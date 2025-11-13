@@ -9,9 +9,5 @@ $pdo = new PDO(
   ]
 );
 
-if($pdo==true){
-    echo "It is working fine";
-}else{
-    echo "Connection is wrong: err";
-}
 
+?>

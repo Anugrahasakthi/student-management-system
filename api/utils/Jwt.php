@@ -18,8 +18,40 @@ function jwt_encode(array $payload): string {
   return implode('.', $segments);
 }
 
+function jwt_decode(string $token): array {
+  $parts = explode('.', $token);
+  if (count($parts) !== 3) throw new Exception('Invalid token format');
+  [$h64, $p64, $s64] = $parts;
+
+  $header  = json_decode(jwt_base64url_decode($h64), true);
+  $payload = json_decode(jwt_base64url_decode($p64), true);
+  $sig     = jwt_base64url_decode($s64);
+
+  if (!is_array($header) || ($header['alg'] ?? '') !== 'HS256') {
+    throw new Exception('Unsupported algorithm');
+  }
+
+  $check = hash_hmac('sha256', "$h64.$p64", JWT_SECRET, true);
+  if (!hash_equals($check, $sig)) throw new Exception('Signature mismatch');
+
+  if (isset($payload['exp']) && time() >= $payload['exp']) {
+    throw new Exception('Token expired');
+  }
+
+  return $payload;
+}
+
+
 
 function jwt_base64url_encode(string $data): string {
   return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
+
+
+function jwt_base64url_decode(string $data): string {
+  $remainder = strlen($data) % 4;
+  if ($remainder) $data .= str_repeat('=', 4 - $remainder);
+  return base64_decode(strtr($data, '-_', '+/')) ?: '';
+}
+
 ?>
