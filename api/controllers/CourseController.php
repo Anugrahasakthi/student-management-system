@@ -4,100 +4,201 @@ require_once __DIR__ . '/../utils/Response.php';
 require_once __DIR__ . '/../utils/Validator.php';
 require_once __DIR__ . '/../middleware.php';
 
-// Get all courses (Public)
+
+// GET all courses
+
 function getAllCourses() {
   global $pdo;
+
   try {
-    $stmt = $pdo->query("SELECT * FROM courses ORDER BY course_id DESC");
-    $courses = $stmt->fetchAll();
-    Response::success($courses);
+    $stmt = $pdo->query("SELECT * FROM courses ORDER BY id DESC");
+    $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    response_json(200, "Courses fetched successfully", $courses);
+
   } catch (Exception $e) {
-    Response::error("Failed to fetch courses: " . $e->getMessage());
+    response_json(500, "Failed to fetch courses: " . $e->getMessage());
   }
 }
 
-// Get one course (Public)
+//Get course by name
+
+function getCourseByName($name) {
+  global $pdo;
+
+  try {
+
+    
+    $stmt = $pdo->prepare("
+      SELECT * FROM courses 
+      WHERE LOWER(REPLACE(course_name, ' ', '')) 
+            LIKE LOWER(REPLACE(?, ' ', ''))
+    ");
+    
+    $stmt->execute(["%$name%"]);
+
+    $course = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($course) {
+      response_json(200, "Course fetched successfully", $course);
+    } else {
+      response_json(404, "Course not found");
+    }
+
+  } catch (Exception $e) {
+    response_json(500, "Failed to fetch course: " . $e->getMessage());
+  }
+}
+
+
+
+
+
+// GET one course by id
+
 function getCourse($id) {
   global $pdo;
+
   try {
-    $stmt = $pdo->prepare("SELECT * FROM courses WHERE course_id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM courses WHERE id = ?");
     $stmt->execute([$id]);
-    $course = $stmt->fetch();
+
+    $course = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($course) {
-      Response::success($course);
+      response_json(200, "Course fetched successfully", $course);
     } else {
-      Response::error("Course not found", 404);
+      response_json(404, "Course not found");
     }
+
   } catch (Exception $e) {
-    Response::error("Error: " . $e->getMessage());
+    response_json(500, "Error fetching course: " . $e->getMessage());
   }
 }
 
-// Create a new course (Admin only)
+//CREATE course.(ADMIN ONLY)
+
 function createCourse() {
   global $pdo;
-  $payload = authenticate();
-  requireAdmin($payload);
 
-  $data = json_decode(file_get_contents("php://input"), true);
-  $name = trim($data['course_name'] ?? '');
+  $payload = auth();
+  require_admin($payload);
+
+  // Input
+  $data = json_decode(file_get_contents("php://input"), true) ?? [];
+
+  validate_required($data, ['course_name']);
+
+  $name = trim($data['course_name']);
   $desc = trim($data['course_description'] ?? '');
   $duration = trim($data['duration'] ?? '');
 
-  if (Validator::isEmpty($name)) {
-    Response::error("Course name is required");
-    return;
+  // Check duplicate before inserting
+  try {
+    $check = $pdo->prepare("SELECT id FROM courses WHERE course_name = ?");
+    $check->execute([$name]);
+
+    if ($check->rowCount() > 0) {
+      response_json(409, "Course already exists");
+    }
+  } catch (Exception $e) {
+    response_json(500, "Error checking duplicates: " . $e->getMessage());
   }
 
+  // Insert new course
   try {
-    $stmt = $pdo->prepare("INSERT INTO courses (course_name, course_description, duration) VALUES (?, ?, ?)");
+    $stmt = $pdo->prepare(
+      "INSERT INTO courses (course_name, course_description, duration)
+       VALUES (?, ?, ?)"
+    );
+
     $stmt->execute([$name, $desc, $duration]);
-    Response::success(["message" => "Course created successfully"]);
-  } catch (Exception $e) {
-    Response::error("Failed to create course: " . $e->getMessage());
+
+    response_json(200, "Course created successfully");
+
+  } catch (PDOException $e) {
+    // Database-level duplicate protection
+    if ($e->getCode() === "23000") {
+      response_json(409, "Course already exists");
+    }
+
+    response_json(500, "Failed to create course: " . $e->getMessage());
   }
 }
 
-// Update course (Admin only)
+
+// UPDATE COURSE (ADMIN ONLY)
+ 
 function updateCourse($id) {
   global $pdo;
-  $payload = authenticate();
-  requireAdmin($payload);
 
-  $data = json_decode(file_get_contents("php://input"), true);
+  
+  $payload = auth();
+  require_admin($payload);
+
+  $data = json_decode(file_get_contents("php://input"), true) ?? [];
+
   $name = trim($data['course_name'] ?? '');
   $desc = trim($data['course_description'] ?? '');
   $duration = trim($data['duration'] ?? '');
 
+  // Prevent updating to an existing course name
+  if (!empty($name)) {
+    try {
+      $chk = $pdo->prepare("SELECT id FROM courses WHERE course_name = ? AND id <> ?");
+      $chk->execute([$name, $id]);
+
+      if ($chk->rowCount() > 0) {
+        response_json(409, "Another course with this name already exists");
+      }
+
+    } catch (Exception $e) {
+      response_json(500, "Error checking duplicates during update: " . $e->getMessage());
+    }
+  }
+
+  // Update course
   try {
-    $stmt = $pdo->prepare("UPDATE courses SET course_name=?, course_description=?, duration=? WHERE course_id=?");
+    $stmt = $pdo->prepare(
+      "UPDATE courses 
+       SET course_name=?, course_description=?, duration=? 
+       WHERE id=?"
+    );
+
     $stmt->execute([$name, $desc, $duration, $id]);
 
     if ($stmt->rowCount() > 0) {
-      Response::success(["message" => "Course updated successfully"]);
+      response_json(200, "Course updated successfully");
     } else {
-      Response::error("Course not found or no changes made", 404);
+      response_json(404, "Course not found or no changes made");
     }
+
   } catch (Exception $e) {
-    Response::error("Failed to update course: " . $e->getMessage());
+    response_json(500, "Failed to update course: " . $e->getMessage());
   }
 }
 
-// Delete course (Admin only)
+
+// DELETE course (ADMIN ONLY)
+
 function deleteCourse($id) {
   global $pdo;
-  $payload = authenticate();
-  requireAdmin($payload);
+
+ 
+  $payload = auth();
+  require_admin($payload);
 
   try {
-    $stmt = $pdo->prepare("DELETE FROM courses WHERE course_id = ?");
+    $stmt = $pdo->prepare("DELETE FROM courses WHERE id=?");
     $stmt->execute([$id]);
+
     if ($stmt->rowCount() > 0) {
-      Response::success(["message" => "Course deleted successfully"]);
+      response_json(200, "Course deleted successfully");
     } else {
-      Response::error("Course not found", 404);
+      response_json(404, "Course not found");
     }
+
   } catch (Exception $e) {
-    Response::error("Failed to delete course: " . $e->getMessage());
+    response_json(500, "Failed to delete course: " . $e->getMessage());
   }
 }

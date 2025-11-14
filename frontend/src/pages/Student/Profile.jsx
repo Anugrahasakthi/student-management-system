@@ -8,7 +8,7 @@ const Profile=()=>{
                 <li className="header-list"><Link to="/home">Home</Link></li>
                 <li className="header-list"><Link to="/logout">Logout</Link></li>
           </ul>
-            <div className="container"><h1>Hi Student. You can see you details here.</h1></div>
+            <div className="container"><h1>Hi Student. You can see your details here.</h1></div>
         </div>
         
         

@@ -16,7 +16,7 @@ const Header = () =>{
                     </>
                 )}
 
-                {token && role ==='admin' && (
+                    {token && role ==='admin' && (
                     <>
                     <li className="header-list"><Link to="/students">Students</Link></li>
                     <li className="header-list"><Link to="/logout">Logout</Link></li>                    

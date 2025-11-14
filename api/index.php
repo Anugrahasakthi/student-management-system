@@ -29,12 +29,14 @@ require_once __DIR__ . '/controllers/CourseController.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// ✅ Dynamically detect project path (works in any folder)
+// Dynamically detect project path
 $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
 $normalized = str_replace($scriptDir, '', $uri);
-if ($normalized === '' || $normalized === false) $normalized = '/';
+if ($normalized === '' || $normalized === false) {
+    $normalized = '/';
+}
 
-// Debug line (optional)
+// Debug (optional)
 error_log("DEBUG ROUTE => method=$method, normalized=$normalized");
 
 // =================== ROUTES ===================
@@ -65,21 +67,52 @@ if ($method === 'GET' && $normalized === '/me/student') {
   exit;
 }
 
-// ================= COURSE ROUTES (optional) =================
+// ================= COURSE ROUTES =================
 
-// Example: GET all courses
+// GET all courses
 if ($method === 'GET' && $normalized === '/courses') {
-  $user = auth(); // verify token
-  getAllCourses();
-  exit;
+    $user = auth();
+    getAllCourses();
+    exit;
 }
 
-// Example: GET single course
-if (preg_match('#^/course/(\d+)$#', $normalized, $matches) && $method === 'GET') {
-  $user = auth();
-  getCourse((int)$matches[1]);
-  exit;
+// Decode URL once (CRITICAL FIX)
+$decoded = rawurldecode($normalized);
+
+// GET course by name (MUST come before ID route)
+if ($method === 'GET' && preg_match('#^/courses/name/(.+)$#u', $decoded, $matches)) {
+    $payload = auth();
+    getCourseByName($matches[1]);
+    exit;
 }
 
-// ================= DEFAULT: Route not found =================
+// GET course by ID (match ONLY numbers)
+if ($method === 'GET' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
+    $user = auth();
+    getCourse((int)$matches[1]);
+    exit;
+}
+
+// CREATE course
+if ($method === 'POST' && $normalized === '/courses') {
+    $user = auth();
+    createCourse();
+    exit;
+}
+
+// UPDATE course
+if ($method === 'PUT' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
+    $user = auth();
+    updateCourse((int)$matches[1]);
+    exit;
+}
+
+// DELETE course
+if ($method === 'DELETE' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
+    $user = auth();
+    deleteCourse((int)$matches[1]);
+    exit;
+}
+
+// ================= DEFAULT: 404 =================
 response_json(404, 'Route not found: ' . $normalized);
