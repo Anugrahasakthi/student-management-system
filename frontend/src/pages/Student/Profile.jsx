@@ -1,17 +1,44 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import client from "../../api/client";
 import "../pages.css";
 
-const Profile=()=>{
-    return(
-        <div>
-            <ul className="nav-links">
-                <li className="header-list"><Link to="/home">Home</Link></li>
-                <li className="header-list"><Link to="/logout">Logout</Link></li>
-          </ul>
-            <div className="container"><h1>Hi Student. You can see your details here.</h1></div>
-        </div>
-        
-        
-    )
-}
-export default Profile
+const Profile = () => {
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await client.get("/me/student"); 
+        setStudent(res.data.data);
+      } catch (error) {
+        console.error("Error loading profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading) return <h2>Loading...</h2>;
+
+  return (
+    <div>
+      <ul className="nav-links">
+        <li className="header-list"><Link to="/home">Home</Link></li>
+        <li className="header-list"><Link to="/logout">Logout</Link></li>
+      </ul>
+
+      <div className="prof-container">
+        <h1>Welcome, {student.name}</h1>
+        <p><strong>Email:</strong> {student.email}</p>
+        <p><strong>Phone:</strong> {student.phone}</p>
+        <p><strong>DOB:</strong> {student.dob}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
