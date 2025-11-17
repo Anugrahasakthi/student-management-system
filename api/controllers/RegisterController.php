@@ -15,7 +15,7 @@ function registerController() {
   $phone = trim($data['phone'] ?? '');
   $dob = trim($data['dob'] ?? '');
 
-  // ✅ Step 1: Validate input
+  // Validate input
   if ($email === '' || $password === '' || $role === '' || $name === '') {
     response_json(400, 'Email, password, name, and role are required');
   }
@@ -30,20 +30,20 @@ function registerController() {
 
   global $pdo;
 
-  // ✅ Step 2: Check for duplicate email
+  // Check for duplicate email
   $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
   $stmt->execute([$email]);
   if ($stmt->fetch()) {
     response_json(409, 'Email already registered');
   }
 
-  // ✅ Step 3: Insert into users table
+  // Insert into users table
   $hash = password_hash($password, PASSWORD_BCRYPT);
   $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)");
   $stmt->execute([$email, $hash, $role]);
   $userId = $pdo->lastInsertId();
 
-  // ✅ Step 4: Insert into role-specific table
+  // Insert into role-specific table
   if ($role === 'student') {
     $stmt = $pdo->prepare("
       INSERT INTO students (user_id, email, name, phone, dob)
@@ -58,7 +58,7 @@ function registerController() {
     $stmt->execute([$userId, $email, $name, $phone, $dob]);
   }
 
-  // ✅ Step 5: Success response
+  // Success response
   response_json(201, 'User registered successfully', [
     'email' => $email,
     'role' => $role

@@ -1,69 +1,76 @@
 <?php
 
-
 require_once __DIR__ . '/utils/Jwt.php';
 require_once __DIR__ . '/utils/Response.php';
 
+// AUTH MIDDLEWARE Decodes JWT and returns payload
 
 function auth(): array {
+
+   
+    if (function_exists('apache_request_headers')) {
+        $headers = apache_request_headers();
+    } else {
+        $headers = [];
+    }
+
+    $authHeader = null;
+
+    foreach ($headers as $key => $value) {
+        if (strtolower($key) === 'authorization') {
+            $authHeader = $value;
+            break;
+        }
+    }
+
+    // No header → reject
+    if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+        response_json(401, 'Missing or invalid Authorization header');
+    }
+
+    // Extract pure token
+    $token = substr($authHeader, 7);
+
+    try {
+        // Decode token
+        $payload = jwt_decode($token);
+
+        // Token expiry check
+        if (isset($payload['exp']) && time() >= $payload['exp']) {
+            response_json(401, 'Token has expired');
+        }
+
+        
+        return $payload;
+
+    } catch (Exception $e) {
+        response_json(401, 'Token invalid or expired');
+    }
+}
+
+//ADMIN ONLY ACCESS
  
-  if (function_exists('apache_request_headers')) {
-    $headers = apache_request_headers();
-  } else {
-    $headers = [];
-  }
-
-  
-  $auth = null;
-  foreach ($headers as $key => $value) {
-    if (strtolower($key) === 'authorization') {
-      $auth = $value;
-      break;
-    }
-  }
-
-  
-  if (!$auth || !str_starts_with($auth, 'Bearer ')) {
-    response_json(401, 'Missing or invalid Authorization header');
-  }
-
-  
-  $token = substr($auth, 7);
-
-  try {
-    
-    $payload = jwt_decode($token);
-
-    
-    if (isset($payload['exp']) && time() >= $payload['exp']) {
-      response_json(401, 'Token has expired');
-    }
-
-    
-    return $payload;
-
-  } catch (Exception $e) {
-    response_json(401, 'Token invalid or expired');
-  }
-}
-
-
-//to allow admin alone
 function require_admin(array $payload): array {
-  $role = $payload['role'] ?? null;
-
-  if ($role !== 'admin') {
-    response_json(403, 'Access denied: Admin only');
-  }
-  return $payload;
+    if (($payload['role'] ?? null) !== 'admin') {
+        response_json(403, 'Access denied: Admin only');
+    }
+    return $payload;
 }
 
-//to allow students alone
+//STUDENT ONLY ACCESS
+ 
 function require_student(array $payload): array {
-  $role = $payload['role'] ?? null;
+    if (($payload['role'] ?? null) !== 'student') {
+        response_json(403, 'Access denied: Student only');
+    }
+    return $payload;
+}
 
-  if ($role !== 'student') {
-    response_json(403, 'Access denied: Student only');
-  }
-  return $payload;
+
+function is_admin(array $payload): bool {
+    return ($payload['role'] ?? null) === 'admin';
+}
+
+function is_student(array $payload): bool {
+    return ($payload['role'] ?? null) === 'student';
 }

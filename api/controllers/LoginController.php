@@ -14,23 +14,31 @@ function loginController(): void {
     response_json(400, 'Email & Password are required');
   }
 
-  // Finding user by email
   global $pdo;
   $query = $pdo->prepare("SELECT * FROM users WHERE email = ?");
   $query->execute([$email]);
   $user = $query->fetch();
 
-  // Checking email or password is valid
   if (!$user || !password_verify($password, $user['password_hash'])) {
     response_json(401, 'Invalid email or password');
   }
 
-  // To generate token payload
+  //Fetch student_id (if user is a student)
+  $student_id = null;
+  if ($user['role'] === 'student') {
+      $stmt = $pdo->prepare("SELECT id FROM students WHERE user_id = ?");
+      $stmt->execute([$user['id']]);
+      $stu = $stmt->fetch();
+      $student_id = $stu['id'] ?? null;
+  }
+
+
   $payload = [
-    'id'    => $user['id'],
-    'email' => $user['email'],
-    'role'  => $user['role'],
-    ];
+    'id'          => $user['id'],       
+    'student_id'  => $student_id,       
+    'role'        => $user['role'],
+    'email'       => $user['email'],
+  ];
 
   $token = jwt_encode($payload);
 
@@ -38,8 +46,9 @@ function loginController(): void {
     'token' => $token,
     'role'  => $user['role'],
     'user'  => [
-      'id'    => $user['id'],
-      'email' => $user['email']      
+      'id'          => $user['id'],
+      'student_id'  => $student_id,
+      'email'       => $user['email'],
     ],
   ]);
 }

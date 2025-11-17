@@ -9,7 +9,8 @@ const Logout = ()=>{
             <h1>Thanks for Visiting</h1>
             <img src={Thankyou} alt="thank you" className='thank-you'/>
             <div className="logout-options">
-                <Link className="logout-but" to="/">Login Again</Link>
+                <Link className="logout-but" to="/">Home</Link>
+                <Link className="logout-but" to="/login">Login Again</Link>
                 <Link className="logout-but" to="/register">New User</Link>
 
             </div>

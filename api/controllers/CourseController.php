@@ -11,7 +11,7 @@ function getAllCourses() {
   global $pdo;
 
   try {
-    $stmt = $pdo->query("SELECT * FROM courses ORDER BY id DESC");
+    $stmt = $pdo->query("SELECT * FROM courses ORDER BY id");
     $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     response_json(200, "Courses fetched successfully", $courses);

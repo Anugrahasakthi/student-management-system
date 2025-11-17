@@ -140,13 +140,88 @@ button:hover {
   height:100vh;
 }
 
-.prof-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: blanchedalmond;
-  height:100vh;
 
+
+.course-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 12px;
+  border-radius: 8px;
 }
+.course-card button {
+  padding: 8px 12px;
+  background-color: darkblue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.dashboard-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.dash-btn {
+  padding: 10px 15px;
+  background-color: darkblue;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.course-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.course-card {
+  background: #f5f5f5;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+.enroll-btn {
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enrolled-btn {
+  padding: 8px 15px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.course-card {
+  background: white;
+  padding: 15px;
+  margin: 12px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+

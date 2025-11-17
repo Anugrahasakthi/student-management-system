@@ -4,17 +4,11 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
 require_once __DIR__ . '/../utils/Response.php';
 
-/**
- * ADMIN → show all students with courses
- */
+
 function listStudents() {
 
-  $auth = auth(); // verify token
-
-  $auth = require_admin($auth);
-  // if ($auth['role'] !== 'admin') {
-  //   response_json(403, 'Only admin can view all students');
-  // }
+  $auth = auth();
+  require_admin($auth);
 
   global $pdo;
   $sql = "
@@ -24,31 +18,30 @@ function listStudents() {
     JOIN users u ON u.id = s.user_id
     LEFT JOIN enrollments e ON e.student_id = s.id
     LEFT JOIN courses c ON c.id = e.course_id
-    GROUP BY s.id, s.name, s.phone, s.dob, u.email;
+    GROUP BY s.id, s.name, s.phone, s.dob, u.email
   ";
 
-  $rows = $pdo->query($sql)->fetchAll();
+  $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
   response_json(200, 'All students with courses', $rows);
 }
 
-/**
- * STUDENT → show own detail + courses
- */
+
+
+
 function myStudentProfile() {
 
-  $auth = auth(); // verify token
+  $auth = auth();
+  require_student($auth);
 
-  $auth = require_student($auth);
+  // student_id from JWT 
+  $student_id = $auth['student_id'] ?? null;
 
-    // TEMP: check what payload looks like
-  // response_json(200, 'Payload test', $auth);
-  // if ($auth['role'] !== 'student') {
-  //   response_json(403, 'Only student can view this');
-  // }
-
-  $userId = $auth['id'];
+  if (!$student_id) {
+    response_json(404, 'Student profile not found (student_id missing)');
+  }
 
   global $pdo;
+
   $sql = "
     SELECT s.id, s.name, s.phone, s.dob, u.email,
            GROUP_CONCAT(c.course_name) AS courses
@@ -56,13 +49,18 @@ function myStudentProfile() {
     JOIN users u ON u.id = s.user_id
     LEFT JOIN enrollments e ON e.student_id = s.id
     LEFT JOIN courses c ON c.id = e.course_id
-    WHERE s.user_id = ?
-    GROUP BY s.id, s.name, s.phone, s.dob, u.email;
+    WHERE s.id = ?
+    GROUP BY s.id, s.name, s.phone, s.dob, u.email
   ";
 
   $stmt = $pdo->prepare($sql);
-  $stmt->execute([$userId]);
-  $row = $stmt->fetch();
+  $stmt->execute([$student_id]);
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if (!$row) {
+    response_json(404, 'Student not found');
+  }
 
   response_json(200, 'Student profile', $row);
 }
+

@@ -1,0 +1,10 @@
+.prof-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: blanchedalmond;
+  height:100vh;
+
+}

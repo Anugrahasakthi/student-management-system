@@ -1,5 +1,5 @@
 <?php
-function response_json(int $status, string $message, array $data = null): void {
+function response_json(int $status, string $message, $data = null): void {
   http_response_code($status);
   header('Content-Type: application/json');
 
@@ -8,6 +8,7 @@ function response_json(int $status, string $message, array $data = null): void {
     'message' => $message,
   ];
 
+  // allow any type: array, object, null, string, bool
   if ($data !== null) {
     $out['data'] = $data;
   }
