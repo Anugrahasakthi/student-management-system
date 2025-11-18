@@ -1,0 +1,64 @@
+.AvailableCourse-cont{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+  min-height: 100vh;        
+  background-size: cover;   
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.availCourse-card {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+  background-color: bisque;
+  padding: 15px;
+  margin: 20px;
+  margin-bottom:0px;
+  border-style:solid;
+  border-radius: 8px;
+  border-color: black;
+}
+
+.course-content{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* background-color: greenyellow; */
+    width:900px;
+}
+
+.course-but{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.enroll-btn {
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enrolled-btn {
+  padding: 8px 15px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+

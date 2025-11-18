@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./pages.css";
+import "../pages/Css/Register.css";
 import client from "../api/client";
 import { useNavigate,Link } from "react-router-dom";
 
@@ -54,7 +55,7 @@ const Register = () => {
   }, [error, success]);
 
   return (
-    <div className="login-container">
+    <div className="register-container">
       <h1 className="heading">Register</h1>
 
        <form className="form-container" onSubmit={handleSubmit}>

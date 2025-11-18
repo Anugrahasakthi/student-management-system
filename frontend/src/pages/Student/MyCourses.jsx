@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
 import Header from "../../pages/Header";
-import "../pages.css";
+import "../Css/mycourse.css";
+import cloudImg from "../../assets/clouds.png";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -34,15 +35,15 @@ const MyCourses = () => {
     <div>
       <Header />
 
-      <div className="container">
-        <h1>My Courses</h1>
+      <div className="mycourseContainer" style={{ backgroundImage: `url(${cloudImg})` }}>
+        <h1 className="course-head">My Courses</h1>
         <hr />
 
         {courses.length === 0 ? (
           <p>You have not enrolled in any courses yet.</p>
         ) : (
           courses.map((course) => (
-            <div key={course.id} className="course-card">
+            <div key={course.id} className="courses-card">
               <h3>{course.course_name}</h3>
               <p>{course.course_description}</p>
             </div>

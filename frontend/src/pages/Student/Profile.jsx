@@ -39,7 +39,7 @@ useEffect(() => {
 
       <div className="prof-container">
         <h1>Welcome, {student.name}</h1>
-        <img src={girl}/>
+        <img src={girl} className="image"/>
         <p><strong>Email:</strong> {student.email}</p>
         <p><strong>Phone:</strong> {student.phone}</p>
         <p><strong>DOB:</strong> {student.dob}</p>

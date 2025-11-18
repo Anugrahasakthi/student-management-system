@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Thankyou from "../assets/Thank you.png";
+import Thankyou from "../assets/Thankyou.png";
 import "./pages.css"
 
 const Logout = ()=>{

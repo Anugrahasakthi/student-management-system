@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
 import Header from "../../pages/Header";
-import "../pages.css";
+import "../Css/AvailableCourses.css";
+import cloudImg from "../../assets/clouds.png";
 
 const AvailableCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -52,21 +53,25 @@ const AvailableCourses = () => {
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="AvailableCourse-cont" style={{ backgroundImage: `url(${cloudImg})` }}>
         <h1>Available Courses</h1>
 
         {message && <p className="success-message">{message}</p>}
 
         {courses.map((course) => (
-          <div key={course.id} className="course-card">
-            <h3>{course.course_name}</h3>
+          <div key={course.id} className="availCourse-card">
+            <div className="course-content">
+              <h3>{course.course_name}</h3>
             <p>{course.course_description}</p>
-
-            {course.enrolled ? (
-              <button className="enrolled-btn" disabled>✔ Enrolled</button>
+            </div>
+            <div className="course-but">{course.enrolled ? (
+              <button className="enrolled-btn" disabled> Enrolled</button>
             ) : (
               <button className="enroll-btn" onClick={() => handleEnroll(course.id)}>Enroll</button>
-            )}
+            )}</div>
+            
+
+            
           </div>
         ))}
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import client from "../../api/client";
 import Header from "../Header";   
 import "../Css/studentDash.css";
+import cloudImg from "../../assets/clouds.png";
 
 
 const StudentDashboard = () => {
@@ -37,7 +38,7 @@ const StudentDashboard = () => {
     <div>
       <Header />
 
-      <div className="dashbord-container">
+      <div className="dashbord-container" style={{ backgroundImage: `url(${cloudImg})` }}>
         <h1>Welcome, {student?.name} </h1>      
         <hr />
         <h2>Your Enrolled Courses:</h2>

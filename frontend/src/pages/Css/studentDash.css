@@ -3,15 +3,22 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;   
-  align-items: center;
-  text-align: center;
+  /* align-items: center; */
+  /* text-align: center; */
   padding: 40px 20px;
   min-height: 100vh;
-  background-color: blanchedalmond;
+  /* background-color: blanchedalmond; */
+  width: 100%;
+  min-height: 100vh;        
+  background-size: cover;   
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
 }
 
 
 .dashbord-container h1 {
+  text-align: center;
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -36,20 +43,17 @@
 
 
 .course-card {
-  background: white;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-start;
+  background:beige;
+  width:900px;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left:50px;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-
-.course-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
 
 .course-card h3 {
   font-size: 22px;
@@ -57,9 +61,9 @@
   margin-bottom: 10px;
 }
 
-/* Course Description */
+
 .course-card p {
   font-size: 16px;
   line-height: 1.5;
-  color: #444;
+  color:blue;
 }
