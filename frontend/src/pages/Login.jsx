@@ -1,103 +1,14 @@
 
-// import React, { useState } from "react";
-// import "./pages.css";
-// import "../pages/Css/Login.css";
-// import client from "../api/client";
-// import { useNavigate, Link } from "react-router-dom";
 
-// const Login = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-//   const [success, setSuccess] = useState("");
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setError("");
-//     setSuccess("");
-
-//     try {
-//       const res = await client.post("/login", { email, password });
-
-//       if (res.data.status === 200) {
-//         const { token, role, user } = res.data.data;
-
-//         localStorage.setItem("token", token);
-//         localStorage.setItem("role", role);
-//         localStorage.setItem("user", JSON.stringify(user));
-
-//         setSuccess("Login successful! Redirecting...");
-        
-//         setTimeout(() => {
-//           navigate("/home");
-//         }, 1000); // waits 1 sec before redirect
-//       } else {
-//         setError(res.data.message || "Invalid credentials");
-//       }
-
-//     } catch (err) {
-//       if (err.response) {
-//         setError(err.response.data.message || "Invalid credentials");
-//       } else {
-//         setError("Server not reachable. Check backend.");
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="login-container">
-//       <h1 className="heading">Login</h1>
-
-      
-//       {error && <p className="error-message">{error}</p>}
-//       {success && <p className="success-message">{success}</p>}
-
-//       <form className="form-container" onSubmit={handleSubmit}>
-//         <div className="label-input">
-//           <label htmlFor="email">Email</label>
-//           <input
-//             type="email"
-//             placeholder="Enter your email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//         </div>
-
-//         <div className="label-input">
-//           <label htmlFor="password">Password</label>
-//           <input
-//             type="password"
-//             placeholder="Enter your password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-//         </div>
-
-//         <button type="submit">Login</button>
-
-//         <Link to="/register" className="link-button">
-//           New User Register Here
-//         </Link>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
-import React, { useState } from "react";
-import "./pages.css";
-import "../pages/Css/Login.css";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import client from "../api/client";
-import { useNavigate, Link } from "react-router-dom";
+import "../pages/Css/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");      // NEW
+  const [role, setRole] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -113,30 +24,29 @@ const Login = () => {
       if (res.data.status === 200) {
         const { token, role: backendRole, user } = res.data.data;
 
-        // 🔥 ROLE CHECK
+       
         if (backendRole !== role) {
           setError("Please choose your correct role.");
           return;
         }
 
+        
         localStorage.setItem("token", token);
         localStorage.setItem("role", backendRole);
         localStorage.setItem("user", JSON.stringify(user));
 
         setSuccess("Login successful! Redirecting...");
 
+        
         setTimeout(() => {
-          if (backendRole === "admin") {
-            navigate("/admin/dashboard");
-          } else {
-            navigate("/home");
-          }
-        }, 1000);
-
+          window.location.href =
+            backendRole === "admin"
+              ? "/admin/dashboard"
+              : "/student/dashboard";
+        }, 800);
       } else {
         setError(res.data.message || "Invalid credentials");
       }
-
     } catch (err) {
       setError(err.response?.data?.message || "Server not reachable.");
     }
@@ -150,8 +60,7 @@ const Login = () => {
       {success && <p className="success-message">{success}</p>}
 
       <form className="form-container" onSubmit={handleSubmit}>
-
-        {/* 🔵 ROLE DROPDOWN */}
+        {/* Role Selection */}
         <div className="label-input">
           <label htmlFor="role">Role</label>
           <select
@@ -166,10 +75,10 @@ const Login = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="email">Email</label>
+          <label>Email</label>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -177,10 +86,10 @@ const Login = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="password">Password</label>
+          <label>Password</label>
           <input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -190,7 +99,7 @@ const Login = () => {
         <button type="submit">Login</button>
 
         <Link to="/register" className="link-button">
-          New User Register Here
+          New User? Register here
         </Link>
       </form>
     </div>

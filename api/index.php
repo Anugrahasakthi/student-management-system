@@ -21,6 +21,8 @@ require_once __DIR__ . '/controllers/RegisterController.php';
 require_once __DIR__ . '/controllers/StudentController.php';
 require_once __DIR__ . '/controllers/CourseController.php';
 require_once __DIR__ . '/controllers/EnrollmentController.php';
+require_once __DIR__ . '/controllers/AdminController.php';
+
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -73,7 +75,7 @@ if ($method === 'GET' && $normalized === '/courses') {
     exit;
 }
 
-// Decode URL once (CRITICAL FIX)
+
 $decoded = rawurldecode($normalized);
 
 // GET course by name (MUST come before ID route)
@@ -134,6 +136,12 @@ if ($method === 'GET' && preg_match('#^/course/([0-9]+)/students$#', $normalized
 // DELETE enrollment (ADMIN ONLY)
 if ($method === 'DELETE' && preg_match('#^/enroll/([0-9]+)$#', $normalized, $m)) {
     deleteEnrollment((int)$m[1]);
+    exit;
+}
+
+// ADMIN dashboard
+if ($method === 'GET' && $normalized === '/admin/stats') {
+    adminStats();
     exit;
 }
 

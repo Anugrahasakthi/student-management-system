@@ -24,14 +24,14 @@ const Header = () => {
         </>
       )}
 
-      {/* STUDENT LINKS */}
+  
       {token && role === "student" && (
         <>
           <li className="header-list">
             <Link to="/student/dashboard">Dashboard</Link>
           </li>
           <li className="header-list">
-            <Link to="/student/courses">Available Courses</Link>
+            <Link to="/student/courses">Courses</Link>
           </li>
           <li className="header-list">
             <Link to="/student/my-courses">My Courses</Link>

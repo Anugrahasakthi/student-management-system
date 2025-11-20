@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Home from "./pages/Home";        // New common homepage
+import Home from "./pages/Home";        
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
-
-import Students from "./pages/Admin/Students";
-
 import Profile from "./pages/Student/Profile";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import AvailableCourses from "./pages/Student/AvailableCourses";
 import MyCourses from "./pages/Student/MyCourses";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import ManageStudents from "./pages/Admin/ManageStudents";
+
+
+
 
 function App() {
   const token = localStorage.getItem("token");
@@ -29,13 +31,22 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/home" element={isLoggedIn ? (isStudent ? (<Navigate to="/student/dashboard" />)
-                                                : isAdmin ? (<Navigate to="/admin/students" />) 
+                                                : isAdmin ? (<Navigate to="/admin/dashboard" />) 
                                                 : (<Navigate to="/" />)) : (<Navigate to="/" />)} />
 
         <Route
-          path="/admin/students"
-          element={isAdmin ? <Students /> : <Navigate to="/login" />}
+          path="/admin/dashboard"
+          element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}
         />
+
+        <Route
+          path="/admin/students"
+          element={isAdmin ? <ManageStudents /> : <Navigate to="/login" />}
+        />
+
+        
+
+
 
         
         <Route

@@ -54,7 +54,7 @@ const AvailableCourses = () => {
     <div>
       <Header />
       <div className="AvailableCourse-cont" style={{ backgroundImage: `url(${cloudImg})` }}>
-        <h1>Available Courses</h1>
+        <h1>Courses List:</h1>
 
         {message && <p className="success-message">{message}</p>}
 

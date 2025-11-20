@@ -1,0 +1,41 @@
+.admin-nav {
+  background: #000d5a;
+  padding: 12px 20px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-links {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-links li a {
+  padding: 8px 18px;
+  background: #ffb3d1;
+  border-radius: 6px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
+}
+
+.admin-links li a:hover {
+  background: #ff89c7;
+}
+
+.logout a {
+  background: #ff4d4d !important;
+  color: white !important;
+}
+
+.logout a:hover {
+  background: #e60000 !important;
+}
