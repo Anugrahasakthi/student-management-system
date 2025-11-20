@@ -11,6 +11,7 @@ import AvailableCourses from "./pages/Student/AvailableCourses";
 import MyCourses from "./pages/Student/MyCourses";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ManageStudents from "./pages/Admin/ManageStudents";
+import ManageCourses from "./pages/Admin/ManageCourses";
 
 
 
@@ -42,6 +43,11 @@ function App() {
         <Route
           path="/admin/students"
           element={isAdmin ? <ManageStudents /> : <Navigate to="/login" />}
+        />
+
+        <Route
+           path="/admin/courses"
+           element={isAdmin ? <ManageCourses /> : <Navigate to="/login" />}
         />
 
         

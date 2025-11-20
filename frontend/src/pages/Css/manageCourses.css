@@ -1,0 +1,75 @@
+.manage-container {
+width: 90%;
+ margin: 40px auto;
+ padding: 20px;
+}
+
+.manage-title {
+ font-size: 36px;
+ font-weight: bold;
+ color: #222;
+}
+
+.manage-subtitle {
+ color: #666;
+ margin-bottom: 20px;
+}
+
+.courses-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin-top: 20px;
+}
+
+.courses-table th {
+ background: #004080;
+ color: white;
+ padding: 12px;
+ text-align: left;
+ font-size: 16px;
+}
+
+.courses-table td {
+ padding: 12px;
+ border-bottom: 1px solid #ccc;
+}
+
+.courses-table tr:hover {
+ background: #f9f9f9;
+}
+
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn {
+ padding: 6px 12px;
+ margin-right: 6px;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+ font-weight: bold;
+}
+
+.edit-btn {
+ background: #ffc107;
+}
+
+.delete-btn {
+ background: #dc3545;
+ color: white;
+}
+
+.save-btn {
+background: #28a745;
+color: white;
+}
+
+.cancel-btn {
+ background: #6c757d;
+ color: white;
+}
+
+input {
+ padding: 6px;
+ width: 90%;
+}
