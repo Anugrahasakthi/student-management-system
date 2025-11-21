@@ -12,6 +12,10 @@ import MyCourses from "./pages/Student/MyCourses";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ManageStudents from "./pages/Admin/ManageStudents";
 import ManageCourses from "./pages/Admin/ManageCourses";
+import CreateCourse from "./pages/Admin/CreateCourse";
+import ManageEnrollments from "./pages/Admin/ManageEnrollments";
+
+
 
 
 
@@ -49,6 +53,17 @@ function App() {
            path="/admin/courses"
            element={isAdmin ? <ManageCourses /> : <Navigate to="/login" />}
         />
+
+        <Route
+           path="/admin/create-course"
+           element={isAdmin ? <CreateCourse /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/admin/enrollments"
+          element={isAdmin ? <ManageEnrollments /> : <Navigate to="/login" />}
+        />
+
 
         
 

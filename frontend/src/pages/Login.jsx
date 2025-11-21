@@ -19,6 +19,8 @@ const Login = () => {
     setSuccess("");
 
     try {
+
+      
       const res = await client.post("/login", { email, password });
 
       if (res.data.status === 200) {

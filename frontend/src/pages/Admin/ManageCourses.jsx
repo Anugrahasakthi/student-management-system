@@ -77,6 +77,12 @@ const ManageCourses = () => {
       <div className="manage-container">
         <h1 className="manage-title">Courses</h1>
 {/*         <p className="manage-subtitle">View, Edit, or Delete Courses.</p> */}
+        <div className="top-actions">
+            <button className="create-btn"  onClick={() => window.location.href = "/admin/create-course"}>
+                    + Create Course
+            </button>
+        </div>
+
 
         <table className="courses-table">
           <thead>

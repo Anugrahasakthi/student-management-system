@@ -1,0 +1,88 @@
+.enroll-page-container {
+  width: 90%;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.tabs {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.tabs .active-tab {
+  background: pink;
+  color: black;
+  border: 2px solid #000;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.enroll-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.enroll-table th {
+  background: #03254c;
+  color: white;
+  padding: 10px;
+}
+
+.enroll-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.unenroll-btn {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.unenroll-btn:hover {
+  background: #c91f2e;
+}
+
+.enroll-form-container {
+  width: 400px;
+  margin: auto;
+  background: #fce4ec;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.enroll-form-container input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.submit-btn {
+  background: green;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}

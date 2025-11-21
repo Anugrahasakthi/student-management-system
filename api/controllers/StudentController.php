@@ -22,7 +22,7 @@ function listStudents() {
   ";
 
   $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-  response_json(200, 'All students with courses', $rows);
+  response_json(200, 'Sudents and their details', $rows);
 }
 
 

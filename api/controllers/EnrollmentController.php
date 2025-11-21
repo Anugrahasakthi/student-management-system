@@ -3,7 +3,11 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
 require_once __DIR__ . '/../utils/Response.php';
 
-
+/**
+ * ============================================================
+ *  ENROLL STUDENT
+ * ============================================================
+ */
 function enrollStudent() {
     global $pdo;
 
@@ -16,7 +20,7 @@ function enrollStudent() {
         response_json(400, "course_id is required");
     }
 
-    
+    // Determine student_id
     if ($payload['role'] === 'student') {
         $student_id = $payload['student_id'];
     } else {
@@ -27,14 +31,14 @@ function enrollStudent() {
         response_json(400, "student_id is required");
     }
 
-    
+    // Check student exists
     $chkStu = $pdo->prepare("SELECT id FROM students WHERE id = ?");
     $chkStu->execute([$student_id]);
-    if ($chkStu->rowCount() === 0) {
+    if (!$chkStu->fetch()) {
         response_json(404, "Student not found");
     }
 
-    
+    // Check course exists
     $chkCourse = $pdo->prepare("SELECT duration FROM courses WHERE id = ?");
     $chkCourse->execute([$course_id]);
     $courseRow = $chkCourse->fetch(PDO::FETCH_ASSOC);
@@ -43,43 +47,40 @@ function enrollStudent() {
         response_json(404, "Course not found");
     }
 
-   
-    preg_match('/(\d+)/', $courseRow['duration'], $match);
-    $months = intval($match[1]);
+    preg_match('/(\d+)/', $courseRow['duration'], $m);
+    $months = intval($m[1]);
     $days = $months * 30;
 
-   
+    // Check duplicate
     $chk = $pdo->prepare("SELECT id FROM enrollments WHERE student_id = ? AND course_id = ?");
     $chk->execute([$student_id, $course_id]);
-    if ($chk->rowCount() > 0) {
+    if ($chk->fetch()) {
         response_json(409, "Already enrolled");
     }
 
-    
-    $startDate = date("Y-m-d");
-    $endDate = date("Y-m-d", strtotime("+$days days"));
+    $start = date("Y-m-d");
+    $end = date("Y-m-d", strtotime("+$days days"));
 
-   
     $stmt = $pdo->prepare("
         INSERT INTO enrollments (student_id, course_id, enrolled_at, end_date)
         VALUES (?, ?, ?, ?)
     ");
-    $stmt->execute([$student_id, $course_id, $startDate, $endDate]);
+    $stmt->execute([$student_id, $course_id, $start, $end]);
 
-    response_json(200, "Enrollment successful", [
-        "start_date" => $startDate,
-        "end_date"   => $endDate,
-        "duration_days" => $days
-    ]);
+    response_json(200, "Enrollment successful");
 }
 
 
-
+/**
+ * ============================================================
+ *  GET ALL ENROLLMENTS (Admin only)
+ * ============================================================
+ */
 function getAllEnrollments() {
     global $pdo;
 
-    $auth = auth();
-    require_admin($auth);
+    $payload = auth();
+    require_admin($payload);
 
     $sql = "
         SELECT 
@@ -99,36 +100,81 @@ function getAllEnrollments() {
 
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-    
     foreach ($rows as &$row) {
         $today = new DateTime();
-        $end = new DateTime($row['end_date']);
-
-        $daysLeft = $today->diff($end)->format("%r%a");
-
-        $row['days_left'] = $daysLeft;
+        $end = new DateTime($row["end_date"]);
+        $row["days_left"] = $today->diff($end)->format("%r%a");
     }
 
     response_json(200, "All enrollments", $rows);
 }
 
 
-function getStudentCourses($student_id) {
+/**
+ * ============================================================
+ *  DELETE ENROLLMENT + Record dropped list
+ * ============================================================
+ */
+function deleteEnrollment($id) {
     global $pdo;
+
     $payload = auth();
 
-    if ($payload['role'] === 'student' && $payload['student_id'] != $student_id) {
-        response_json(403, "Students can view only their own courses");
+    // Find enrollment
+    $stmt = $pdo->prepare("SELECT * FROM enrollments WHERE id = ?");
+    $stmt->execute([$id]);
+    $enrollment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$enrollment) {
+        response_json(404, "Enrollment not found");
     }
 
-    $stmt = $pdo->prepare("
-        SELECT c.*, e.enrolled_at, e.end_date
-        FROM enrollments e
-        JOIN courses c ON e.course_id = c.id
-        WHERE e.student_id = ?
-    ");
-    $stmt->execute([$student_id]);
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Who dropped?
+    $dropped_by = ($payload["role"] === "admin") ? "admin" : "student";
+    $reason = $_POST["reason"] ?? "No reason provided";
 
-    response_json(200, "Courses loaded", $data);
+    // Store in dropped_enrollments
+    $insert = $pdo->prepare("
+        INSERT INTO dropped_enrollments (enrollment_id, student_id, course_id, dropped_by, reason, dropped_at)
+        VALUES (?, ?, ?, ?, ?, NOW())
+    ");
+
+    $insert->execute([
+        $enrollment["id"],
+        $enrollment["student_id"],
+        $enrollment["course_id"],
+        $dropped_by,
+        $reason
+    ]);
+
+    // Delete enrollment
+    $del = $pdo->prepare("DELETE FROM enrollments WHERE id = ?");
+    $del->execute([$id]);
+
+    response_json(200, "Enrollment removed successfully");
+}
+
+
+/**
+ * ============================================================
+ *  GET DROPPED ENROLLMENTS (Admin only)
+ * ============================================================
+ */
+function getDroppedEnrollments() {
+    global $pdo;
+
+    $payload = auth();
+    require_admin($payload);
+
+    $sql = "
+        SELECT d.*, s.name AS student_name, c.course_name
+        FROM dropped_enrollments d
+        JOIN students s ON s.id = d.student_id
+        JOIN courses c ON c.id = d.course_id
+        ORDER BY d.dropped_at DESC
+    ";
+
+    $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    response_json(200, "Dropped enrollments", $rows);
 }
