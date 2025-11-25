@@ -15,37 +15,25 @@ function enrollStudent() {
     $data = json_decode(file_get_contents("php://input"), true);
 
     $course_id = $data['course_id'] ?? null;
-
-    if (!$course_id) {
-        response_json(400, "course_id is required");
-    }
+    if (!$course_id) response_json(400, "course_id is required");
 
     // Determine student_id
-    if ($payload['role'] === 'student') {
-        $student_id = $payload['student_id'];
-    } else {
-        $student_id = $data['student_id'] ?? null;
-    }
+    $student_id = ($payload['role'] === 'student')
+        ? $payload['student_id']
+        : ($data['student_id'] ?? null);
 
-    if (!$student_id) {
-        response_json(400, "student_id is required");
-    }
+    if (!$student_id) response_json(400, "student_id is required");
 
-    // Check student exists
+    // Check student
     $chkStu = $pdo->prepare("SELECT id FROM students WHERE id = ?");
     $chkStu->execute([$student_id]);
-    if (!$chkStu->fetch()) {
-        response_json(404, "Student not found");
-    }
+    if (!$chkStu->fetch()) response_json(404, "Student not found");
 
-    // Check course exists
+    // Check course
     $chkCourse = $pdo->prepare("SELECT duration FROM courses WHERE id = ?");
     $chkCourse->execute([$course_id]);
     $courseRow = $chkCourse->fetch(PDO::FETCH_ASSOC);
-
-    if (!$courseRow) {
-        response_json(404, "Course not found");
-    }
+    if (!$courseRow) response_json(404, "Course not found");
 
     preg_match('/(\d+)/', $courseRow['duration'], $m);
     $months = intval($m[1]);
@@ -54,9 +42,7 @@ function enrollStudent() {
     // Check duplicate
     $chk = $pdo->prepare("SELECT id FROM enrollments WHERE student_id = ? AND course_id = ?");
     $chk->execute([$student_id, $course_id]);
-    if ($chk->fetch()) {
-        response_json(409, "Already enrolled");
-    }
+    if ($chk->fetch()) response_json(409, "Already enrolled");
 
     $start = date("Y-m-d");
     $end = date("Y-m-d", strtotime("+$days days"));
@@ -69,6 +55,7 @@ function enrollStudent() {
 
     response_json(200, "Enrollment successful");
 }
+
 
 
 /**
@@ -85,6 +72,7 @@ function getAllEnrollments() {
     $sql = "
         SELECT 
             e.id AS enrollment_id,
+            s.id AS student_id,
             s.name AS student_name,
             u.email AS student_email,
             c.course_name,
@@ -101,18 +89,17 @@ function getAllEnrollments() {
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($rows as &$row) {
-        $today = new DateTime();
-        $end = new DateTime($row["end_date"]);
-        $row["days_left"] = $today->diff($end)->format("%r%a");
+        $row["days_left"] = (new DateTime())->diff(new DateTime($row["end_date"]))->format("%r%a");
     }
 
     response_json(200, "All enrollments", $rows);
 }
 
 
+
 /**
  * ============================================================
- *  DELETE ENROLLMENT + Record dropped list
+ *  DELETE ENROLLMENT + INSERT INTO DROPPED LIST
  * ============================================================
  */
 function deleteEnrollment($id) {
@@ -120,25 +107,26 @@ function deleteEnrollment($id) {
 
     $payload = auth();
 
-    // Find enrollment
+    // Fetch enrollment row
     $stmt = $pdo->prepare("SELECT * FROM enrollments WHERE id = ?");
     $stmt->execute([$id]);
     $enrollment = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$enrollment) response_json(404, "Enrollment not found");
 
-    if (!$enrollment) {
-        response_json(404, "Enrollment not found");
-    }
+    // Proper DELETE JSON reading
+    $raw = file_get_contents("php://input");
+    $body = json_decode($raw, true);
+    if (!$body) $body = $_REQUEST;
 
-    // Who dropped?
+    $reason = $body["reason"] ?? "No reason provided";
     $dropped_by = ($payload["role"] === "admin") ? "admin" : "student";
-    $reason = $_POST["reason"] ?? "No reason provided";
 
-    // Store in dropped_enrollments
+    // Insert record
     $insert = $pdo->prepare("
-        INSERT INTO dropped_enrollments (enrollment_id, student_id, course_id, dropped_by, reason, dropped_at)
+        INSERT INTO dropped_enrollments
+        (enrollment_id, student_id, course_id, dropped_by, reason, dropped_at)
         VALUES (?, ?, ?, ?, ?, NOW())
     ");
-
     $insert->execute([
         $enrollment["id"],
         $enrollment["student_id"],
@@ -147,7 +135,7 @@ function deleteEnrollment($id) {
         $reason
     ]);
 
-    // Delete enrollment
+    // Delete original enrollment
     $del = $pdo->prepare("DELETE FROM enrollments WHERE id = ?");
     $del->execute([$id]);
 
@@ -155,9 +143,10 @@ function deleteEnrollment($id) {
 }
 
 
+
 /**
  * ============================================================
- *  GET DROPPED ENROLLMENTS (Admin only)
+ *  GET DROPPED ENROLLMENTS
  * ============================================================
  */
 function getDroppedEnrollments() {
@@ -178,3 +167,4 @@ function getDroppedEnrollments() {
 
     response_json(200, "Dropped enrollments", $rows);
 }
+

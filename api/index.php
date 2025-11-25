@@ -1,13 +1,13 @@
 <?php
 
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-  http_response_code(204);
-  exit;
+    http_response_code(204);
+    exit;
 }
 
 require_once __DIR__ . '/config.php';
@@ -24,125 +24,90 @@ require_once __DIR__ . '/controllers/AdminController.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Dynamically detect project folder
+// Normalize URI
 $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
 $normalized = str_replace($scriptDir, '', $uri);
-if ($normalized === '' || $normalized === false) {
-    $normalized = '/';
-}
+if ($normalized === '' || $normalized === false) $normalized = '/';
 
-error_log("DEBUG ROUTE => method=$method, normalized=$normalized");
+$errorLog = "DEBUG => METHOD: $method | URI: $normalized";
+error_log($errorLog);
+
+
+// ----------------------- ROUTES ----------------------------
 
 // LOGIN
-if ($method === 'POST' && $normalized === '/login') {
-  loginController();
-  exit;
-}
+if ($method === 'POST' && $normalized === '/login') return loginController();
 
 // REGISTER
-if ($method === 'POST' && $normalized === '/register') {
-  registerController();
-  exit;
+if ($method === 'POST' && $normalized === '/register') return registerController();
+
+// ADMIN → List all students
+if ($method === 'GET' && $normalized === '/students') return listStudents();
+
+// STUDENT → Own profile
+if ($method === 'GET' && $normalized === '/me/student') return myStudentProfile();
+
+// STUDENT → My courses
+if ($method === 'GET' && $normalized === '/me/courses') {
+    $auth = auth();
+    return getMyCourses($auth['student_id']);
 }
 
-// ADMIN → all students
-if ($method === 'GET' && $normalized === '/students') {
-  listStudents();
-  exit;
+// Get all courses
+if ($method === 'GET' && $normalized === '/courses') return getAllCourses();
+
+
+// Get course by name
+if ($method === 'GET' && preg_match('#^/courses/name/(.+)$#', $normalized, $m)) {
+    return getCourseByName($m[1]);
 }
 
-// STUDENT → own profile
-if ($method === 'GET' && $normalized === '/me/student') {
-  myStudentProfile();
-  exit;
+// Get course by ID
+if ($method === 'GET' && preg_match('#^/courses/([0-9]+)$#', $normalized, $m)) {
+    return getCourse((int)$m[1]);
 }
 
-// GET all courses
-if ($method === 'GET' && $normalized === '/courses') {
-    $user = auth();
-    getAllCourses();
-    exit;
-}
-
-$decoded = rawurldecode($normalized);
-
-// GET course by name
-if ($method === 'GET' && preg_match('#^/courses/name/(.+)$#u', $decoded, $matches)) {
-    $payload = auth();
-    getCourseByName($matches[1]);
-    exit;
-}
-
-// GET course by ID
-if ($method === 'GET' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
-    $user = auth();
-    getCourse((int)$matches[1]);
-    exit;
-}
 
 // CREATE course
-if ($method === 'POST' && $normalized === '/courses') {
-    $user = auth();
-    createCourse();
-    exit;
-}
+if ($method === 'POST' && $normalized === '/courses') return createCourse();
 
 // UPDATE course
-if ($method === 'PUT' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
-    $user = auth();
-    updateCourse((int)$matches[1]);
-    exit;
+if ($method === 'PUT' && preg_match('#^/courses/([0-9]+)$#', $normalized, $m)) {
+    return updateCourse((int)$m[1]);
 }
 
 // DELETE course
-if ($method === 'DELETE' && preg_match('#^/courses/([0-9]+)$#', $decoded, $matches)) {
-    $user = auth();
-    deleteCourse((int)$matches[1]);
-    exit;
+if ($method === 'DELETE' && preg_match('#^/courses/([0-9]+)$#', $normalized, $m)) {
+    return deleteCourse((int)$m[1]);
 }
 
-// ENROLL a student
-if ($method === 'POST' && $normalized === '/enroll') {
-    enrollStudent();
-    exit;
-}
 
-// GET all courses of a student
-if ($method === 'GET' && preg_match('#^/student/([0-9]+)/courses$#', $normalized, $m)) {
-    getStudentCourses((int)$m[1]);
-    exit;
-}
+// ENROLL STUDENT
+if ($method === 'POST' && $normalized === '/enroll') return enrollStudent();
 
-// GET all students of a course
+
+// GET STUDENTS OF A COURSE
 if ($method === 'GET' && preg_match('#^/course/([0-9]+)/students$#', $normalized, $m)) {
-    getCourseStudents((int)$m[1]);
-    exit;
+    return getCourseStudents((int)$m[1]);
 }
 
 
-
-// DELETE enrollment with reason (Admin or Student)
+// DELETE ENROLLMENT
 if ($method === 'DELETE' && preg_match('#^/enroll/([0-9]+)$#', $normalized, $m)) {
-    deleteEnrollment((int)$m[1]);
-    exit;
+    return deleteEnrollment((int)$m[1]);
 }
 
-//  NEW: GET all enrollments (ADMIN ONLY)
-if ($method === 'GET' && $normalized === '/enrollments') {
-    getAllEnrollments();
-    exit;
-}
 
-// GET all dropped enrollments (ADMIN ONLY)
-if ($method === 'GET' && $normalized === '/dropped-enrollments') {
-    getDroppedEnrollments();
-    exit;
-}
+// ADMIN → All enrollments
+if ($method === 'GET' && $normalized === '/enrollments') return getAllEnrollments();
 
-// ADMIN dashboard stats
-if ($method === 'GET' && $normalized === '/admin/stats') {
-    adminStats();
-    exit;
-}
+// ADMIN → Dropped enrollments
+if ($method === 'GET' && $normalized === '/dropped-enrollments') return getDroppedEnrollments();
 
-response_json(404, 'Route not found: ' . $normalized);
+// ADMIN → Dashboard stats
+if ($method === 'GET' && $normalized === '/admin/stats') return adminStats();
+
+
+// 404 fallback
+response_json(404, "Route not found: $normalized");
+

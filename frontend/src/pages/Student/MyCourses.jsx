@@ -5,28 +5,25 @@ import "../Css/mycourse.css";
 import cloudImg from "../../assets/clouds.png";
 
 const MyCourses = () => {
-  const [courses, setCourses] = useState([]);
-  const [student, setStudent] = useState(null);
+  const [courses, setCourses] = useState([]); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadMyCourses = async () => {
       try {
-        const profileRes = await client.get("/me/student");
-        const studentData = profileRes.data.data;
-        setStudent(studentData);
+        const res = await client.get("/me/courses");
 
-        const courseRes = await client.get(`/student/${studentData.id}/courses`);
-        setCourses(courseRes.data.data);
-
+        // ensure safe array
+        setCourses(Array.isArray(res.data.data) ? res.data.data : []);
       } catch (err) {
         console.error("My courses fetch error:", err);
+        setCourses([]);
       } finally {
         setLoading(false);
       }
     };
 
-    loadData();
+    loadMyCourses();
   }, []);
 
   if (loading) return <h2>Loading...</h2>;
@@ -34,9 +31,11 @@ const MyCourses = () => {
   return (
     <div>
       <Header />
-
-      <div className="mycourseContainer" style={{ backgroundImage: `url(${cloudImg})` }}>
-        <h1 className="course-head">My Courses</h1>
+      <div
+        className="mycourseContainer"
+        style={{ backgroundImage: `url(${cloudImg})` }}
+      >
+        <h1 className="course-head">My Courses ({courses.length})</h1>
         <hr />
 
         {courses.length === 0 ? (

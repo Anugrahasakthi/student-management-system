@@ -1,15 +1,19 @@
+/* Page layout */
 .enroll-page-container {
   width: 90%;
   margin: auto;
   padding-top: 20px;
 }
 
+/* Page Title */
 .page-title {
   text-align: center;
   font-size: 30px;
   margin-bottom: 25px;
+  font-weight: bold;
 }
 
+/* Tabs */
 .tabs {
   text-align: center;
   margin-bottom: 20px;
@@ -23,6 +27,11 @@
   cursor: pointer;
   border-radius: 8px;
   font-weight: bold;
+  transition: 0.2s;
+}
+
+.tabs button:hover {
+  background: #ccc;
 }
 
 .tabs .active-tab {
@@ -31,6 +40,7 @@
   border: 2px solid #000;
 }
 
+/* Tables */
 .table-container {
   margin-top: 20px;
 }
@@ -38,19 +48,24 @@
 .enroll-table {
   width: 100%;
   border-collapse: collapse;
+  background: white;
 }
 
 .enroll-table th {
   background: #03254c;
   color: white;
   padding: 10px;
+  text-align: left;
+  font-size: 15px;
 }
 
 .enroll-table td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  font-size: 14px;
 }
 
+/* Unenroll button */
 .unenroll-btn {
   background: #e63946;
   color: white;
@@ -58,26 +73,61 @@
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .unenroll-btn:hover {
   background: #c91f2e;
 }
 
+/* Form Container */
 .enroll-form-container {
   width: 400px;
   margin: auto;
   background: #fce4ec;
   padding: 20px;
   border-radius: 10px;
+  border: 1px solid #ffb6c1;
 }
 
-.enroll-form-container input {
-  width: 100%;
+.enroll-form-container h2 {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.enroll-form-container label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+} 
+
+/* Text & Number Input */
+.enroll-form-container input{
+  width: 90%;
   margin-bottom: 15px;
   padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+  background: white;
+}
+.enroll-form-container select { 
+  width: 90%;
+  margin-left:20px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+  background: white;
 }
 
+/* Dropdown styling */
+.enroll-form-container select {
+  cursor: pointer;
+}
+
+/* Submit Button */
 .submit-btn {
   background: green;
   color: white;
@@ -85,4 +135,43 @@
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+}
+
+.submit-btn:hover {
+  background: #0b7a0b;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.pagination button {
+  padding: 6px 14px;
+  background: #03254c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #021a35;
+}
+
+.pagination button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+  font-weight: bold;
 }
