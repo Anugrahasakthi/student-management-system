@@ -1,7 +1,5 @@
-
-
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import client from "../api/client";
 import "../pages/Css/Login.css";
 
@@ -9,37 +7,53 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
+
+  // Validate email ONLY ON BLUR
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError("");
+      return;
+    }
+
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      setEmailError("Invalid email. Eg: example@domain.com");
+    } else {
+      setEmailError("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError("");
     setSuccess("");
 
-    try {
+    if (emailError) return; // Stop login if invalid email
 
-      
+    try {
       const res = await client.post("/login", { email, password });
 
       if (res.data.status === 200) {
         const { token, role: backendRole, user } = res.data.data;
 
-       
+        // Check role match
         if (backendRole !== role) {
           setError("Please choose your correct role.");
           return;
         }
 
-        
+        // Save login data
         localStorage.setItem("token", token);
         localStorage.setItem("role", backendRole);
         localStorage.setItem("user", JSON.stringify(user));
 
         setSuccess("Login successful! Redirecting...");
 
-        
+        // NAVIGATE USING YOUR OLD METHOD (WORKS PERFECTLY)
         setTimeout(() => {
           window.location.href =
             backendRole === "admin"
@@ -58,13 +72,15 @@ const Login = () => {
     <div className="login-container">
       <h1 className="heading">Login</h1>
 
-      {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">{success}</p>}
-
       <form className="form-container" onSubmit={handleSubmit}>
-        {/* Role Selection */}
+
+        {/* ERROR + SUCCESS MESSAGE INSIDE FORM */}
+        {error && <p className="form-error">{error}</p>}
+        {success && <p className="form-success">{success}</p>}
+
+        {/* ROLE */}
         <div className="label-input">
-          <label htmlFor="role">Role</label>
+          <label>Role</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -76,17 +92,27 @@ const Login = () => {
           </select>
         </div>
 
+        {/* EMAIL */}
         <div className="label-input">
           <label>Email</label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="input-with-hint">
+            <input
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={validateEmail}
+              required
+            />
+
+            {!emailError && email && (
+              <p className="email-hint">Eg: example@domain.com</p>
+            )}
+            {emailError && <p className="email-invalid">{emailError}</p>}
+          </div>
         </div>
 
+        {/* PASSWORD */}
         <div className="label-input">
           <label>Password</label>
           <input

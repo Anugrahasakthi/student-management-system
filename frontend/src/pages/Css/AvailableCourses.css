@@ -65,22 +65,29 @@
 }
 
 /* Buttons */
-.enroll-btn, .enrolled-btn {
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
 .enroll-btn {
-  background: #007bff;
+  background-color: #007bff;
+  border: none;
+  padding: 7px 18px;
   color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.enrolled-btn {
-  background: green;
+.enroll-btn:hover {
+  background-color: #0056b3;
+}
+
+.enrolled-tag {
+  background-color: #28a745;
+  padding: 7px 18px;
   color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 14px;
 }
 
 /* Pagination */

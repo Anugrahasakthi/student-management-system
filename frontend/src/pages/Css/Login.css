@@ -1,58 +1,122 @@
-.form-container {
+/* Center container */
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: pink;
-  padding: 40px;
-  border-radius: 10px;
-  width: 600px;
+  margin-top: 40px;
 }
 
+/* Pink card */
+.form-container {
+  background-color: pink;
+  padding: 40px 50px;
+  border-radius: 12px;
+  width: 500px;
+}
+
+/* Label + Input row */
 .label-input {
   display: flex;
-  flex-direction: row;
-  align-items: center;       
-  justify-content: flex-start;
-  gap: 10px;                 
-  width: 100%;
- 
+  align-items: center;
+  margin-bottom: 22px;
 }
 
-.label-input select {
-  width: 250px;
-  padding: 10px;
-  margin-left: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-
+/* Label */
 .label-input label {
-  width: 130px;              
+  width: 120px;
   font-weight: bold;
-  text-align: right;         
+  text-align: right;
+  margin-right: 15px;
 }
 
+/* Input wrapper */
+.input-with-hint {
+  display: flex;
+  flex-direction: column;
+}
+
+/* SAME SIZE for select + input */
+/* Input */
 .label-input input {
-  width: 250px;
+  width: 260px;
+  height: 42px;
   padding: 10px;
-  border-radius: 5px;
+  font-size: 16px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Select */
+.label-input select {
+  width: 260px;
+  height: 42px;
+  padding: 9px 10px;     /* Select needs slightly different padding */
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-left:20px;   /* Optional: Makes it cleaner */
 }
 
 
+/* Hint */
+.email-hint {
+  color: #777;
+  font-size: 14px;
+  margin-top: 5px;
+  font-style: italic;
+}
 
+/* Invalid email */
+.email-invalid {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
 
-.error-message {
+/* Login button */
+button {
+  display: block;
+  margin: 15px auto 5px;
+  padding: 10px 30px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Register link */
+.link-button {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: underline;
+  color: #333;
+}
+/* Remove unwanted top space above Login heading */
+.heading {
+  margin-top: 0 !important;
+  padding-top: 5px;
+}
+
+/* Error message inside form */
+.form-error {
   color: red;
   font-weight: bold;
-  margin-bottom: 10px;
   text-align: center;
+  margin-bottom: 15px;
 }
 
-.success-message {
+/* Success message inside form */
+.form-success {
   color: green;
   font-weight: bold;
-  margin-bottom: 10px;
   text-align: center;
+  margin-bottom: 15px;
 }

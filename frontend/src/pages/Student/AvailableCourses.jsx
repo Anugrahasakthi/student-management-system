@@ -6,6 +6,7 @@ import cloudImg from "../../assets/clouds.png";
 
 const AvailableCourses = () => {
   const [courses, setCourses] = useState([]);
+  const [enrolledCourseNames, setEnrolledCourseNames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
 
@@ -13,30 +14,46 @@ const AvailableCourses = () => {
   const rowsPerPage = 5;
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const res = await client.get("/courses");
-        setCourses(res.data.data);
-      } catch (err) {
-        console.error("Error fetching courses:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCourses();
+    fetchEnrolledCourses();
   }, []);
 
-  const handleEnroll = async (course_id) => {
+  // Fetch all courses
+  const fetchCourses = async () => {
+    try {
+      const res = await client.get("/courses");
+      const data = res.data.data || res.data;
+      setCourses(data);
+    } catch (err) {
+      console.error("Error fetching courses:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch enrolled courses (match by course_name)
+  const fetchEnrolledCourses = async () => {
+    try {
+      const res = await client.get("/me/courses");
+
+      const enrolled = res.data.data || [];
+
+      const names = enrolled.map((c) => c.course_name.trim());
+      setEnrolledCourseNames(names);
+      
+    } catch (err) {
+      console.error("Error fetching enrolled:", err);
+    }
+  };
+
+  const handleEnroll = async (course_id, course_name) => {
     try {
       await client.post("/enroll", { course_id });
       setMessage("Successfully enrolled!");
 
-      setCourses((prev) =>
-        prev.map((c) =>
-          c.id === course_id ? { ...c, enrolled: true } : c
-        )
-      );
+      // Update UI
+      setEnrolledCourseNames((prev) => [...prev, course_name.trim()]);
+      
     } catch (err) {
       if (err.response?.status === 409) {
         setMessage("Already enrolled in this course.");
@@ -69,7 +86,6 @@ const AvailableCourses = () => {
 
         {message && <p className="success-message">{message}</p>}
 
-        {/* TABLE */}
         <div className="courses-table-wrapper">
           <table className="courses-table">
             <thead>
@@ -81,26 +97,32 @@ const AvailableCourses = () => {
             </thead>
 
             <tbody>
-              {currentRows.map((course) => (
-                <tr key={course.id}>
-                  <td className="course-name">{course.course_name}</td>
-                  <td>{course.course_description}</td>
-                  <td>
-                    {course.enrolled ? (
-                      <button className="enrolled-btn" disabled>
-                        Enrolled
-                      </button>
-                    ) : (
-                      <button
-                        className="enroll-btn"
-                        onClick={() => handleEnroll(course.id)}
-                      >
-                        Enroll
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {currentRows.map((course) => {
+                const isEnrolled = enrolledCourseNames.includes(
+                  course.course_name.trim()
+                );
+
+                return (
+                  <tr key={course.id}>
+                    <td className="course-name">{course.course_name}</td>
+                    <td>{course.course_description}</td>
+                    <td>
+                      {isEnrolled ? (
+                        <span className="enrolled-tag">Enrolled</span>
+                      ) : (
+                        <button
+                          className="enroll-btn"
+                          onClick={() =>
+                            handleEnroll(course.id, course.course_name)
+                          }
+                        >
+                          Enroll
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
