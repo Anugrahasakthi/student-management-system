@@ -1,0 +1,86 @@
+/* Full centered page */
+.edit-profile-page {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+}
+
+/* Card container */
+.edit-profile-card {
+  width: 40%;                          /* smaller = cleaner */
+  background: rgba(255, 255, 255, 0.95);
+  padding: 35px 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  backdrop-filter: blur(8px);
+}
+
+/* Title */
+.edit-profile-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Form layout */
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;      /* clean spacing */
+}
+
+/* Label + input side by side */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Label narrow, close to input */
+.form-row label {
+  width: 120px;     /* shorter = no huge gap */
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Inputs same size */
+.form-row input,
+.form-row textarea {
+  flex: 1;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+}
+
+/* Textarea same style and small height */
+.form-row textarea {
+  height: 40px;       /* SAME as input height */
+  resize: none;
+}
+
+/* Save Button */
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #28a745;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #1e7e34;
+}

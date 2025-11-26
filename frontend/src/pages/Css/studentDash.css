@@ -1,69 +1,114 @@
-
-.dashbord-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;   
-  /* align-items: center; */
-  /* text-align: center; */
-  padding: 40px 20px;
+.student-dashboard-container {
+  /* width: 85%; */
+  /* margin: auto;
+  padding: 30px 0; */
   min-height: 100vh;
-  /* background-color: blanchedalmond; */
-  width: 100%;
-  min-height: 100vh;        
-  background-size: cover;   
+  padding: 40px;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed;
 }
 
-
-.dashbord-container h1 {
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.dashbord-container h2 {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  font-size: 26px;
-  font-weight: 600;
-}
-
-
-.courses-list {
+/* PROFILE CARD */
+.profile-card {
   display: flex;
-  flex-direction: column;    
-  gap: 20px;                 
-  width: 100%;
-  max-width: 900px;          
-  margin-top: 20px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  gap: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-
-.course-card {
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items:flex-start;
-  background:beige;
-  width:900px;
-  padding: 20px;
-  border-radius: 10px;
-  margin-left:50px;
-  text-align: center;
+.profile-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid #03254c;
+  object-fit: cover;
 }
 
-.course-card h3 {
-  font-size: 22px;
-  font-weight: bold;
+.profile-details h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.email {
+  color: #555;
+  font-size: 15px;
   margin-bottom: 10px;
 }
 
+.profile-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
 
-.course-card p {
+.btn-primary {
+  background: #03254c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-secondary {
+  background: #e63946;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+/* PROGRESS CARDS */
+.progress-container {
+  margin-top: 30px;
+  display: flex;
+  gap: 25px;
+}
+
+.progress-card {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.progress-card h3 {
+  font-size: 26px;
+  color: #03254c;
+}
+
+.progress-card p {
+  margin-top: 8px;
+  color: #333;
   font-size: 16px;
-  line-height: 1.5;
-  color:blue;
+}
+.summary-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.summary-card {
+  width: 30%;
+  padding: 25px;
+  background: #f7f9fc;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.summary-card h2 {
+  font-size: 36px;
+  color: #03254c;
+}
+
+.summary-card p {
+  margin-top: 10px;
+  font-size: 18px;
 }

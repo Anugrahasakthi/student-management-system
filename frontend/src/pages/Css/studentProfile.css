@@ -1,13 +1,132 @@
-.prof-container{
+/* FULL PAGE BACKGROUND */
+.profile-view-page {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+
+/* HEADER FIX */
+.profile-header {
+  width: 100%;
+  height: 65px;
+  background: #03254c;
+  padding: 0 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: white;
+  box-sizing: border-box;
+}
+
+/* LEFT SIDE */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.initial-circle {
+  width: 48px;
+  height: 48px;
+  background: #f8b6d0;
+  color: #03254c;
+  border-radius: 50%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  background-color: blanchedalmond;
-  height:100vh;
-
+  font-size: 22px;
+  font-weight: bold;
 }
-.image{
-  width:30%;
+
+.header-name {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* RIGHT SIDE */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.header-right a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: #e63946;
+  padding: 8px 16px;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #c62828;
+}
+
+
+/* PROFILE CARD */
+.profile-view-card {
+  margin-top: 40px;
+  width: 50%;
+  background: rgba(255, 255, 255, 0.90);
+  padding: 35px 40px;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.profile-row {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.profile-row strong {
+  font-weight: bold;
+}
+
+
+/* BUTTON */
+.edit-btn {
+  align-self: center;
+  margin-top: 20px;
+  background: #ffb703;
+  padding: 10px 20px;
+  border: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #d89b00;
 }

@@ -1,27 +1,78 @@
-.mycourseContainer{
-    display:flex;
-    flex-direction: column;
-    width: 100%;
-  min-height: 100vh;        
-  background-size: cover;   
+.mycourseContainer {
+  min-height: 100vh;
+  padding: 40px;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-
-}
-.course-head{
-    font-size: 50px;
-    margin:50px;
-    text-align: center;
-    
+  background-attachment: fixed;
 }
 
-.courses-card {
-  border: 1px solid black;
-  padding: 15px;
-  margin: 20px;
+/* Heading */
+.course-head {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Card same as Courses page */
+.mycourse-card {
+  width: 80%;
+  margin: 20px auto;
+  padding: 25px;
+  background: #ffffffd9;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ddd;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease;
+}
+
+.mycourse-card:hover {
+  transform: translateY(-5px);
+}
+
+.mycourse-card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+}
+
+.mycourse-card p {
+  margin-top: 5px;
+  color: #555;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+/* Pagination */
+.pagination {
+  margin: 30px auto;
+  text-align: center;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  padding: 8px 15px;
+  font-size: 15px;
+  border: none;
   border-radius: 8px;
+  background: #005bb5;
+  color: white;
   cursor: pointer;
-  background-color:darksalmon;
+}
 
+.pagination button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 18px;
+  font-weight: bold;
 }

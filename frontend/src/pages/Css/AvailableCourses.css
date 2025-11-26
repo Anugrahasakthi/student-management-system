@@ -1,64 +1,112 @@
-.AvailableCourse-cont{
-    display:flex;
-    flex-direction: column;
-    width: 100%;
-  min-height: 100vh;        
-  background-size: cover;   
+/* Page Container */
+.AvailableCourse-cont {
+  min-height: 100vh;
+  padding: 40px;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-
+  background-attachment: fixed;
 }
 
-.success-message {
-  color: green;
-  font-weight: bold;
-}
-
-.availCourse-card {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-  background-color: bisque;
-  padding: 15px;
-  margin: 20px;
-  margin-bottom:0px;
-  border-style:solid;
-  border-radius: 8px;
-  border-color: black;
-}
-
-.course-content{
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    /* background-color: greenyellow; */
-    width:900px;
-}
-
-.course-but{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.enroll-btn {
-  padding: 8px 15px;
-  background: #007bff;
+/* Heading */
+.title {
+  text-align: center;
+  font-size: 40px;
   color: white;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+}
+
+/* Success Message */
+.success-message {
+  width: fit-content;
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  background: rgba(0, 128, 0, 0.9);
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Table */
+.courses-table-wrapper {
+  width: 90%;
+  margin: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffffd9;
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.courses-table th {
+  background: #003399;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.courses-table td {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+}
+
+.course-name {
+  font-weight: bold;
+  color: black;
+}
+
+/* Buttons */
+.enroll-btn, .enrolled-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.enrolled-btn {
-  padding: 8px 15px;
-  background: green;
+.enroll-btn {
+  background: #007bff;
   color: white;
-  border: none;
-  border-radius: 5px;
 }
 
+.enrolled-btn {
+  background: green;
+  color: white;
+}
 
+/* Pagination */
+.pagination {
+  margin-top: 25px;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pagination .active {
+  background: #003399;
+  color: white;
+}
+
+.pagination button:disabled {
+  background: gray;
+  color: white;
+  cursor: not-allowed;
+}

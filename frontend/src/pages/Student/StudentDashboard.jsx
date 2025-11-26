@@ -1,80 +1,91 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
-import Header from "../Header";
+import StudentHeader from "./StudentHeader";
 import "../Css/studentDash.css";
 import cloudImg from "../../assets/clouds.png";
-import { useNavigate } from "react-router-dom";
 
 const StudentDashboard = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      navigate("/", { replace: true });
-      return;
-    }
-  }, [navigate]);
-
   const [student, setStudent] = useState(null);
-  const [myCourses, setMyCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [summary, setSummary] = useState(null);
+
+  // Load student profile
+  const loadProfile = async () => {
+    const res = await client.get("/me/student");
+    setStudent(res.data.data);
+  };
+
+  // Load summary counts
+  const loadSummary = async () => {
+    const res = await client.get("/student/dashboard-summary");
+    setSummary(res.data.data);
+  };
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
+    loadProfile();
+    loadSummary();
+  }, []);
 
-        // Get student profile
-        const profileRes = await client.get("/me/student");
-        const studentData = profileRes.data.data;
-        setStudent(studentData);
-
-        // Get enrolled courses (NEW API)
-        const coursesRes = await client.get("/me/courses");
-        setMyCourses(coursesRes.data.data);
-
-      } catch (err) {
-        console.error("Dashboard load error:", err);
-        navigate("/", { replace: true });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (localStorage.getItem("token")) {
-      loadData();
-    }
-  }, [navigate]);
-
-  if (loading) return <h2>Loading...</h2>;
+  if (!student || !summary) return <h2>Loading...</h2>;
 
   return (
     <div>
-      <Header />
+      <StudentHeader />
 
-      <div
-        className="dashbord-container"
-        style={{ backgroundImage: `url(${cloudImg})` }}
-      >
-        <h1>Welcome, {student?.name}</h1>
-        <hr />
+      <div className="student-dashboard-container" style={{ backgroundImage: `url(${cloudImg})` }}>
+        <div className="profile-card">
 
-        <h2>
-          Your Enrolled Courses:{" "}
-          {myCourses?.length > 0 ? myCourses.length : "No courses yet"}
-        </h2>
+          <img
+            src={
+              student.profile_pic ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="profile"
+            className="profile-photo"
+          />
 
-        {myCourses.length === 0 ? (
-          <p>You have not enrolled in any courses yet.</p>
-        ) : (
-          myCourses.map((course) => (
-            <div key={course.id} className="course-card">
-              <h3>{course.course_name}</h3>
-              <p>{course.course_description}</p>
+          <div className="profile-details">
+            <h2>{student.name}</h2>
+            <p className="email">{student.email}</p>
+            <p>Phone: {student.phone}</p>
+            <p>DOB: {student.dob}</p>
+
+            <div className="profile-buttons">
+              <button
+                className="btn-primary"
+                onClick={() => (window.location.href = "/student/my-courses")}
+              >
+                View My Courses
+              </button>
+
+              <button
+                className="btn-secondary"
+                onClick={() => (window.location.href = "/student/profile/edit")}
+              >
+                Edit Profile
+              </button>
             </div>
-          ))
-        )}
+          </div>
+
+        </div>
+
+        {/* Summary Cards */}
+        <div className="summary-cards">
+          <div className="summary-card">
+            <h2>{summary.enrolled_total}</h2>
+            <p>Total Enrolled Courses</p>
+          </div>
+
+          <div className="summary-card">
+            <h2>{summary.in_progress}</h2>
+            <p>In-Progress Courses</p>
+          </div>
+
+          <div className="summary-card">
+            <h2>{summary.dropped}</h2>
+            <p>Dropped Courses</p>
+          </div>
+        </div>
+
       </div>
     </div>
   );

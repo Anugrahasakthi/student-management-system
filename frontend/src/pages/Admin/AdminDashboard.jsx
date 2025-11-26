@@ -86,7 +86,7 @@ const AdminDashboard = () => {
 
         {/* Announcements Section */}
         <div className="announcement-section">
-          <h2 className="announce-title">📢 Announcements</h2>
+          <h2 className="announce-title">Announcements</h2>
 
           <div className="announce-box">
             {recentCourses.length === 0 ? (

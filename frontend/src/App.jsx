@@ -5,7 +5,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
-import Profile from "./pages/Student/Profile";
+import StudentProfile from "./pages/Student/StudentProfile.jsx";
+import EditStudentProfile from "./pages/Student/EditStudentProfile.jsx";
+
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import AvailableCourses from "./pages/Student/AvailableCourses";
 import MyCourses from "./pages/Student/MyCourses";
@@ -85,10 +87,17 @@ function App() {
           element={isStudent ? <MyCourses /> : <Navigate to="/login" />}
         />
 
+       
+
         <Route
           path="/student/profile"
-          element={isStudent ? <Profile /> : <Navigate to="/login" />}
+          element={isStudent ? <StudentProfile /> : <Navigate to="/login" />}
         />
+
+        <Route
+          path="/student/profile/edit"
+          element={isStudent ? <EditStudentProfile /> : <Navigate to="/login" />}
+        /> 
 
         
         <Route path="*" element={<h1>404 Not Found</h1>} />

@@ -1,0 +1,80 @@
+/* HEADER CONTAINER */
+.student-header {
+  background: #03254c;
+  padding: 12px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* LEFT SIDE LOGO */
+.student-header .logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* NAV LINKS */
+.student-header nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.student-header nav a {
+  text-decoration: none;
+  color: #ffd6e0; /* light pink */
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+/* HOVER EFFECT */
+.student-header nav a:hover {
+  background: #fc8da7;
+  color: #03254c;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  background: #c91f2e;
+}
+
+/* RESPONSIVE (Mobile View) */
+@media (max-width: 700px) {
+  .student-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .student-header nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .student-header nav a,
+  .logout-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
