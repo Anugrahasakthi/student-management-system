@@ -1,0 +1,55 @@
+/* MAIN PINK BOX */
+.form-container {
+  width: 60%;
+  margin: 50px auto;
+  background-color: #ffccd5;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+/* HEADING */
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* FORM WRAPPER – IMPORTANT TO STOP LEAKAGE */
+.create-course-page form {
+  display: flex;
+  flex-direction: column;
+  /* gap: 22px; */
+}
+
+/* LABEL */
+.create-course-page label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* INPUT STYLING – ONLY FOR THIS PAGE */
+.create-course-page input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* BUTTON INSIDE PAGE ONLY */
+.course-submit-btn {
+  align-self: flex-end;
+  padding: 12px 22px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.course-submit-btn:hover {
+  background-color: #218838;
+}

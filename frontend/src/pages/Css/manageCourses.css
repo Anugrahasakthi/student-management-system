@@ -1,88 +1,32 @@
 .manage-container {
-width: 90%;
- margin: 40px auto;
- padding: 20px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 20px;
 }
 
+/* TITLE CENTERED */
 .manage-title {
- font-size: 36px;
- font-weight: bold;
- color: #222;
+  font-size: 36px;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+  text-align: center;
 }
 
-.manage-subtitle {
- color: #666;
- margin-bottom: 20px;
-}
-
-.courses-table {
- width: 100%;
- border-collapse: collapse;
- margin-top: 20px;
-}
-
-.courses-table th {
- background: #004080;
- color: white;
- padding: 12px;
- text-align: left;
- font-size: 16px;
-}
-
-.courses-table td {
- padding: 12px;
- border-bottom: 1px solid #ccc;
-}
-
-.courses-table tr:hover {
- background: #f9f9f9;
-}
-
-.edit-btn,
-.delete-btn,
-.save-btn,
-.cancel-btn {
- padding: 6px 12px;
- margin-right: 6px;
- border: none;
- border-radius: 5px;
- cursor: pointer;
- font-weight: bold;
-}
-
-.edit-btn {
- background: #ffc107;
-}
-
-.delete-btn {
- background: #dc3545;
- color: white;
-}
-
-.save-btn {
-background: #28a745;
-color: white;
-}
-
-.cancel-btn {
- background: #6c757d;
- color: white;
-}
-
-input {
- padding: 6px;
- width: 90%;
-}
-
-.top-actions {
+/* TITLE WITH BUTTON ON RIGHT */
+.title-container {
+  position: relative;
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
   margin-bottom: 20px;
 }
 
+/* BUTTON POSITIONED TOP RIGHT */
 .create-btn {
-  padding: 10px 20px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 18px;
   background-color: #28a745;
   color: white;
   border: none;
@@ -95,4 +39,75 @@ input {
   background-color: #218838;
 }
 
+/* TABLE */
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
 
+.courses-table th {
+  background: #004080;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.courses-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.courses-table tr:hover {
+  background: #f9f9f9;
+}
+
+/* INPUT FIELD */
+input {
+  padding: 6px;
+  width: 95%;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+/* ACTION ICONS CONTAINER */
+.iconButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ICON BUTTONS */
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* Icon colors */
+.edit-icon {
+  color: #ffc107;
+}
+
+.delete-icon {
+  color: #dc3545;
+}
+
+.save-btn i {
+  color: #28a745;
+}
+
+.cancel-btn i {
+  color: #6c757d;
+}
+
+.icon-btn:hover {
+  opacity: 0.7;
+}
+
+/* CENTER ACTIONS COLUMN */
+.actions-col {
+  text-align: center;
+  width: 120px;
+}

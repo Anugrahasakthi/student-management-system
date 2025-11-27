@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Meghan from "../assets/Meghan logo.png";
 import cloudImg from "../assets/clouds.png";
 
-import "./Home.css";
+import "../pages/Css/Home.css";
 
 const Home = () => {
   return (

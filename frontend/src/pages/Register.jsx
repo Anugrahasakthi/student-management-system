@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./pages.css";
 import "../pages/Css/Register.css";
 import client from "../api/client";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,17 +26,10 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await client.post("/register", formData);
+      await client.post("/register", formData);
+
       setSuccess("Registration successful!");
-      setError(""); 
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        dob: "",
-        password: "",
-        role: "student",
-      });
+      setError("");
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
@@ -44,23 +37,19 @@ const Register = () => {
     }
   };
 
-  
   useEffect(() => {
-    if (error) {
-      alert(error);
-    }
-    if (success) {
-      alert(success);
-    }
+    if (error) alert(error);
+    if (success) alert(success);
   }, [error, success]);
 
   return (
     <div className="register-container">
-      <h1 className="heading">Register</h1>
+      <form className="form-container" onSubmit={handleSubmit}>
+        
+        <h1 className="regis-heading">Register</h1>
 
-       <form className="form-container" onSubmit={handleSubmit}>
         <div className="label-input">
-          <label htmlFor="name">Full Name</label>
+          <label>Full Name</label>
           <input
             type="text"
             name="name"
@@ -72,7 +61,7 @@ const Register = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="email">Email</label>
+          <label>Email</label>
           <input
             type="email"
             name="email"
@@ -84,7 +73,7 @@ const Register = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="phone">Phone</label>
+          <label>Phone</label>
           <input
             type="text"
             name="phone"
@@ -95,7 +84,7 @@ const Register = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="dob">Date of Birth</label>
+          <label>Date of Birth</label>
           <input
             type="date"
             name="dob"
@@ -105,7 +94,7 @@ const Register = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="password">Password</label>
+          <label>Password</label>
           <input
             type="password"
             name="password"
@@ -117,22 +106,21 @@ const Register = () => {
         </div>
 
         <div className="label-input">
-          <label htmlFor="role" style={{ marginRight: "10px" }}>Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
+          <label>Role</label>
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="student">Student</option>
             <option value="admin">Admin</option>
           </select>
         </div>
 
-        <button type="submit" className="link-button">Register</button>
-        <Link to="/login" className="link-button">
-        Already User? Login Here
-      </Link>
+        <div className="button-group">
+          <button type="submit" className="link-button">Register</button>
+
+          <Link to="/login" className="link-button-link">
+            Already User? Login Here
+          </Link>
+        </div>
+
       </form>
     </div>
   );

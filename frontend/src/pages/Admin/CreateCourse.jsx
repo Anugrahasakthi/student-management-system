@@ -1,72 +1,7 @@
-// import { useState } from "react";
-// import client from "../../api/client";
-// import AdminHeader from "./AdminHeader";
-
-// const CreateCourse = () => {
-//   const [form, setForm] = useState({
-//     course_name: "",
-//     course_description: "",
-//     duration: ""
-//   });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       await client.post("/courses", form);
-
-//       alert("Course created successfully!");
-//       window.location.href = "/admin/courses";
-//     } catch (error) {
-//       console.error("Error creating course:", error);
-//       alert("Failed to create course");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <AdminHeader />
-
-//       <div className="form-container">
-//         <h1>Create New Course</h1>
-
-//         <form onSubmit={handleSubmit}>
-//           <label>Course Name</label>
-//           <input
-//             type="text"
-//             value={form.course_name}
-//             onChange={(e) => setForm({ ...form, course_name: e.target.value })}
-//             required
-//           />
-
-//           <label>Description</label>
-//           <input
-//             type="text"
-//             value={form.course_description}
-//             onChange={(e) => setForm({ ...form, course_description: e.target.value })}
-//             required
-//           />
-
-//           <label>Duration</label>
-//           <input
-//             type="text"
-//             value={form.duration}
-//             onChange={(e) => setForm({ ...form, duration: e.target.value })}
-//             required
-//           />
-
-//           <button type="submit" className="create-btn">Create Course</button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CreateCourse;
-
 import { useState } from "react";
 import client from "../../api/client";
 import AdminHeader from "./AdminHeader";
+import "../Css/createCourse.css";
 
 const CreateCourse = () => {
   const [form, setForm] = useState({
@@ -102,8 +37,8 @@ const CreateCourse = () => {
 
       <div className="form-container">
         <h1>Create New Course</h1>
-
-        <form onSubmit={handleSubmit}>
+        <div className="create-course-page">
+          <form onSubmit={handleSubmit}>
           <label>Course Name</label>
           <input
             type="text"
@@ -128,8 +63,16 @@ const CreateCourse = () => {
             required
           />
 
-          <button type="submit" className="create-btn">Create Course</button>
+          <div className="button-row">
+    <button type="submit" className="course-submit-btn">
+      Create Course
+    </button>
+  </div>
         </form>
+
+        </div>
+
+        
       </div>
     </div>
   );

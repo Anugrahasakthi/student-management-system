@@ -1,0 +1,37 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* NAV BAR */
+
+
+.nav-links {
+  background-color: darkblue;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  gap: 20px;
+  height: 60px;
+  padding-right: 25px;
+}
+
+/* NAV ITEMS */
+.header-list a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  background-color: rgb(244, 163, 219);
+  padding: 8px 14px;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.header-list a:hover {
+  background-color: green;
+  color: white;
+}

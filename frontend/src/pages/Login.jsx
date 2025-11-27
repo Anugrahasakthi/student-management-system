@@ -11,8 +11,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Validate email ONLY ON BLUR
-  const validateEmail = () => {
+  const handleEmailFocus = () => {
+    if (!email) {
+      setEmailError("Eg: example@domain.com");
+    }
+  };
+
+  const handleEmailBlur = () => {
     if (!email) {
       setEmailError("");
       return;
@@ -20,7 +25,7 @@ const Login = () => {
 
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
-      setEmailError("Invalid email. Eg: example@domain.com");
+      setEmailError("Invalid email format. Eg: example@domain.com");
     } else {
       setEmailError("");
     }
@@ -28,11 +33,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
     setSuccess("");
 
-    if (emailError) return; // Stop login if invalid email
+    if (emailError && emailError.startsWith("Invalid")) return;
 
     try {
       const res = await client.post("/login", { email, password });
@@ -40,20 +44,16 @@ const Login = () => {
       if (res.data.status === 200) {
         const { token, role: backendRole, user } = res.data.data;
 
-        // Check role match
         if (backendRole !== role) {
-          setError("Please choose your correct role.");
+          setError("Selected role does not match your account.");
           return;
         }
 
-        // Save login data
         localStorage.setItem("token", token);
         localStorage.setItem("role", backendRole);
         localStorage.setItem("user", JSON.stringify(user));
 
         setSuccess("Login successful! Redirecting...");
-
-        // NAVIGATE USING YOUR OLD METHOD (WORKS PERFECTLY)
         setTimeout(() => {
           window.location.href =
             backendRole === "admin"
@@ -64,56 +64,53 @@ const Login = () => {
         setError(res.data.message || "Invalid credentials");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Server not reachable.");
+      setError(err.response?.data?.message || "Server not reachable");
     }
   };
 
   return (
     <div className="login-container">
-      <h1 className="heading">Login</h1>
 
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h1 className="login-heading">Login</h1>
 
-        {/* ERROR + SUCCESS MESSAGE INSIDE FORM */}
-        {error && <p className="form-error">{error}</p>}
-        {success && <p className="form-success">{success}</p>}
+        {error && <p className="msg-error">{error}</p>}
+        {success && <p className="msg-success">{success}</p>}
 
-        {/* ROLE */}
-        <div className="label-input">
+        <div className="row">
           <label>Role</label>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            required
-          >
+          <select value={role} onChange={(e) => setRole(e.target.value)} required>
             <option value="">Select Role</option>
             <option value="admin">Admin</option>
             <option value="student">Student</option>
           </select>
         </div>
 
-        {/* EMAIL */}
-        <div className="label-input">
+        <div className="row">
           <label>Email</label>
-          <div className="input-with-hint">
-            <input
+          <div className="input-box">
+            <input 
+              style={{marginLeft:25, width:360}}
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={validateEmail}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (emailError.startsWith("Eg")) setEmailError(""); // clear hint while typing
+              }}
+              onFocus={handleEmailFocus}
+              onBlur={handleEmailBlur}
               required
             />
-
-            {!emailError && email && (
-              <p className="email-hint">Eg: example@domain.com</p>
+            {emailError && (
+              <p className={emailError.startsWith("Invalid") ? "error-text" : "hint-text"}>
+                {emailError}
+              </p>
             )}
-            {emailError && <p className="email-invalid">{emailError}</p>}
           </div>
         </div>
 
-        {/* PASSWORD */}
-        <div className="label-input">
+        <div className="row">
           <label>Password</label>
           <input
             type="password"
@@ -124,10 +121,10 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button className="login-btn" type="submit">Login</button>
 
-        <Link to="/register" className="link-button">
-          New User? Register here
+        <Link to="/register" className="register-link">
+          New User? Register Here
         </Link>
       </form>
     </div>
@@ -135,3 +132,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

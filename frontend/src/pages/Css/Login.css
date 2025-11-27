@@ -1,122 +1,112 @@
-/* Center container */
 .login-container {
+  background-color: skyblue;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 40px;
 }
 
-/* Pink card */
-.form-container {
+.login-card {
   background-color: pink;
-  padding: 40px 50px;
+  padding: 30px 35px;
+  width: 40%;
   border-radius: 12px;
-  width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Label + Input row */
-.label-input {
+.login-heading {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form row (same as register) */
+.row {
   display: flex;
-  align-items: center;
-  margin-bottom: 22px;
+  align-items: flex-start;
+  margin: 12px 0;
 }
 
-/* Label */
-.label-input label {
+/* Labels (same width as Register) */
+.row label {
   width: 120px;
   font-weight: bold;
-  text-align: right;
-  margin-right: 15px;
+  margin-top: 8px;
 }
 
-/* Input wrapper */
-.input-with-hint {
+.input-column {
   display: flex;
   flex-direction: column;
+  width: 280px;  /* EXACT SAME width as the input */
 }
 
-/* SAME SIZE for select + input */
-/* Input */
-.label-input input {
-  width: 260px;
-  height: 42px;
-  padding: 10px;
-  font-size: 16px;
+
+/* Input container */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Inputs + Select (same width as Register) */
+.row input,
+.row select {
+  flex: 1;
+  padding: 8px 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+  border: 1px solid #aaa;
+  font-size: 15px;
 }
 
-/* Select */
-.label-input select {
-  width: 260px;
-  height: 42px;
-  padding: 9px 10px;     /* Select needs slightly different padding */
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  margin-left:20px;   /* Optional: Makes it cleaner */
-}
-
-
-/* Hint */
-.email-hint {
-  color: #777;
-  font-size: 14px;
-  margin-top: 5px;
+/* Hint text */
+.hint-text {
+  color: #555;
   font-style: italic;
-}
-
-/* Invalid email */
-.email-invalid {
-  color: red;
-  font-size: 14px;
   margin-top: 5px;
+  font-size: 13px;
 }
 
-/* Login button */
-button {
+/* Error text */
+.error-text {
+  color: red;
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Button */
+.login-btn {
   display: block;
-  margin: 15px auto 5px;
-  padding: 10px 30px;
-  border: none;
+  width: 160px;
+  margin: 20px auto 5px;
+  padding: 10px;
   background: #007bff;
   color: white;
   border-radius: 6px;
+  border: none;
   cursor: pointer;
 }
-
-button:hover {
+.login-btn:hover {
   background: #0056b3;
 }
 
 /* Register link */
-.link-button {
+.register-link {
+  text-align: center;
   display: block;
-  text-align: center;
-  margin-top: 15px;
+  margin-top: 10px;
+  color: blue;
   text-decoration: underline;
-  color: #333;
-}
-/* Remove unwanted top space above Login heading */
-.heading {
-  margin-top: 0 !important;
-  padding-top: 5px;
 }
 
-/* Error message inside form */
-.form-error {
+/* Error & success messages */
+.msg-error {
   color: red;
-  font-weight: bold;
   text-align: center;
-  margin-bottom: 15px;
+  font-weight: bold;
 }
-
-/* Success message inside form */
-.form-success {
+.msg-success {
   color: green;
-  font-weight: bold;
   text-align: center;
-  margin-bottom: 15px;
+  font-weight: bold;
 }

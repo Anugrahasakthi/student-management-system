@@ -15,6 +15,9 @@
 
 /* Tabs */
 .tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -99,32 +102,26 @@
   font-weight: bold;
   display: block;
   margin-bottom: 6px;
-} 
+}
 
-/* Text & Number Input */
-.enroll-form-container input{
+.enroll-form-container input {
   width: 90%;
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #aaa;
   font-size: 14px;
-  background: white;
-}
-.enroll-form-container select { 
-  width: 90%;
-  margin-left:20px;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-  font-size: 14px;
-  background: white;
 }
 
-/* Dropdown styling */
 .enroll-form-container select {
-  cursor: pointer;
+  width: 90%;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+  background: white;
 }
 
 /* Submit Button */
@@ -174,4 +171,88 @@
 .pagination span {
   font-size: 16px;
   font-weight: bold;
+}
+
+/* ========== MODAL STYLING ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  background: white;
+  padding: 25px;
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-box textarea {
+  width: 100%;
+  height: 90px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 14px;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ok-btn {
+  background: #556b2f;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  background: #bbb;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ========== TOAST ========== */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4CAF50;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  animation: fadeOut 4s forwards;
+  z-index: 3000;
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

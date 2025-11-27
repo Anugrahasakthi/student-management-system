@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
-import Header from "../../pages/Header";
+import Header from "../../pages/header";
 import "../Css/mycourse.css";
 import cloudImg from "../../assets/clouds.png";
 
