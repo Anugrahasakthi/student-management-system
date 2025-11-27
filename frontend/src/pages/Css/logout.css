@@ -37,7 +37,7 @@
   transition: 0.3s;
 }
 
-/* BUTTON HOVER */
+
 .logout-but:hover {
   background-color: green;
   color: white;

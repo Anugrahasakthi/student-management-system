@@ -20,7 +20,6 @@
   margin-bottom: 20px;
 }
 
-/* BUTTON POSITIONED TOP RIGHT */
 .create-btn {
   position: absolute;
   right: 0;
@@ -70,14 +69,13 @@ input {
   border-radius: 4px;
 }
 
-/* ACTION ICONS CONTAINER */
+/* ACTION ICONS */
 .iconButtons {
   display: flex;
   justify-content: center;
   gap: 12px;
 }
 
-/* ICON BUTTONS */
 .icon-btn {
   background: none;
   border: none;
@@ -85,7 +83,6 @@ input {
   font-size: 22px;
 }
 
-/* Icon colors */
 .edit-icon {
   color: #ffc107;
 }
@@ -102,12 +99,66 @@ input {
   color: #6c757d;
 }
 
-.icon-btn:hover {
-  opacity: 0.7;
+/* PAGINATION */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* CENTER ACTIONS COLUMN */
-.actions-col {
-  text-align: center;
-  width: 120px;
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid #004080;
+  background: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.pagination button:hover {
+  background: #004080;
+  color: white;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.active-page {
+  background: #004080 !important;
+  color: white !important;
+}
+
+/* SUCCESS / ERROR POPUP */
+.success-popup {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white; 
+  z-index: 9999;
+  animation: fadeInOut 2.4s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.success-popup.success {
+  background-color: #28a745;
+}
+
+.success-popup.error {
+  background-color: #dc3545;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -20%); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10%); }
 }

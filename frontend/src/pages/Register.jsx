@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./pages.css";
 import "../pages/Css/Register.css";
 import client from "../api/client";
 import { useNavigate, Link } from "react-router-dom";

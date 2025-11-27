@@ -89,26 +89,29 @@ const Login = () => {
         <div className="row">
           <label>Email</label>
           <div className="input-box">
-            <input 
-              style={{marginLeft:25, width:360}}
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (emailError.startsWith("Eg")) setEmailError(""); // clear hint while typing
-              }}
-              onFocus={handleEmailFocus}
-              onBlur={handleEmailBlur}
-              required
-            />
-            {emailError && (
-              <p className={emailError.startsWith("Invalid") ? "error-text" : "hint-text"}>
-                {emailError}
-              </p>
-            )}
-          </div>
-        </div>
+          <input 
+          style={{width:320}}
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => {
+          setEmail(e.target.value);
+        if (emailError.startsWith("Eg")) setEmailError("");
+      }}
+      onFocus={handleEmailFocus}
+      onBlur={handleEmailBlur}
+      required
+    />
+
+    {emailError && (
+      <p className={emailError.startsWith("Invalid") ? "error-text" : "hint-text"}>
+        {emailError}
+      </p>
+    )}
+  </div>
+</div>
+
+
 
         <div className="row">
           <label>Password</label>
