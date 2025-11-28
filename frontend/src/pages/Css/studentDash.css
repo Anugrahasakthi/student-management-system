@@ -1,7 +1,4 @@
 .student-dashboard-container {
-  /* width: 85%; */
-  /* margin: auto;
-  padding: 30px 0; */
   min-height: 100vh;
   padding: 40px;
   background-size: cover;
@@ -62,32 +59,7 @@
   border: none;
 }
 
-/* PROGRESS CARDS */
-.progress-container {
-  margin-top: 30px;
-  display: flex;
-  gap: 25px;
-}
-
-.progress-card {
-  flex: 1;
-  background: #f8f9fa;
-  padding: 25px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-
-.progress-card h3 {
-  font-size: 26px;
-  color: #03254c;
-}
-
-.progress-card p {
-  margin-top: 8px;
-  color: #333;
-  font-size: 16px;
-}
+/* SUMMARY CARDS */
 .summary-cards {
   display: flex;
   justify-content: space-between;
@@ -111,4 +83,35 @@
 .summary-card p {
   margin-top: 10px;
   font-size: 18px;
+}
+
+/* ANNOUNCEMENTS */
+.announcement-box {
+  margin-top: 40px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.announcement-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #03254c;
+  margin-bottom: 20px;
+}
+
+.announcement-item {
+  padding: 15px;
+  background: #f7f9fc;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
 }

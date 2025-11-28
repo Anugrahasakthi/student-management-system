@@ -1,3 +1,7 @@
+:root {
+  --input-width: 360px;
+}
+
 .login-container {
   background-color: skyblue;
   min-height: 100vh;
@@ -22,56 +26,60 @@
 
 .row {
   display: flex;
-  align-items: center;   /* FIXES alignment */
+  align-items: flex-start;
   margin: 12px 0;
 }
 
 .row label {
-  width: 100px;
-  text-align: right;
-  margin-right: 15px;
+  width: 110px;
+  font-weight: bold;
 }
 
-
-
-
-
-/* Input container */
 .input-box {
   display: flex;
   flex-direction: column;
+  width: var(--input-width);
+}
+
+.input-box input,
+.input-box select {
   width: 100%;
-}
-
-
-.input-box p {
-  min-height: 18px;
-  margin: 3px 0 0;
-}
-
-.row input,
-.row select {
-  width: 360px;
   padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #aaa;
   font-size: 15px;
 }
 
-.input-box {
-  width: 360px;
+/* PASSWORD WRAPPER */
+.password-wrapper {
+  position: relative;
+  width: 100%;
 }
 
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
 
-/* Hint text */
+/* EYE ICON */
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #444;
+}
+
+/* HINT & ERROR TEXT */
 .hint-text {
   color: #555;
   font-style: italic;
-  margin-top: 5px;
   font-size: 13px;
+  margin-top: 5px;
 }
 
-/* Error text */
 .error-text {
   color: red;
   margin-top: 5px;
@@ -79,7 +87,7 @@
   font-weight: bold;
 }
 
-/* Button */
+/* BUTTON */
 .login-btn {
   display: block;
   width: 160px;
@@ -91,11 +99,11 @@
   border: none;
   cursor: pointer;
 }
+
 .login-btn:hover {
   background: #0056b3;
 }
 
-/* Register link */
 .register-link {
   text-align: center;
   display: block;
@@ -104,12 +112,13 @@
   text-decoration: underline;
 }
 
-/* Error & success messages */
+/* ERROR & SUCCESS */
 .msg-error {
   color: red;
   text-align: center;
   font-weight: bold;
 }
+
 .msg-success {
   color: green;
   text-align: center;

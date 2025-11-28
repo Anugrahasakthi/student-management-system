@@ -1,3 +1,4 @@
+/* Full Page Centering */
 .register-container {
   display: flex;
   justify-content: center;
@@ -8,6 +9,7 @@
   padding: 0;
 }
 
+/* Main Form */
 .form-container {
   background-color: pink;
   width: 40%;
@@ -16,12 +18,14 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Heading */
 .regis-heading {
   text-align: center;
   font-size: 28px;
-  margin-bottom: 15px; /* Reduce gap */
+  margin-bottom: 15px;
 }
 
+/* Each Row */
 .label-input {
   display: flex;
   align-items: center;
@@ -34,15 +38,46 @@
   font-size: 14px;
 }
 
+/* Normal Inputs */
 .label-input input,
-.label-input select {
-  flex: 1;
+.label-input select,
+.password-wrapper {
+  width: 100%;
   padding: 6px 8px;
   border-radius: 6px;
   border: 1px solid #aaa;
   font-size: 14px;
 }
 
+/* Remove default styles for wrapper */
+.password-wrapper {
+  position: relative;
+  padding: 0;
+  border: none;
+}
+
+/* Real password input */
+.password-wrapper input {
+  width: 100%;
+  padding: 6px 8px;
+  padding-right: 40px;   /* Space for icon */
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Eye Icon */
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Buttons */
 .button-group {
   display: flex;
   flex-direction: column;

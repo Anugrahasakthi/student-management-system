@@ -16,11 +16,10 @@
   font-weight: bold;
 }
 
-/* FORM WRAPPER – IMPORTANT TO STOP LEAKAGE */
+/* FORM WRAPPER */
 .create-course-page form {
   display: flex;
   flex-direction: column;
-  /* gap: 22px; */
 }
 
 /* LABEL */
@@ -29,7 +28,7 @@
   font-weight: 600;
 }
 
-/* INPUT STYLING – ONLY FOR THIS PAGE */
+/* INPUT */
 .create-course-page input {
   padding: 12px;
   font-size: 16px;
@@ -38,9 +37,15 @@
   width: 100%;
 }
 
-/* BUTTON INSIDE PAGE ONLY */
+/* BUTTON ROW */
+.button-row {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* SUBMIT BUTTON */
 .course-submit-btn {
-  align-self: flex-end;
   padding: 12px 22px;
   background-color: #28a745;
   color: white;
@@ -52,4 +57,35 @@
 
 .course-submit-btn:hover {
   background-color: #218838;
+}
+
+/* SUCCESS / ERROR POPUP */
+.success-popup {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  z-index: 9999;
+  animation: fadeInOut 2.4s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.success-popup.success {
+  background-color: #28a745;
+}
+
+.success-popup.error {
+  background-color: #dc3545;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -20%); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10%); }
 }

@@ -10,23 +10,35 @@ const CreateCourse = () => {
     duration: ""
   });
 
+  // Popup states (same as manageCourses)
+  const [successMsg, setSuccessMsg] = useState("");
+  const [msgType, setMsgType] = useState("");
+
+  const showPopup = (msg, type = "success") => {
+    setSuccessMsg(msg);
+    setMsgType(type);
+    setTimeout(() => {
+      setSuccessMsg("");
+      setMsgType("");
+      if (type === "success") {
+        window.location.href = "/admin/courses";
+      }
+    }, 2000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await client.post("/courses", form);
 
-      alert(res.data.message || "Course created successfully!");
-      window.location.href = "/admin/courses";
+      showPopup(res.data.message || "Course created successfully!", "success");
 
     } catch (error) {
-      console.error("Error creating course:", error);
-
-      // Show backend error message (example: "Course already exists")
-      if (error.response && error.response.data && error.response.data.message) {
-        alert(error.response.data.message);
+      if (error.response?.data?.message) {
+        showPopup(error.response.data.message, "error");
       } else {
-        alert("Failed to create course");
+        showPopup("Failed to create course", "error");
       }
     }
   };
@@ -35,44 +47,53 @@ const CreateCourse = () => {
     <div>
       <AdminHeader />
 
+      {/* Popup */}
+      {successMsg && (
+        <div className={`success-popup ${msgType}`}>
+          {successMsg}
+        </div>
+      )}
+
       <div className="form-container">
         <h1>Create New Course</h1>
+
         <div className="create-course-page">
           <form onSubmit={handleSubmit}>
-          <label>Course Name</label>
-          <input
-            type="text"
-            value={form.course_name}
-            onChange={(e) => setForm({ ...form, course_name: e.target.value })}
-            required
-          />
+            <label>Course Name</label>
+            <input
+              type="text"
+              value={form.course_name}
+              onChange={(e) => setForm({ ...form, course_name: e.target.value })}
+              required
+            />
 
-          <label>Description</label>
-          <input
-            type="text"
-            value={form.course_description}
-            onChange={(e) => setForm({ ...form, course_description: e.target.value })}
-            required
-          />
+            <label>Description</label>
+            <input
+              type="text"
+              value={form.course_description}
+              onChange={(e) =>
+                setForm({ ...form, course_description: e.target.value })
+              }
+              required
+            />
 
-          <label>Duration</label>
-          <input
-            type="text"
-            value={form.duration}
-            onChange={(e) => setForm({ ...form, duration: e.target.value })}
-            required
-          />
+            <label>Duration</label>
+            <input
+              type="text"
+              value={form.duration}
+              onChange={(e) =>
+                setForm({ ...form, duration: e.target.value })
+              }
+              required
+            />
 
-          <div className="button-row">
-    <button type="submit" className="course-submit-btn">
-      Create Course
-    </button>
-  </div>
-        </form>
-
+            <div className="button-row">
+              <button type="submit" className="course-submit-btn">
+                Create Course
+              </button>
+            </div>
+          </form>
         </div>
-
-        
       </div>
     </div>
   );

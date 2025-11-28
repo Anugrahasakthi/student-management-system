@@ -7,60 +7,103 @@ import "../Css/adminDash.css";
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      navigate("/", { replace: true });
-      return;
-    }
-  }, [navigate]);
-
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [recentCourses, setRecentCourses] = useState([]);
+  const [topCourses, setTopCourses] = useState([]);
+  const [topStudents, setTopStudents] = useState([]);
 
-  // Load Dashboard Stats
+  /* 🔐 Block Back Button + Redirect if No Token */
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.replace("/");
+      return;
+    }
+
+    // Disable back navigation
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+    };
+  }, []);
+
+  /* 📊 Load Admin Stats */
   useEffect(() => {
     const loadStats = async () => {
       try {
         const res = await client.get("/admin/stats");
         setStats(res.data.data);
       } catch (err) {
-        console.error("Error loading admin stats:", err);
-
-        navigate("/", { replace: true });
+        window.location.replace("/");
       } finally {
         setLoading(false);
       }
     };
 
-    if (localStorage.getItem("token")) {
-      loadStats();
-    }
-  }, [navigate]);
+    if (localStorage.getItem("token")) loadStats();
+  }, []);
 
-  // Load recently added courses
+  /* 📈 Load Top Courses & Students */
   useEffect(() => {
-    const fetchCourses = async () => {
+    const loadEnrollmentStats = async () => {
       try {
-        const res = await client.get("/courses");
+        const res = await client.get("/enrollments");
+        const enrollments = res.data.data;
 
-        // sort by created_at (most recent first)
-        const sorted = res.data.data.sort(
-          (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        );
+        // Group by course
+        const courseCounts = {};
+        enrollments.forEach((e) => {
+          courseCounts[e.course_name] =
+            (courseCounts[e.course_name] || 0) + 1;
+        });
 
-        setRecentCourses(sorted.slice(0, 2)); // take only latest 2
+        const sortedCourses = Object.entries(courseCounts)
+          .map(([name, count]) => ({ name, count }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 2);
+
+        setTopCourses(sortedCourses);
+
+        // Group by student
+        const studentCounts = {};
+        enrollments.forEach((e) => {
+          studentCounts[e.student_name] =
+            (studentCounts[e.student_name] || 0) + 1;
+        });
+
+        const sortedStudents = Object.entries(studentCounts)
+          .map(([name, count]) => ({ name, count }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 2);
+
+        setTopStudents(sortedStudents);
       } catch (error) {
-        console.error("Error loading courses:", error);
+        console.error("Error loading enrollment stats", error);
       }
     };
 
-    fetchCourses();
+    loadEnrollmentStats();
   }, []);
 
-  if (loading) return <h2>Loading...</h2>;
+  /* 🌀 Smooth Full-Screen Loader (No Flicker) */
+  if (loading)
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "26px",
+          fontWeight: "600",
+          background: "white",
+          overflow: "hidden",
+        }}
+      >
+        Loading...
+      </div>
+    );
 
   return (
     <div>
@@ -68,10 +111,9 @@ const AdminDashboard = () => {
 
       <div className="admin-container">
         <h1>Admin Dashboard</h1>
-
         <hr />
 
-        {/* Statistics Cards */}
+        {/* Summary Cards */}
         <div className="dashboard-cards">
           <div className="dash-card">
             <h2>{stats.students}</h2>
@@ -84,22 +126,51 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Announcements Section */}
-        <div className="announcement-section">
-          <h2 className="announce-title">Announcements</h2>
+        {/* Tables Section */}
+        <div className="tables-row">
 
-          <div className="announce-box">
-            {recentCourses.length === 0 ? (
-              <p>No recent courses added</p>
-            ) : (
-              recentCourses.map((course) => (
-                <div key={course.id} className="announce-item">
-                  <h3>{course.course_name}</h3>
-                  
-                </div>
-              ))
-            )}
+          {/* Top Courses */}
+          <div className="table-card">
+            <h2 className="table-title">Top 2 Courses (Most Enrollments)</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Students Enrolled</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topCourses.map((c, index) => (
+                  <tr key={index}>
+                    <td>{c.name}</td>
+                    <td>{c.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+
+          {/* Top Students */}
+          <div className="table-card">
+            <h2 className="table-title">Top 2 Students (Most Courses)</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Courses Enrolled</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topStudents.map((s, index) => (
+                  <tr key={index}>
+                    <td>{s.name}</td>
+                    <td>{s.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </div>
     </div>

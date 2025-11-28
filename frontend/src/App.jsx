@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";        
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Logout from "./pages/Logout";
 import StudentProfile from "./pages/Student/StudentProfile.jsx";
 import EditStudentProfile from "./pages/Student/EditStudentProfile.jsx";
 
@@ -18,10 +17,6 @@ import CreateCourse from "./pages/Admin/CreateCourse";
 import ManageEnrollments from "./pages/Admin/ManageEnrollments";
 
 
-
-
-
-
 function App() {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
@@ -33,73 +28,81 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/home" element={isLoggedIn ? (isStudent ? (<Navigate to="/student/dashboard" />)
-                                                : isAdmin ? (<Navigate to="/admin/dashboard" />) 
-                                                : (<Navigate to="/" />)) : (<Navigate to="/" />)} />
 
+        {/* Auto redirect when manually visiting /home */}
+        <Route
+          path="/home"
+          element={
+            isLoggedIn
+              ? isStudent
+                ? <Navigate to="/student/dashboard" replace />
+                : isAdmin
+                  ? <Navigate to="/admin/dashboard" replace />
+                  : <Navigate to="/" replace />
+              : <Navigate to="/" replace />
+          }
+        />
+
+        {/* ========================== ADMIN ROUTES ========================== */}
         <Route
           path="/admin/dashboard"
-          element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}
+          element={isAdmin ? <AdminDashboard /> : <Navigate to="/" replace />}
         />
 
         <Route
           path="/admin/students"
-          element={isAdmin ? <ManageStudents /> : <Navigate to="/login" />}
+          element={isAdmin ? <ManageStudents /> : <Navigate to="/" replace />}
         />
 
         <Route
-           path="/admin/courses"
-           element={isAdmin ? <ManageCourses /> : <Navigate to="/login" />}
+          path="/admin/courses"
+          element={isAdmin ? <ManageCourses /> : <Navigate to="/" replace />}
         />
 
         <Route
-           path="/admin/create-course"
-           element={isAdmin ? <CreateCourse /> : <Navigate to="/login" />}
+          path="/admin/create-course"
+          element={isAdmin ? <CreateCourse /> : <Navigate to="/" replace />}
         />
 
         <Route
           path="/admin/enrollments"
-          element={isAdmin ? <ManageEnrollments /> : <Navigate to="/login" />}
+          element={isAdmin ? <ManageEnrollments /> : <Navigate to="/" replace />}
         />
 
 
-        
-
-
-
-        
+        {/* ========================== STUDENT ROUTES ========================== */}
         <Route
           path="/student/dashboard"
-          element={isStudent ? <StudentDashboard /> : <Navigate to="/login" />}
+          element={isStudent ? <StudentDashboard /> : <Navigate to="/" replace />}
         />
 
         <Route
           path="/student/courses"
-          element={isStudent ? <AvailableCourses /> : <Navigate to="/login" />}
+          element={isStudent ? <AvailableCourses /> : <Navigate to="/" replace />}
         />
 
         <Route
           path="/student/my-courses"
-          element={isStudent ? <MyCourses /> : <Navigate to="/login" />}
+          element={isStudent ? <MyCourses /> : <Navigate to="/" replace />}
         />
-
-       
 
         <Route
           path="/student/profile"
-          element={isStudent ? <StudentProfile /> : <Navigate to="/login" />}
+          element={isStudent ? <StudentProfile /> : <Navigate to="/" replace />}
         />
 
         <Route
           path="/student/profile/edit"
-          element={isStudent ? <EditStudentProfile /> : <Navigate to="/login" />}
-        /> 
+          element={isStudent ? <EditStudentProfile /> : <Navigate to="/" replace />}
+        />
 
-        
+
+        {/* 404 PAGE */}
         <Route path="*" element={<h1>404 Not Found</h1>} />
 
       </Routes>

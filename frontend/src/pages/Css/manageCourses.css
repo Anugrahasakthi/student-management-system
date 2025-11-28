@@ -1,22 +1,17 @@
 .manage-container {
   width: 90%;
   margin: 40px auto;
-  padding: 20px;
 }
 
-/* TITLE CENTERED */
 .manage-title {
   font-size: 36px;
   font-weight: bold;
   color: #222;
-  margin: 0;
   text-align: center;
 }
 
-/* TITLE WITH BUTTON ON RIGHT */
 .title-container {
   position: relative;
-  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -34,22 +29,15 @@
   font-size: 16px;
 }
 
-.create-btn:hover {
-  background-color: #218838;
-}
-
-/* TABLE */
 .courses-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
 }
 
 .courses-table th {
   background: #004080;
   color: white;
   padding: 12px;
-  font-size: 16px;
 }
 
 .courses-table td {
@@ -57,11 +45,6 @@
   border-bottom: 1px solid #ccc;
 }
 
-.courses-table tr:hover {
-  background: #f9f9f9;
-}
-
-/* INPUT FIELD */
 input {
   padding: 6px;
   width: 95%;
@@ -69,9 +52,15 @@ input {
   border-radius: 4px;
 }
 
-/* ACTION ICONS */
-.iconButtons {
+/* ACTION BUTTONS */
+.actions-col {
+  width: 150px;
+}
+
+.iconButtons,
+.edit-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 12px;
 }
@@ -113,18 +102,6 @@ input {
   background: white;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 15px;
-}
-
-.pagination button:hover {
-  background: #004080;
-  color: white;
-}
-
-.pagination button:disabled {
-  background: #ccc;
-  color: #666;
-  cursor: not-allowed;
 }
 
 .active-page {
@@ -132,7 +109,7 @@ input {
   color: white !important;
 }
 
-/* SUCCESS / ERROR POPUP */
+/* POPUP */
 .success-popup {
   position: fixed;
   top: 15%;
@@ -142,10 +119,9 @@ input {
   border-radius: 10px;
   font-size: 18px;
   font-weight: bold;
-  color: white; 
+  color: white;
   z-index: 9999;
   animation: fadeInOut 2.4s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .success-popup.success {
@@ -154,11 +130,4 @@ input {
 
 .success-popup.error {
   background-color: #dc3545;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -20%); }
-  10% { opacity: 1; transform: translate(-50%, 0); }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -10%); }
 }

@@ -1,4 +1,6 @@
-
+/* ------------------------
+    ADMIN MAIN LAYOUT
+------------------------ */
 .admin-container {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,6 @@
   margin: 20px auto;
   padding: 20px;
 }
-
 
 .admin-container h1 {
   text-align: center;
@@ -21,7 +22,9 @@
   margin-bottom: 20px;
 }
 
-
+/* ------------------------
+    DASHBOARD CARDS
+------------------------ */
 .dashboard-cards {
   display: flex;
   justify-content: space-between;
@@ -36,9 +39,8 @@
   border-radius: 10px;
   padding: 25px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease-in-out;
-  cursor: pointer;
 }
 
 .dash-card:hover {
@@ -60,37 +62,44 @@
   font-weight: 500;
 }
 
-
-
-.announcement-section {
+/* ------------------------
+    TABLES (TOP COURSES + TOP STUDENTS)
+------------------------ */
+.tables-row {
   margin-top: 40px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.announce-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.announce-box {
-  width: 70%;
-  margin: auto;
-  background: #f8f9fa;
+.table-card {
+  width: 48%;
+  background: #ffffff;
   padding: 20px;
-  border-radius: 10px;
-  border-left: 5px solid #007bff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.announce-item {
+.table-title {
+  text-align: center;
   margin-bottom: 15px;
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-size: 20px;
+  font-weight: bold;
+  color: #03254c;
 }
 
-.announce-item h3 {
-  margin: 0;
-  color: #03254c;
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-card th,
+.table-card td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.table-card th {
+  background: #f2f2f2;
+  text-align: left;
 }
