@@ -424,7 +424,7 @@ const Login = () => {
                 className="eye-icon"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                <FontAwesomeIcon icon={showPassword ? faEye: faEyeSlash} />
               </span>
             </div>
           </div>
