@@ -1,6 +1,10 @@
 <?php
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../utils/Response.php';
+// require_once __DIR__ . '/../db.php';
+// require_once __DIR__ . '/../utils/Response.php';
+
+require_once dirname(__DIR__) . '/db.php';
+require_once dirname(__DIR__) . '/utils/Response.php';
+
 
 function registerController() {
   $data = json_decode(file_get_contents("php://input"), true);
