@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config.php';
 function jwt_encode(array $payload): string {
     // issued-at + expiry
     $payload['iat'] = time();
-    $payload['exp'] = time() + 2 * 60 * 60; // 2 hours
+    $payload['exp'] = time() + 2 * 60 * 60; // 2 hours expiry
 
     $header = ['alg' => 'HS256', 'typ' => 'JWT'];
 

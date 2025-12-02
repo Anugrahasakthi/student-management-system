@@ -157,7 +157,7 @@ function updateCourse($id) {
     }
   }
 
-  // Update course
+ 
   try {
     $stmt = $pdo->prepare(
       "UPDATE courses 

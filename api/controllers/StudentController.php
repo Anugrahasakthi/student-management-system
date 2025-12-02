@@ -4,8 +4,6 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
 require_once __DIR__ . '/../utils/Response.php';
 
-
-// ---------------- LIST ALL STUDENTS (ADMIN) ----------------
 function listStudents() {
     $auth = auth();
     require_admin($auth);
@@ -25,9 +23,6 @@ function listStudents() {
     response_json(200, 'Students and their details', $rows);
 }
 
-
-
-// ---------------- GET MY PROFILE ----------------
 function myStudentProfile() {
   $auth = auth();
   require_student($auth);
@@ -62,10 +57,6 @@ function myStudentProfile() {
   response_json(200, "Student profile", $row);
 }
 
-
-
-
-// ---------------- UPDATE PROFILE ----------------
 function studentUpdateProfile() {
     $payload = auth();
     require_student($payload);
@@ -102,10 +93,6 @@ function studentUpdateProfile() {
     response_json(200, "Profile updated successfully");
 }
 
-
-
-
-// ---------------- GET MY COURSES ----------------
 function getMyCourses($student_id) {
     global $pdo;
 
@@ -129,26 +116,23 @@ function getMyCourses($student_id) {
     response_json(200, "My Courses", $rows);
 }
 
-
-
-// ---------------- STUDENT DASHBOARD SUMMARY ----------------
 function studentDashboardSummary() {
     global $pdo;
 
     $auth = auth();
     $student_id = $auth["student_id"];
 
-    // Active
+  
     $active = $pdo->prepare("SELECT COUNT(*) AS count FROM enrollments WHERE student_id = ?");
     $active->execute([$student_id]);
     $activeCount = $active->fetch(PDO::FETCH_ASSOC)['count'];
 
-    // Dropped
+   
     $dropped = $pdo->prepare("SELECT COUNT(*) AS count FROM dropped_enrollments WHERE student_id = ?");
     $dropped->execute([$student_id]);
     $droppedCount = $dropped->fetch(PDO::FETCH_ASSOC)['count'];
 
-    // Total
+  
     $total = $activeCount + $droppedCount;
 
     response_json(200, "Dashboard Summary", [

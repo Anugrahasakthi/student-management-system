@@ -28,13 +28,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Auto redirect when manually visiting /home */}
         <Route
           path="/home"
           element={
@@ -48,7 +45,7 @@ function App() {
           }
         />
 
-        {/* ========================== ADMIN ROUTES ========================== */}
+      {/* admin routes */}
         <Route
           path="/admin/dashboard"
           element={isAdmin ? <AdminDashboard /> : <Navigate to="/" replace />}
@@ -75,7 +72,7 @@ function App() {
         />
 
 
-        {/* ========================== STUDENT ROUTES ========================== */}
+        {/*student routes*/}
         <Route
           path="/student/dashboard"
           element={isStudent ? <StudentDashboard /> : <Navigate to="/" replace />}
@@ -102,7 +99,6 @@ function App() {
         />
 
 
-        {/* 404 PAGE */}
         <Route path="*" element={<h1>404 Not Found</h1>} />
 
       </Routes>

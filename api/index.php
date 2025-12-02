@@ -31,33 +31,21 @@ $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
 $normalized = str_replace($scriptDir, '', $uri);
 if ($normalized === '' || $normalized === false) $normalized = '/';
 
-
-// ---------------- ROUTES ----------------
-
-// LOGIN
 if ($method === 'POST' && $normalized === '/login') return loginController();
-
-// REGISTER
 if ($method === 'POST' && $normalized === '/register') return registerController();
 
-// STUDENT PROFILE
+
 if ($method === 'GET' && $normalized === '/me/student') return myStudentProfile();
-
-// UPDATE PROFILE
 if ($method === 'PUT' && $normalized === '/student/update-profile') return studentUpdateProfile();
-
-// DASHBOARD SUMMARY
 if ($method === 'GET' && $normalized === '/student/dashboard-summary') return studentDashboardSummary();
-
-// STUDENT COURSES
 if ($method === 'GET' && $normalized === '/me/courses') {
     $auth = auth();
     return getMyCourses($auth['student_id']);
 }
 
-// COURSE ROUTES
-if ($method === 'GET' && $normalized === '/courses') return getAllCourses();
 
+
+if ($method === 'GET' && $normalized === '/courses') return getAllCourses();
 if ($method === 'GET' && preg_match('#^/courses/([0-9]+)$#', $normalized, $m)) {
     return getCourse((int)$m[1]);
 }
@@ -77,7 +65,7 @@ if ($method === 'DELETE' && preg_match('#^/courses/([0-9]+)$#', $normalized, $m)
 }
 
 
-// ENROLLMENTS
+
 if ($method === 'POST' && $normalized === '/enroll') return enrollStudent();
 
 if ($method === 'DELETE' && preg_match('#^/enroll/([0-9]+)$#', $normalized, $m)) {
@@ -85,15 +73,13 @@ if ($method === 'DELETE' && preg_match('#^/enroll/([0-9]+)$#', $normalized, $m))
 }
 
 if ($method === 'GET' && $normalized === '/enrollments') return getAllEnrollments();
-
 if ($method === 'GET' && $normalized === '/dropped-enrollments') return getDroppedEnrollments();
 
 
-// ADMIN
-if ($method === 'GET' && $normalized === '/students') return listStudents();
 
+if ($method === 'GET' && $normalized === '/students') return listStudents();
 if ($method === 'GET' && $normalized === '/admin/stats') return adminStats();
 
 
-// 404
+
 response_json(404, "Route not found: $normalized");

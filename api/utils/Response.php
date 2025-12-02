@@ -8,7 +8,7 @@ function response_json(int $status, string $message, $data = null): void {
     'message' => $message,
   ];
 
-  // allow any type: array, object, null, string, bool
+ 
   if ($data !== null) {
     $out['data'] = $data;
   }

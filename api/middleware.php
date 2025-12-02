@@ -48,7 +48,7 @@ function auth(): array {
     }
 }
 
-//ADMIN ONLY ACCESS
+//ADMIN - access only
  
 function require_admin(array $payload): array {
     if (($payload['role'] ?? null) !== 'admin') {
@@ -57,7 +57,7 @@ function require_admin(array $payload): array {
     return $payload;
 }
 
-//STUDENT ONLY ACCESS
+//STUDENT - access only
  
 function require_student(array $payload): array {
     if (($payload['role'] ?? null) !== 'student') {
@@ -66,7 +66,7 @@ function require_student(array $payload): array {
     return $payload;
 }
 
-
+            
 function is_admin(array $payload): bool {
     return ($payload['role'] ?? null) === 'admin';
 }

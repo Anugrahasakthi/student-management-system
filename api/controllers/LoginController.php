@@ -23,7 +23,7 @@ function loginController(): void {
     response_json(401, 'Invalid email or password');
   }
 
-  //Fetch student_id (if user is a student)
+
   $student_id = null;
   if ($user['role'] === 'student') {
       $stmt = $pdo->prepare("SELECT id FROM students WHERE user_id = ?");

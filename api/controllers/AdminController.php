@@ -13,11 +13,9 @@ function adminStats() {
    
     $courses = $pdo->query("SELECT COUNT(*) FROM courses")->fetchColumn();
    
-    $enrollments = $pdo->query("SELECT COUNT(*) FROM enrollments")->fetchColumn();
-
     response_json(200, "Admin dashboard stats", [
         "students" => $students,
-        "courses" => $courses,
-        "enrollments" => $enrollments
+        "courses" => $courses
+     
     ]);
 }

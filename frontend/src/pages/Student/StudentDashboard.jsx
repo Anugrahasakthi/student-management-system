@@ -9,15 +9,13 @@ const StudentDashboard = () => {
   const [summary, setSummary] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
 
-  /* ✅ PREVENT BACK BUTTON + REDIRECT IF NO TOKEN */
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       window.location.replace("/");
       return;
     }
-
-    // Disable Back Button
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
       window.history.pushState(null, "", window.location.href);

@@ -12,7 +12,6 @@ const AdminDashboard = () => {
   const [topCourses, setTopCourses] = useState([]);
   const [topStudents, setTopStudents] = useState([]);
 
-  /* 🔐 Block Back Button + Redirect if No Token */
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -20,14 +19,13 @@ const AdminDashboard = () => {
       return;
     }
 
-    // Disable back navigation
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
       window.history.pushState(null, "", window.location.href);
     };
   }, []);
 
-  /* 📊 Load Admin Stats */
+  
   useEffect(() => {
     const loadStats = async () => {
       try {
@@ -43,7 +41,7 @@ const AdminDashboard = () => {
     if (localStorage.getItem("token")) loadStats();
   }, []);
 
-  /* 📈 Load Top Courses & Students */
+  
   useEffect(() => {
     const loadEnrollmentStats = async () => {
       try {
@@ -85,7 +83,7 @@ const AdminDashboard = () => {
     loadEnrollmentStats();
   }, []);
 
-  /* 🌀 Smooth Full-Screen Loader (No Flicker) */
+  /* Full-Screen Loader (No Flicker) */
   if (loading)
     return (
       <div

@@ -3,11 +3,7 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
 require_once __DIR__ . '/../utils/Response.php';
 
-/**
- * ============================================================
- *  ENROLL STUDENT
- * ============================================================
- */
+
 function enrollStudent() {
     global $pdo;
 
@@ -24,12 +20,12 @@ function enrollStudent() {
 
     if (!$student_id) response_json(400, "student_id is required");
 
-    // Check student
+    // Check student presence
     $chkStu = $pdo->prepare("SELECT id FROM students WHERE id = ?");
     $chkStu->execute([$student_id]);
     if (!$chkStu->fetch()) response_json(404, "Student not found");
 
-    // Check course
+    // Check course presence
     $chkCourse = $pdo->prepare("SELECT duration FROM courses WHERE id = ?");
     $chkCourse->execute([$course_id]);
     $courseRow = $chkCourse->fetch(PDO::FETCH_ASSOC);
@@ -56,13 +52,6 @@ function enrollStudent() {
     response_json(200, "Enrollment successful");
 }
 
-
-
-/**
- * ============================================================
- *  GET ALL ENROLLMENTS (Admin only)
- * ============================================================
- */
 function getAllEnrollments() {
     global $pdo;
 
@@ -96,12 +85,6 @@ function getAllEnrollments() {
 }
 
 
-
-/**
- * ============================================================
- *  DELETE ENROLLMENT + INSERT INTO DROPPED LIST
- * ============================================================
- */
 function deleteEnrollment($id) {
     global $pdo;
 
@@ -142,13 +125,6 @@ function deleteEnrollment($id) {
     response_json(200, "Enrollment removed successfully");
 }
 
-
-
-/**
- * ============================================================
- *  GET DROPPED ENROLLMENTS
- * ============================================================
- */
 function getDroppedEnrollments() {
     global $pdo;
 
