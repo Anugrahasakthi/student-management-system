@@ -1,11 +1,11 @@
-/* Page layout */
+
 .enroll-page-container {
   width: 90%;
   margin: auto;
   padding-top: 20px;
 }
 
-/* Page Title */
+
 .page-title {
   text-align: center;
   font-size: 30px;
@@ -13,7 +13,7 @@
   font-weight: bold;
 }
 
-/* Tabs */
+
 .tabs {
   display: flex;
   justify-content: center;
@@ -41,7 +41,7 @@
   border: 2px solid #000;
 }
 
-/* Tables */
+
 .table-container {
   margin-top: 20px;
 }
@@ -66,7 +66,7 @@
   font-size: 14px;
 }
 
-/* Unenroll button */
+
 .unenroll-btn {
   background: #e63946;
   color: white;
@@ -80,7 +80,7 @@
   background: #c91f2e;
 }
 
-/* FORM CONTAINER (FIXED & ALIGNED) */
+
 .enroll-form-container {
   width: 420px;
   margin: 30px auto;
@@ -106,7 +106,7 @@
 
 .enroll-form-container input,
 .enroll-form-container select {
-  width: 100%;      /* FIXED ALIGNMENT */
+  width: 100%;      
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 6px;
@@ -115,7 +115,6 @@
   background: white;
 }
 
-/* Submit Button */
 .submit-btn {
   width: 100%;
   background: green;
@@ -131,7 +130,7 @@
   background: #0b7a0b;
 }
 
-/* Pagination */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -155,7 +154,6 @@
   cursor: not-allowed;
 }
 
-/* MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -207,10 +205,10 @@
   border: none;
 }
 
-/* TOAST */
+
 .toast {
   position: fixed;
-  top: 20px;
+  top: 120px;
   left: 50%;
   transform: translateX(-50%);
   background: #4CAF50;

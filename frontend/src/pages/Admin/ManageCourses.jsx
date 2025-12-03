@@ -125,8 +125,6 @@ const ManageCourses = () => {
             {currentRows.map((course, index) => (
               <tr key={course.id}>
                 <td>{indexOfFirst + index + 1}</td>
-
-                {/* Course Name */}
                 <td>
                   {editing === course.id ? (
                     <input
@@ -141,7 +139,7 @@ const ManageCourses = () => {
                   )}
                 </td>
 
-                {/* Description */}
+                
                 <td>
                   {editing === course.id ? (
                     <input
@@ -159,7 +157,6 @@ const ManageCourses = () => {
                   )}
                 </td>
 
-                {/* Duration */}
                 <td>
                   {editing === course.id ? (
                     <input
@@ -173,8 +170,7 @@ const ManageCourses = () => {
                     course.duration
                   )}
                 </td>
-
-                {/* ACTION BUTTONS */}
+                
                 <td className="actions-col">
                   {editing === course.id ? (
                     <div className="edit-actions">
@@ -215,7 +211,7 @@ const ManageCourses = () => {
           </tbody>
         </table>
 
-        {/* PAGINATION */}
+        
         <div className="pagination">
           <button
             onClick={() => goToPage(currentPage - 1)}

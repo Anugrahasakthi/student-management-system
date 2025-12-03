@@ -14,15 +14,15 @@ const ManageEnrollments = () => {
     course_id: "",
   });
 
-  // Modal states
+  
   const [showModal, setShowModal] = useState(false);
   const [reason, setReason] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-  // Toast message
+ 
   const [toast, setToast] = useState("");
 
-  // Pagination
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 
@@ -59,7 +59,7 @@ const ManageEnrollments = () => {
     loadCourses();
   }, []);
 
-  // Enroll a student
+
   const handleEnroll = async (e) => {
     e.preventDefault();
     try {
@@ -77,13 +77,13 @@ const ManageEnrollments = () => {
     }
   };
 
-  // Open modal
+ 
   const handleUnenroll = (id) => {
     setSelectedId(id);
     setShowModal(true);
   };
 
-  // Submit unenrollment
+  
   const submitUnenroll = async () => {
     if (!reason.trim()) {
       setToast("Reason cannot be empty");
@@ -92,12 +92,9 @@ const ManageEnrollments = () => {
     }
 
     try {
+     
       await client.delete(`/enroll/${selectedId}`, {
-        data: { reason },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        data: { reason }
       });
 
       setShowModal(false);
@@ -116,7 +113,7 @@ const ManageEnrollments = () => {
     }
   };
 
-  // Pagination
+  
   const lastIndex = currentPage * rowsPerPage;
   const firstIndex = lastIndex - rowsPerPage;
 
@@ -137,7 +134,7 @@ const ManageEnrollments = () => {
       <div className="enroll-page-container">
         <h1 className="page-title">Manage Enrollments</h1>
 
-        {/* Tabs */}
+       
         <div className="tabs">
           <button
             className={tab === "active" ? "active-tab" : ""}
@@ -167,7 +164,7 @@ const ManageEnrollments = () => {
           </button>
         </div>
 
-        {/* ACTIVE enrollments */}
+        
         {tab === "active" && (
           <div className="table-container">
             <table className="enroll-table">
@@ -211,7 +208,7 @@ const ManageEnrollments = () => {
               </tbody>
             </table>
 
-            {/* Pagination */}
+            
             <div className="pagination">
               <button
                 onClick={() => setCurrentPage((p) => p - 1)}
@@ -234,7 +231,7 @@ const ManageEnrollments = () => {
           </div>
         )}
 
-        {/* ENROLL FORM */}
+        
         {tab === "new" && (
           <div className="enroll-form-container">
             <h2>Enroll a Student</h2>
@@ -273,7 +270,7 @@ const ManageEnrollments = () => {
           </div>
         )}
 
-        {/* DROPPED enrollments */}
+        
         {tab === "dropped" && (
           <div className="table-container">
             <table className="enroll-table">
@@ -304,7 +301,7 @@ const ManageEnrollments = () => {
               </tbody>
             </table>
 
-            {/* Pagination */}
+            
             <div className="pagination">
               <button
                 onClick={() => setCurrentPage((p) => p - 1)}
@@ -328,7 +325,7 @@ const ManageEnrollments = () => {
         )}
       </div>
 
-      {/* MODAL */}
+      
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -352,7 +349,7 @@ const ManageEnrollments = () => {
         </div>
       )}
 
-      {/* TOAST */}
+      
       {toast && <div className="toast">{toast}</div>}
     </div>
   );

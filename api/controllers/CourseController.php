@@ -21,39 +21,6 @@ require_once __DIR__ . '/../middleware.php';
     }
   }
 
-  //Get course by name
-
-  function getCourseByName($name) {
-    global $pdo;
-
-    try {
-
-      
-      $stmt = $pdo->prepare("
-        SELECT * FROM courses 
-        WHERE LOWER(REPLACE(course_name, ' ', '')) 
-              LIKE LOWER(REPLACE(?, ' ', ''))
-      ");
-      
-      $stmt->execute(["%$name%"]);
-
-      $course = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if ($course) {
-        response_json(200, "Course fetched successfully", $course);
-      } else {
-        response_json(404, "Course not found");
-      }
-
-    } catch (Exception $e) {
-      response_json(500, "Failed to fetch course: " . $e->getMessage());
-    }
-  }
-
-
-
-
-
   // GET one course by id
 
   function getCourse($id) {
