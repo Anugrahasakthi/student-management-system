@@ -57,6 +57,7 @@ const StudentHeader = () => {
       <nav>
         <Link to="/student/dashboard">Dashboard</Link>
         <Link to="/student/courses">Courses</Link>
+        <Link to="/student/my-courses">My Courses</Link>
         <Link to="/student/profile">My Profile</Link>
 
         <button className="logout-btn" onClick={logout}>Logout</button>

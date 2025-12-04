@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
-import Header from "../../pages/Header";
+import StudentHeader from "./StudentHeader";
 import "../Css/AvailableCourses.css";
 import cloudImg from "../../assets/clouds.png";
 
@@ -76,7 +76,7 @@ const AvailableCourses = () => {
 
   return (
     <div>
-      <Header />
+      <StudentHeader />
 
       <div
         className="AvailableCourse-cont"

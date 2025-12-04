@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import client from "../../api/client";
-import Header from "../../pages/Header";
+import StudentHeader from "./StudentHeader";
 import "../Css/mycourse.css";
 import cloudImg from "../../assets/clouds.png";
 
@@ -39,7 +39,7 @@ const MyCourses = () => {
 
   return (
     <div>
-      <Header />
+      <StudentHeader />
       <div
         className="mycourseContainer"
         style={{ backgroundImage: `url(${cloudImg})` }}

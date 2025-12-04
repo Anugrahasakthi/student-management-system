@@ -52,6 +52,8 @@
   font-weight: 600;
 }
 
+
+
 /* RIGHT SIDE */
 .header-right {
   display: flex;
@@ -60,6 +62,24 @@
 }
 
 .header-right a {
+  text-decoration: none;
+  color: #ffd6e0; /* light pink */
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.header-right a:hover {
+  background: #fc8da7;
+  color: #03254c;
+}
+
+.header-right a :hover {
+  background: #fc8da7;
+  /* color: #03254c; */
+  color: #ffd6e0;
   color: white;
   text-decoration: none;
   font-size: 18px;

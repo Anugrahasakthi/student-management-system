@@ -7,10 +7,7 @@ const Header = () => {
   const role = localStorage.getItem("role");
 
   return (
-    <ul className="nav-links">
-
-      {/* ALWAYS SHOW HOME */}
-      
+    <ul className="nav-links">      
 
       {/* PUBLIC (not logged in) */}
       {!token && (
