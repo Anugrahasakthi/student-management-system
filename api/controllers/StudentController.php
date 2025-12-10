@@ -16,8 +16,8 @@ function listStudents() {
         JOIN users u ON u.id = s.user_id
         LEFT JOIN enrollments e ON e.student_id = s.id
         LEFT JOIN courses c ON c.id = e.course_id
-        GROUP BY s.id, s.name, s.phone, s.dob, u.email
-    ";
+        GROUP BY s.id
+    ";    
 
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     response_json(200, 'Students and their details', $rows);
@@ -47,8 +47,7 @@ function myStudentProfile() {
     LEFT JOIN enrollments e ON e.student_id = s.id
     LEFT JOIN courses c ON c.id = e.course_id
     WHERE s.id = ?
-    GROUP BY s.id, s.name, s.phone, s.dob, s.address, s.education, s.hobbies, u.email
-  ";
+    GROUP BY s.id";
 
   $stmt = $pdo->prepare($sql);
   $stmt->execute([$student_id]);

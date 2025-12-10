@@ -1,10 +1,6 @@
 <?php
-// require_once __DIR__ . '/../db.php';
-// require_once __DIR__ . '/../utils/Response.php';
-
-require_once dirname(__DIR__) . '/db.php';
-require_once dirname(__DIR__) . '/utils/Response.php';
-
+require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../utils/Response.php';
 
 function registerController() {
   $data = json_decode(file_get_contents("php://input"), true);
@@ -45,8 +41,8 @@ function registerController() {
   $hash = password_hash($password, PASSWORD_BCRYPT);
   $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)");
   $stmt->execute([$email, $hash, $role]);
-  $userId = $pdo->lastInsertId();
 
+  $userId = $pdo->lastInsertId();
   // Insert into role-specific table
   if ($role === 'student') {
     $stmt = $pdo->prepare("

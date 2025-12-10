@@ -1,9 +1,7 @@
 <?php
 /* 
-FILE NAME:
-DESCRIPTION:
-DATE CREATED:
-DATE MODIFIED:
+FILE NAME:AdminController.php
+DESCRIPTION:To show some stats like number of registered students and number of available courses
 */
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
