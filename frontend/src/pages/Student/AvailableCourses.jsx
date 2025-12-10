@@ -77,7 +77,6 @@ const AvailableCourses = () => {
   return (
     <div>
       <StudentHeader />
-
       <div
         className="AvailableCourse-cont"
         style={{ backgroundImage: `url(${cloudImg})` }}

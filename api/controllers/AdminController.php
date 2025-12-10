@@ -1,4 +1,10 @@
 <?php
+/* 
+FILE NAME:
+DESCRIPTION:
+DATE CREATED:
+DATE MODIFIED:
+*/
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/../middleware.php';
 require_once __DIR__ . '/../utils/Response.php';

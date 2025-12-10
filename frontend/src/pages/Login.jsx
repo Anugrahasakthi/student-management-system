@@ -16,9 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleEmailFocus = () => {
-    if (!email) {
-      setEmailError("Eg: example@domain.com");
-    }
+    if (!email) setEmailError("Eg: example@domain.com");
   };
 
   const handleEmailBlur = () => {
@@ -26,10 +24,12 @@ const Login = () => {
       setEmailError("");
       return;
     }
-
     const regex = /^[a-z][a-z0-9]*@[a-z]+\.[a-z]{2,}$/;
-
-    setEmailError(regex.test(email) ? "" : "Invalid email format. Eg: example@domain.com");
+    setEmailError(
+      regex.test(email)
+        ? ""
+        : "Invalid email format. Eg: example@domain.com"
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +55,6 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(user));
 
         setSuccess("Login successful! Redirecting...");
-
         setTimeout(() => {
           window.location.href =
             backendRole === "admin"
@@ -72,7 +71,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-
       <form className="login-card" onSubmit={handleSubmit}>
         <h1 className="login-heading">Login</h1>
 
@@ -80,21 +78,24 @@ const Login = () => {
         {success && <p className="msg-success">{success}</p>}
 
         
-        <div className="row">
+        <div className="form-row">
           <label>Role</label>
-          <div className="input-box">
-            <select value={role} onChange={(e) => setRole(e.target.value)} required>
-              <option value="" disabled selected>Select Role</option>
-              <option value="admin">Admin</option>
-              <option value="student">Student</option>
-            </select>
-          </div>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+            className="role-box"
+          >
+            <option value="" disabled hidden>Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="student">Student</option>
+          </select>
         </div>
 
-        
-        <div className="row">
+       
+        <div className="form-row">
           <label>Email</label>
-          <div className="input-box">
+          <div className="email-box">
             <input
               type="email"
               placeholder="Enter email"
@@ -107,38 +108,46 @@ const Login = () => {
               onBlur={handleEmailBlur}
               required
             />
-            {emailError && (
-              <p className={emailError.startsWith("Invalid") ? "error-text" : "hint-text"}>
-                {emailError}
-              </p>
-            )}
           </div>
         </div>
+
+        {emailError && (
+          <p
+            className={
+              emailError.startsWith("Invalid")
+                ? "error-text"
+                : "hint-text"
+            }
+          >
+            {emailError}
+          </p>
+        )}
 
         
-        <div className="row">
+        <div className="form-row">
           <label>Password</label>
-          <div className="input-box">
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+          <div className="pass-box">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span
+              className="eye-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <FontAwesomeIcon
+                icon={showPassword ? faEye : faEyeSlash}
               />
-
-              <span
-                className="eye-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <FontAwesomeIcon icon={showPassword ? faEye: faEyeSlash} />
-              </span>
-            </div>
+            </span>
           </div>
         </div>
 
-        <button className="login-btn" type="submit">Login</button>
+        <button className="login-btn" type="submit">
+          Login
+        </button>
 
         <Link to="/register" className="register-link">
           New User? Register Here
@@ -149,4 +158,3 @@ const Login = () => {
 };
 
 export default Login;
-
