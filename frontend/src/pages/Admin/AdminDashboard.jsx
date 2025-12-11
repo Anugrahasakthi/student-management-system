@@ -83,7 +83,7 @@ const AdminDashboard = () => {
     loadEnrollmentStats();
   }, []);
 
-  /* Full-Screen Loader (No Flicker) */
+  
   if (loading)
     return (
       <div
@@ -111,14 +111,13 @@ const AdminDashboard = () => {
         <h1>Admin Dashboard</h1>
         <hr />
 
-        {/* Summary Cards */}
         <div className="dashboard-cards">
-          <div className="dash-card">
+          <div className="dash-card" onClick={() => navigate("/admin/students")} style={{ cursor: "pointer" }}>
             <h2>{stats.students}</h2>
             <p>Students</p>
           </div>
 
-          <div className="dash-card">
+          <div className="dash-card" onClick={() => navigate("/admin/courses")} style={{ cursor: "pointer" }}>
             <h2>{stats.courses}</h2>
             <p>Courses</p>
           </div>

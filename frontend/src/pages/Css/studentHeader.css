@@ -1,4 +1,4 @@
-/* HEADER CONTAINER */
+
 .student-header {
   background: #03254c;
   padding: 12px 30px;
@@ -11,14 +11,14 @@
   z-index: 10;
 }
 
-/* LEFT SIDE LOGO */
+
 .student-header .logo {
   font-size: 22px;
   font-weight: bold;
   letter-spacing: 1px;
 }
 
-/* NAV LINKS */
+
 .student-header nav {
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
 
 .student-header nav a {
   text-decoration: none;
-  color: #ffd6e0; /* light pink */
+  color: #ffd6e0; 
   font-size: 16px;
   padding: 8px 16px;
   border-radius: 8px;
@@ -35,13 +35,13 @@
   font-weight: 600;
 }
 
-/* HOVER EFFECT */
+
 .student-header nav a:hover {
   background: #fc8da7;
   color: #03254c;
 }
 
-/* LOGOUT BUTTON */
+
 .logout-btn {
   background: #e63946;
   color: white;
@@ -58,7 +58,7 @@
   background: #c91f2e;
 }
 
-/* RESPONSIVE (Mobile View) */
+
 @media (max-width: 700px) {
   .student-header {
     flex-direction: column;

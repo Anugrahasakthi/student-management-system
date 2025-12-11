@@ -171,7 +171,6 @@ const ManageEnrollments = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Student ID</th>
                   <th>Student</th>
                   <th>Email</th>
                   <th>Course</th>
@@ -187,7 +186,6 @@ const ManageEnrollments = () => {
                 {currentRows.map((e, i) => (
                   <tr key={e.enrollment_id}>
                     <td>{firstIndex + i + 1}</td>
-                    <td>{e.student_id}</td>
                     <td>{e.student_name}</td>
                     <td>{e.student_email}</td>
                     <td>{e.course_name}</td>
@@ -277,10 +275,9 @@ const ManageEnrollments = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Student ID</th>
+                  <th>Student Name</th>
                   <th>Course ID</th>
                   <th>Course</th>
-                  <th>Dropped By</th>
                   <th>Reason</th>
                   <th>Dropped At</th>
                 </tr>
@@ -290,10 +287,9 @@ const ManageEnrollments = () => {
                 {currentRows.map((d, i) => (
                   <tr key={d.id}>
                     <td>{firstIndex + i + 1}</td>
-                    <td>{d.student_id}</td>
+                    <td>{d.student_name}</td>
                     <td>{d.course_id}</td>
                     <td>{d.course_name}</td>
-                    <td>{d.dropped_by}</td>
                     <td>{d.reason}</td>
                     <td>{d.dropped_at}</td>
                   </tr>

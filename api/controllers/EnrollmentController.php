@@ -52,6 +52,38 @@ function enrollStudent() {
     response_json(200, "Enrollment successful");
 }
 
+// function getAllEnrollments() {
+//     global $pdo;
+
+//     $payload = auth();
+//     require_admin($payload);
+
+//     $sql = "
+//         SELECT 
+//             e.id AS enrollment_id,
+//             s.id AS student_id,
+//             s.name AS student_name,
+//             u.email AS student_email,
+//             c.course_name,
+//             c.duration,
+//             e.enrolled_at,
+//             e.end_date
+//         FROM enrollments e
+//         JOIN students s ON s.id = e.student_id
+//         JOIN users u ON u.id = s.user_id
+//         JOIN courses c ON c.id = e.course_id
+//         ORDER BY e.enrolled_at DESC
+//     ";
+
+//     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+//     foreach ($rows as &$row) {
+//         $row["days_left"] = (new DateTime())->diff(new DateTime($row["end_date"]))->format("%r%a");
+//     }
+
+//     response_json(200, "All enrollments", $rows);
+// }
+
 function getAllEnrollments() {
     global $pdo;
 
@@ -65,9 +97,11 @@ function getAllEnrollments() {
             s.name AS student_name,
             u.email AS student_email,
             c.course_name,
-            c.duration,
+            c.duration AS duration,
+
             e.enrolled_at,
-            e.end_date
+            e.end_date,
+            DATEDIFF(e.end_date, CURDATE()) AS days_left
         FROM enrollments e
         JOIN students s ON s.id = e.student_id
         JOIN users u ON u.id = s.user_id
@@ -77,8 +111,11 @@ function getAllEnrollments() {
 
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
+    // Optional: convert negative days to 'Expired'
     foreach ($rows as &$row) {
-        $row["days_left"] = (new DateTime())->diff(new DateTime($row["end_date"]))->format("%r%a");
+        if ($row["days_left"] < 0) {
+            $row["days_left"] = "Expired";
+        }
     }
 
     response_json(200, "All enrollments", $rows);

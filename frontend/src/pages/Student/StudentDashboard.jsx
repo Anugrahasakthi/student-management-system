@@ -77,7 +77,7 @@ const StudentDashboard = () => {
             <h2>{student.name}</h2>
             <p className="email">{student.email}</p>
             <p>Phone: {student.phone}</p>
-            <p>DOB: {student.dob}</p>
+            
 
             <div className="profile-buttons">
               <button
@@ -97,7 +97,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        {/* Summary Cards */}
+        
         <div className="summary-cards">
           <div className="summary-card">
             <h2>{summary.enrolled_total}</h2>
@@ -115,7 +115,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        {/* Announcements */}
+        
         <div className="announcement-box">
           <h2 className="announcement-title">Announcements</h2>
 

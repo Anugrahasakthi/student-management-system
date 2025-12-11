@@ -84,9 +84,7 @@
 .save-btn:hover {
   background: #1e7e34;
 }
-/* --------------------------------------------- */
-/* SUCCESS / ERROR POPUP */
-/* --------------------------------------------- */
+
 
 .profile-popup {
   position: fixed;
@@ -118,4 +116,18 @@
   10% { opacity: 1; transform: translate(-50%, 0); }
   90% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -15%); }
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-link {
+  text-decoration: none;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 20px;
+  /* font-weight: bold; */
 }

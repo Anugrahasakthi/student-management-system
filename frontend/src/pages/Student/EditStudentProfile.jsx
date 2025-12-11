@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import client from "../../api/client";
 import "../Css/editProfile.css";
 import cloudImg from "../../assets/clouds.png";
@@ -18,7 +19,7 @@ const EditStudentProfile = () => {
 
 
   const [popupMsg, setPopupMsg] = useState("");
-  const [popupType, setPopupType] = useState(""); // success / error
+  const [popupType, setPopupType] = useState(""); 
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -47,7 +48,7 @@ const EditStudentProfile = () => {
       setPopupType("");
 
       if (type === "success") {
-        window.location.href = "/student/profile"; // redirect
+        window.location.href = "/student/profile"; 
       }
 
     }, 2000);
@@ -121,7 +122,7 @@ const EditStudentProfile = () => {
           <button className="save-btn" onClick={handleSave}>
             Save Changes
           </button>
-
+          <Link className="profile-link" to="/student/profile">Back to MyProfile</Link>
         </div>
       </div>
     </div>

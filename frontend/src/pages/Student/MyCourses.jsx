@@ -7,10 +7,8 @@ import cloudImg from "../../assets/clouds.png";
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 4;
+  const coursesPerPage = 3;
 
   useEffect(() => {
     const loadMyCourses = async () => {
@@ -30,7 +28,7 @@ const MyCourses = () => {
 
   if (loading) return <h2>Loading...</h2>;
 
-  // Pagination Logic
+
   const lastIndex = currentPage * coursesPerPage;
   const firstIndex = lastIndex - coursesPerPage;
   const currentCourses = courses.slice(firstIndex, lastIndex);
@@ -59,7 +57,7 @@ const MyCourses = () => {
           ))
         )}
 
-        {/* Pagination Buttons */}
+        
         {courses.length > 0 && (
           <div className="pagination">
             <button

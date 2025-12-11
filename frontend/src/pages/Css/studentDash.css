@@ -6,7 +6,7 @@
   background-attachment: fixed;
 }
 
-/* PROFILE CARD */
+
 .profile-card {
   display: flex;
   background: #ffffff;
@@ -59,16 +59,16 @@
   border: none;
 }
 
-/* SUMMARY CARDS */
+
 .summary-cards {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .summary-card {
-  width: 30%;
-  padding: 25px;
+  width: 25%;
+  padding: 10px;
   background: #f7f9fc;
   border-radius: 12px;
   text-align: center;

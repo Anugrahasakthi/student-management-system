@@ -31,16 +31,13 @@ const AvailableCourses = () => {
     }
   };
 
-  // Fetch enrolled courses (match by course_name)
+  // Fetch enrolled courses
   const fetchEnrolledCourses = async () => {
     try {
       const res = await client.get("/me/courses");
-
       const enrolled = res.data.data || [];
-
       const names = enrolled.map((c) => c.course_name.trim());
       setEnrolledCourseNames(names);
-      
     } catch (err) {
       console.error("Error fetching enrolled:", err);
     }
@@ -51,9 +48,7 @@ const AvailableCourses = () => {
       await client.post("/enroll", { course_id });
       setMessage("Successfully enrolled!");
 
-      // Update UI
       setEnrolledCourseNames((prev) => [...prev, course_name.trim()]);
-      
     } catch (err) {
       if (err.response?.status === 409) {
         setMessage("Already enrolled in this course.");
@@ -67,21 +62,21 @@ const AvailableCourses = () => {
 
   if (loading) return <h2>Loading...</h2>;
 
-  // Pagination Logic
+  // Pagination logic
   const lastIndex = currentPage * rowsPerPage;
   const firstIndex = lastIndex - rowsPerPage;
   const currentRows = courses.slice(firstIndex, lastIndex);
-
   const totalPages = Math.ceil(courses.length / rowsPerPage);
 
   return (
     <div>
       <StudentHeader />
+
       <div
         className="AvailableCourse-cont"
         style={{ backgroundImage: `url(${cloudImg})` }}
       >
-        <h1 className="title">Courses List:</h1>
+        <h1 className="title">Courses List</h1>
 
         {message && <p className="success-message">{message}</p>}
 
@@ -89,22 +84,30 @@ const AvailableCourses = () => {
           <table className="courses-table">
             <thead>
               <tr>
+                <th>S.No</th>
                 <th>Course Name</th>
                 <th>Description</th>
-                <th>Enroll</th>
+                <th>Duration</th>
+                <th>Status</th>
               </tr>
             </thead>
 
             <tbody>
-              {currentRows.map((course) => {
+              {currentRows.map((course, index) => {
                 const isEnrolled = enrolledCourseNames.includes(
                   course.course_name.trim()
                 );
 
                 return (
                   <tr key={course.id}>
+                    <td>{firstIndex + index + 1}</td>
+
                     <td className="course-name">{course.course_name}</td>
+
                     <td>{course.course_description}</td>
+
+                    <td>{course.duration}</td>
+
                     <td>
                       {isEnrolled ? (
                         <span className="enrolled-tag">Enrolled</span>
@@ -126,7 +129,7 @@ const AvailableCourses = () => {
           </table>
         </div>
 
-        {/* PAGINATION */}
+        {/* Pagination */}
         <div className="pagination">
           <button
             disabled={currentPage === 1}
