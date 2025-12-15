@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import client from "../../api/client";
 import AdminHeader from "./AdminHeader";
 import "../Css/adminHeader.css";
@@ -19,6 +20,7 @@ const ManageCourses = () => {
     course_description: "",
     duration: ""
   });
+  const navigate=useNavigate();
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -51,21 +53,39 @@ const ManageCourses = () => {
     }, 2500);
   };
 
-  const handleUpdate = async (id) => {
-    try {
-      await client.put(`/courses/${id}`, form);
 
-      setCourses((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, ...form } : c))
-      );
 
-      setEditing(null);
-      showPopup("Course updated successfully!", "success");
-    } catch (err) {
-      console.error("Update error:", err);
-      showPopup("Error updating course", "error");
-    }
-  };
+const handleUpdate = async (id) => {
+  const original = courses.find(c => c.id === id);
+
+  const noChange =
+    original.course_name === form.course_name &&
+    original.course_description === form.course_description &&
+    original.duration === form.duration;
+
+  if (noChange) {
+    setEditing(null);        
+    return;                  
+  }
+
+  try {
+    await client.put(`/courses/${id}`, form);
+
+    setCourses(prev =>
+      prev.map(c => (c.id === id ? { ...c, ...form } : c))
+    );
+
+    setEditing(null);
+    showPopup("Course updated successfully!", "success");
+  } catch (err) {
+    console.error("Update error:", err);
+    showPopup(
+      err.response?.data?.message || "Error updating course",
+      "error"
+    );
+  }
+};
+
 
   const handleDelete = async (id) => {
     try {
@@ -104,7 +124,7 @@ const ManageCourses = () => {
 
           <button
             className="create-btn"
-            onClick={() => (window.location.href = "/admin/create-course")}
+            onClick={() => navigate("/admin/create-course")}
           >
             + Create Course
           </button>

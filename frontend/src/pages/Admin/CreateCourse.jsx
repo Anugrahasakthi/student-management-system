@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import client from "../../api/client";
 import AdminHeader from "./AdminHeader";
 import "../Css/createCourse.css";
@@ -9,6 +10,8 @@ const CreateCourse = () => {
     course_description: "",
     duration: ""
   });
+
+  const navigate=useNavigate();
 
   // Popup states (same as manageCourses)
   const [successMsg, setSuccessMsg] = useState("");
@@ -21,7 +24,7 @@ const CreateCourse = () => {
       setSuccessMsg("");
       setMsgType("");
       if (type === "success") {
-        window.location.href = "/admin/courses";
+        navigate("/admin/courses");
       }
     }, 2000);
   };
@@ -32,7 +35,7 @@ const CreateCourse = () => {
     try {
       const res = await client.post("/courses", form);
 
-      showPopup(res.data.message || "Course created successfully!", "success");
+      showPopup("Course created successfully!", "success");
 
     } catch (error) {
       if (error.response?.data?.message) {
