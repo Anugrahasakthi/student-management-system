@@ -10,6 +10,7 @@ function auth(): array {
    
     if (function_exists('apache_request_headers')) {
         $headers = apache_request_headers();
+        
     } else {
         $headers = [];
     }

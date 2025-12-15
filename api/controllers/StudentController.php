@@ -116,10 +116,10 @@ function getMyCourses($student_id) {
 }
 
 function studentDashboardSummary() {
-    global $pdo;
-
     $auth = auth();
+    require_student($auth);
     $student_id = $auth["student_id"];
+    global $pdo;
 
   
     $active = $pdo->prepare("SELECT COUNT(*) AS count FROM enrollments WHERE student_id = ?");

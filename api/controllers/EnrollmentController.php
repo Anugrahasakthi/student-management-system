@@ -52,38 +52,6 @@ function enrollStudent() {
     response_json(200, "Enrollment successful");
 }
 
-// function getAllEnrollments() {
-//     global $pdo;
-
-//     $payload = auth();
-//     require_admin($payload);
-
-//     $sql = "
-//         SELECT 
-//             e.id AS enrollment_id,
-//             s.id AS student_id,
-//             s.name AS student_name,
-//             u.email AS student_email,
-//             c.course_name,
-//             c.duration,
-//             e.enrolled_at,
-//             e.end_date
-//         FROM enrollments e
-//         JOIN students s ON s.id = e.student_id
-//         JOIN users u ON u.id = s.user_id
-//         JOIN courses c ON c.id = e.course_id
-//         ORDER BY e.enrolled_at DESC
-//     ";
-
-//     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
-//     foreach ($rows as &$row) {
-//         $row["days_left"] = (new DateTime())->diff(new DateTime($row["end_date"]))->format("%r%a");
-//     }
-
-//     response_json(200, "All enrollments", $rows);
-// }
-
 function getAllEnrollments() {
     global $pdo;
 
@@ -92,13 +60,12 @@ function getAllEnrollments() {
 
     $sql = "
         SELECT 
-            e.id AS enrollment_id,
+            e.id,
             s.id AS student_id,
             s.name AS student_name,
             u.email AS student_email,
             c.course_name,
-            c.duration AS duration,
-
+            c.duration,
             e.enrolled_at,
             e.end_date,
             DATEDIFF(e.end_date, CURDATE()) AS days_left
@@ -111,7 +78,6 @@ function getAllEnrollments() {
 
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-    // Optional: convert negative days to 'Expired'
     foreach ($rows as &$row) {
         if ($row["days_left"] < 0) {
             $row["days_left"] = "Expired";
@@ -162,6 +128,7 @@ function deleteEnrollment($id) {
     response_json(200, "Enrollment removed successfully");
 }
 
+
 function getDroppedEnrollments() {
     global $pdo;
 
@@ -169,10 +136,13 @@ function getDroppedEnrollments() {
     require_admin($payload);
 
     $sql = "
-        SELECT d.*, s.name AS student_name, c.course_name
+        SELECT 
+            d.*, 
+            s.name AS student_name, 
+            c.course_name
         FROM dropped_enrollments d
-        JOIN students s ON s.id = d.student_id
-        JOIN courses c ON c.id = d.course_id
+        LEFT JOIN students s ON s.id = d.student_id
+        LEFT JOIN courses c ON c.id = d.course_id
         ORDER BY d.dropped_at DESC
     ";
 
@@ -180,4 +150,3 @@ function getDroppedEnrollments() {
 
     response_json(200, "Dropped enrollments", $rows);
 }
-

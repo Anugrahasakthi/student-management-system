@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import client from "../../api/client";
 import StudentHeader from "./StudentHeader";
 import "../Css/studentDash.css";
@@ -8,19 +9,16 @@ const StudentDashboard = () => {
   const [student, setStudent] = useState(null);
   const [summary, setSummary] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
+  const navigate = useNavigate();
 
-  
+  // Check login token
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.replace("/");
+      navigate("/", { replace: true });
       return;
     }
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-      window.history.pushState(null, "", window.location.href);
-    };
-  }, []);
+  }, [navigate]);
 
   const loadProfile = async () => {
     const res = await client.get("/me/student");
@@ -62,13 +60,10 @@ const StudentDashboard = () => {
         className="student-dashboard-container"
         style={{ backgroundImage: `url(${cloudImg})` }}
       >
+        
         <div className="profile-card">
-
           <img
-            src={
-              student.profile_pic ||
-              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-            }
+            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
             alt="profile"
             className="profile-photo"
           />
@@ -77,19 +72,18 @@ const StudentDashboard = () => {
             <h2>{student.name}</h2>
             <p className="email">{student.email}</p>
             <p>Phone: {student.phone}</p>
-            
 
             <div className="profile-buttons">
               <button
                 className="btn-primary"
-                onClick={() => (window.location.href = "/student/my-courses")}
+                onClick={() => navigate("/student/my-courses")}
               >
                 View My Courses
               </button>
 
               <button
                 className="btn-secondary"
-                onClick={() => (window.location.href = "/student/profile/edit")}
+                onClick={() => navigate("/student/profile/edit")}
               >
                 Edit Profile
               </button>
@@ -97,7 +91,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        
+        {/* ============== SUMMARY CARDS ============== */}
         <div className="summary-cards">
           <div className="summary-card">
             <h2>{summary.enrolled_total}</h2>
@@ -115,7 +109,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        
+        {/* ============== ANNOUNCEMENTS ============== */}
         <div className="announcement-box">
           <h2 className="announcement-title">Announcements</h2>
 
@@ -129,10 +123,10 @@ const StudentDashboard = () => {
             ))
           )}
         </div>
-
       </div>
     </div>
   );
 };
 
 export default StudentDashboard;
+

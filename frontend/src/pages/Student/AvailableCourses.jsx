@@ -22,7 +22,7 @@ const AvailableCourses = () => {
   const fetchCourses = async () => {
     try {
       const res = await client.get("/courses");
-      const data = res.data.data || res.data;
+      const data = res.data.data;
       setCourses(data);
     } catch (err) {
       console.error("Error fetching courses:", err);
@@ -129,7 +129,7 @@ const AvailableCourses = () => {
           </table>
         </div>
 
-        {/* Pagination */}
+        
         <div className="pagination">
           <button
             disabled={currentPage === 1}

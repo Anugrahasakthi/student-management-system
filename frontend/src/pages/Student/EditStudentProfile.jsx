@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import client from "../../api/client";
 import "../Css/editProfile.css";
 import cloudImg from "../../assets/clouds.png";
@@ -20,6 +20,8 @@ const EditStudentProfile = () => {
 
   const [popupMsg, setPopupMsg] = useState("");
   const [popupType, setPopupType] = useState(""); 
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -48,7 +50,8 @@ const EditStudentProfile = () => {
       setPopupType("");
 
       if (type === "success") {
-        window.location.href = "/student/profile"; 
+        navigate("/student/profile", { replace: true });
+
       }
 
     }, 2000);
@@ -91,7 +94,7 @@ const EditStudentProfile = () => {
 
           <div className="form-row">
             <label>Email:</label>
-            <input type="text" name="email" value={student.email} onChange={handleChange} />
+            <input type="email" name="email" value={student.email} disabled />
           </div>
 
           <div className="form-row">

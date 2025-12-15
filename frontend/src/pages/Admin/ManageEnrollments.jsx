@@ -184,7 +184,7 @@ const ManageEnrollments = () => {
 
               <tbody>
                 {currentRows.map((e, i) => (
-                  <tr key={e.enrollment_id}>
+                  <tr key={e.id}>
                     <td>{firstIndex + i + 1}</td>
                     <td>{e.student_name}</td>
                     <td>{e.student_email}</td>
@@ -196,7 +196,7 @@ const ManageEnrollments = () => {
                     <td>
                       <button
                         className="unenroll-btn"
-                        onClick={() => handleUnenroll(e.enrollment_id)}
+                        onClick={() => handleUnenroll(e.id)}
                       >
                         Unenroll
                       </button>

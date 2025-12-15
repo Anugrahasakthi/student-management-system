@@ -14,7 +14,7 @@
 
 /* Card container */
 .edit-profile-card {
-  width: 40%;                          /* smaller = cleaner */
+  width: 40%;                          
   background: rgba(255, 255, 255, 0.95);
   padding: 35px 40px;
   border-radius: 15px;
@@ -111,23 +111,10 @@
   background-color: #dc3545;
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -20%); }
-  10% { opacity: 1; transform: translate(-50%, 0); }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -15%); }
-}
-
-.actions-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .profile-link {
   text-decoration: none;
   text-align: center;
   font-size: 12px;
   margin-left: 20px;
-  /* font-weight: bold; */
+  
 }

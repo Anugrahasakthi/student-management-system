@@ -17,7 +17,8 @@ require_once __DIR__ . '/../middleware.php';
       response_json(200, "Courses fetched successfully", $courses);
 
     } catch (Exception $e) {
-      response_json(500, "Failed to fetch courses: " . $e->getMessage());
+      error_log($e->getMessage());
+      response_json(500, "Failed to fetch courses: " );
     }
   }
 
