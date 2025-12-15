@@ -102,7 +102,7 @@ function deleteEnrollment($id) {
     // Proper DELETE JSON reading
     $raw = file_get_contents("php://input");
     $body = json_decode($raw, true);
-    if (!$body) $body = $_REQUEST;
+    
 
     $reason = $body["reason"] ?? "No reason provided";
     $dropped_by = ($payload["role"] === "admin") ? "admin" : "student";
@@ -143,7 +143,7 @@ function getDroppedEnrollments() {
         FROM dropped_enrollments d
         LEFT JOIN students s ON s.id = d.student_id
         LEFT JOIN courses c ON c.id = d.course_id
-        ORDER BY d.dropped_at DESC
+        ORDER BY d.id DESC
     ";
 
     $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
