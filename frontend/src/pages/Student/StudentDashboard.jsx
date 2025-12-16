@@ -91,7 +91,7 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        {/* ============== SUMMARY CARDS ============== */}
+        
         <div className="summary-cards">
           <div className="summary-card">
             <h2>{summary.enrolled_total}</h2>
@@ -109,9 +109,10 @@ const StudentDashboard = () => {
           </div>
         </div>
 
-        {/* ============== ANNOUNCEMENTS ============== */}
+        
         <div className="announcement-box">
-          <h2 className="announcement-title">Announcements</h2>
+          <h2 className="announcement-title"><i className="bi bi-journal-bookmark icon-books"></i> Announcement</h2>
+          <p className="announcement-desc">Enroll now to the newly added Courses</p>
 
           {announcements.length === 0 ? (
             <p className="no-announcement">No announcements available.</p>

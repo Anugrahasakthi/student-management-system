@@ -114,8 +114,9 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          {emailError && <p className="error-text">{emailError}</p>}
+          
         </div>
+        {emailError && <p className="error-text">{emailError}</p>}
         <div className="label-input">
           <label>Phone</label>
           <input
@@ -154,10 +155,9 @@ const Register = () => {
             >
               <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </span>
-          </div>
-
-          {passwordError && <p className="error-text">{passwordError}</p>}
+          </div>       
         </div>
+        {passwordError && <p className="error-text">{passwordError}</p>}
         <div className="label-input">
           <label>Role</label>
           <select name="role" value={formData.role} onChange={handleChange}>

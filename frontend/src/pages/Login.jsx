@@ -115,7 +115,7 @@ const Login = () => {
           <p
             className={
               emailError.startsWith("Invalid")
-                ? "error-text"
+                ? "error-texts"
                 : "hint-text"
             }
           >

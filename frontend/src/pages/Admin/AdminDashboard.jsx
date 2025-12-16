@@ -12,18 +12,28 @@ const AdminDashboard = () => {
   const [topCourses, setTopCourses] = useState([]);
   const [topStudents, setTopStudents] = useState([]);
 
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     window.location.replace("/");
+  //     return;
+  //   }
+
+  //   window.history.pushState(null, "", window.location.href);
+  //   window.onpopstate = function () {
+  //     window.history.pushState(null, "", window.location.href);
+  //   };
+  // }, []);
+
+    // Check login token
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.replace("/");
+      navigate("/", { replace: true });
       return;
     }
-
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-      window.history.pushState(null, "", window.location.href);
-    };
-  }, []);
+  }, [navigate]);
 
   
   useEffect(() => {
@@ -114,12 +124,12 @@ const AdminDashboard = () => {
         <div className="dashboard-cards">
           <div className="dash-card" onClick={() => navigate("/admin/students")} style={{ cursor: "pointer" }}>
             <h2>{stats.students}</h2>
-            <p>Students</p>
+            <p>Reg Students</p>
           </div>
 
           <div className="dash-card" onClick={() => navigate("/admin/courses")} style={{ cursor: "pointer" }}>
             <h2>{stats.courses}</h2>
-            <p>Courses</p>
+            <p>Available Courses</p>
           </div>
         </div>
 

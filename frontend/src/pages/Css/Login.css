@@ -129,12 +129,18 @@
 .msg-error { color: red; }
 .msg-success { color: green; }
 
-.hint-text,
-.error-text {
+.hint-text{
+  text-align: left;
+  font-size: 13px;
+  /* margin: -4px 0 6px; */
+  margin-left:130px;
+}
+.error-texts {
   text-align: center;
   font-size: 13px;
-  margin: -4px 0 6px;
+  margin-left:10px;
+  /* margin: -4px 0 6px; */
 }
 
-.error-text { color: red; }
+.error-texts { color: red; }
 .hint-text { color: #555; }

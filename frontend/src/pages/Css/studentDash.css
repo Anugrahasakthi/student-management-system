@@ -115,3 +115,12 @@
   font-weight: 500;
   box-shadow: 0 2px 5px rgba(0,0,0,0.06);
 }
+.icon-books {
+  color:greenyellow;   /* navy blue */
+  background-color: orange;
+  /* font-size: 24px;  */
+}
+.announcement-desc{
+  color:green;
+  text-align: center;
+}
