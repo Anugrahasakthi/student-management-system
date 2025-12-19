@@ -49,6 +49,46 @@ function auth(): array {
     }
 }
 
+
+// function auth(): array {
+
+//     $authHeader = null;
+
+//     // 1️⃣ Most reliable (works in many cases)
+//     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+//         $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+//     }
+//     // 2️⃣ Some Apache configs
+//     elseif (isset($_SERVER['Authorization'])) {
+//         $authHeader = $_SERVER['Authorization'];
+//     }
+//     // 3️⃣ Fallback (your original working logic)
+//     elseif (function_exists('apache_request_headers')) {
+//         $headers = apache_request_headers();
+//         foreach ($headers as $key => $value) {
+//             if (strtolower($key) === 'authorization') {
+//                 $authHeader = $value;
+//                 break;
+//             }
+//         }
+//     }
+
+//     if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+//         response_json(401, 'Missing or invalid Authorization header');
+//     }
+
+//     $token = substr($authHeader, 7);
+
+//     try {
+//         return jwt_decode($token);
+//     } catch (Exception $e) {
+//         response_json(401, 'Token invalid or expired');
+//     }
+// }
+
+
+
+
 //ADMIN - access only
  
 function require_admin(array $payload): array {

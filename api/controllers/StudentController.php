@@ -56,6 +56,12 @@ function myStudentProfile() {
   response_json(200, "Student profile", $row);
 }
 
+
+
+
+
+
+
 function studentUpdateProfile() {
     $payload = auth();
     require_student($payload);
@@ -140,3 +146,8 @@ function studentDashboardSummary() {
         "dropped" => $droppedCount
     ]);
 }
+
+
+
+
+

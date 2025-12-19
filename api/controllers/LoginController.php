@@ -40,6 +40,9 @@ function loginController(): void {
     'email'       => $user['email'],
   ];
 
+
+ 
+
   $token = jwt_encode($payload);
 
   response_json(200, 'Login successful', [
