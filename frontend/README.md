@@ -1,16 +1,139 @@
-# React + Vite
+# Student Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple full-stack Student Management System built using **PHP (Backend API)** and **React (Frontend)**.  
+This project focuses on role-based authentication and real-world CRUD operations for students and courses.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About the Project
 
-## React Compiler
+This application allows:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Admins** to manage students, courses, and enrollments
+- **Students** to log in, view available courses, and manage their enrollments
+- Secure authentication using **JWT**
+- Clean separation between frontend and backend
 
-## Expanding the ESLint configuration
+The project is built from scratch without using any backend frameworks, to clearly understand how APIs, authentication, and role handling work.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠 Tech Stack
+
+### Backend
+- PHP 
+- MySQL
+- JWT Authentication
+- REST API
+- Apache (.htaccess routing)
+- CORS configuration for frontend access
+
+### Frontend
+- React (Vite)
+- Axios
+- React Router
+
+---
+
+## Features
+
+### Admin
+- Admin login
+- View registered students
+- Add, edit, delete courses
+- View student enrollments,enroll and unenroll students from the courses
+
+### Student
+- Student login
+- View available courses
+- Enroll in courses
+- Unenroll from courses
+- View enrolled courses
+
+---
+
+## Project Structure
+
+SMS/
+├── api/
+│ ├── controllers/
+│ │ ├── AdminController.php
+│ │ ├── CourseController.php
+│ │ ├── EnrollmentController.php
+│ │ ├── LoginController.php
+│ │ ├── RegisterController.php
+│ │ └── StudentController.php
+│ │
+│ ├── utils/
+│ │ ├── Jwt.php
+│ │ ├── Response.php
+│ │ └── Validator.php
+│ │
+│ ├── config.php
+│ ├── cors.php
+│ ├── db.php
+│ ├── middleware.php
+│ ├── index.php
+│ └── .htaccess
+│
+├── frontend/
+│ ├── public/
+│ ├── src/
+│ │ ├── api/
+│ │ │ └── client.js
+│ │ ├── assets/
+│ │ ├── pages/
+│ │ │ ├── Admin/
+│ │ │ ├── Student/
+│ │ │ └── Css/
+│ │ ├── Header.jsx
+│ │ ├── Home.jsx
+│ │ ├── Login.jsx
+│ │ ├── Register.jsx
+│ │ ├── App.jsx
+│ │ ├── main.jsx
+│ │ └── index.css
+│ │
+│ ├── index.html
+│ ├── package.json
+│ ├── vite.config.js
+│ └── README.md
+│
+└── README.md
+
+## ⚙️ Requirements
+
+### Backend (PHP)
+- XAMPP (Apache + MySQL)
+- PHP 8+
+
+### Frontend (React)
+- Node.js (v18 or later)
+- npm
+
+> Note: Node.js is required only to install dependencies and run the React frontend.  
+> The backend is fully handled using PHP and MySQL.
+
+---
+
+## How to Run the Project
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Anugrahasakthi/student-management-system.git
+cd student-management-system
+
+### Backend Setup (PHP)
+
+1. Move the SMS folder into htdocs.
+
+2. Start Apache and MySQL in XAMPP.
+
+3. Create a MySQL database (example: sms_db).
+
+4. Import your SQL file into the database.
+
+5. Update database credentials in api/db.php.
+
+6. Make sure Apache rewrite module is enabled.
