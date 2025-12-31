@@ -1,0 +1,29 @@
+.staff-dashboard {
+  padding: 30px;
+}
+
+.staff-cards {
+  display: flex;
+  gap: 20px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.staff-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.staff-card:hover {
+  transform: translateY(-5px);
+}
+
+.staff-card h3 {
+  margin-bottom: 8px;
+  color: #000d5a;
+}

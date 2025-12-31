@@ -161,6 +161,7 @@ const Register = () => {
           <label>Role</label>
           <select name="role" value={formData.role} onChange={handleChange}>
             <option value="student">student</option>
+            <option value="staff">staff</option>
             <option value="admin">admin</option>
           </select>
         </div>

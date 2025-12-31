@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import client from "../api/client";
 import "../pages/Css/Login.css";
 
@@ -7,14 +7,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+
   const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Email helpers
   const handleEmailFocus = () => {
     if (!email) setEmailError("Eg: example@domain.com");
   };
@@ -37,6 +41,11 @@ const Login = () => {
     setError("");
     setSuccess("");
 
+    if (!selectedRole) {
+      setError("Please select a role");
+      return;
+    }
+
     if (emailError.startsWith("Invalid")) return;
 
     try {
@@ -45,24 +54,27 @@ const Login = () => {
       if (res.data.status === 200) {
         const { token, role: backendRole, user } = res.data.data;
 
-        if (backendRole !== role) {
-          setError("Selected role does not match your account.");
+        // 🔴 IMPORTANT CHECK
+        if (backendRole !== selectedRole) {
+          setError("Selected role does not match your account");
           return;
         }
 
+        // Save auth
         localStorage.setItem("token", token);
         localStorage.setItem("role", backendRole);
         localStorage.setItem("user", JSON.stringify(user));
 
-        setSuccess("Login successful! Redirecting...");
-        setTimeout(() => {
-          window.location.href =
-            backendRole === "admin"
-              ? "/admin/dashboard"
-              : "/student/dashboard";
-        }, 800);
-      } else {
-        setError(res.data.message || "Invalid credentials");
+        setSuccess("Login successful!");
+
+        // Redirect
+        if (backendRole === "admin") {
+          navigate("/admin/dashboard", { replace: true });
+        } else if (backendRole === "staff") {
+          navigate("/staff/dashboard", { replace: true });
+        } else {
+          navigate("/student/dashboard", { replace: true });
+        }
       }
     } catch (err) {
       setError(err.response?.data?.message || "Server not reachable");
@@ -77,22 +89,25 @@ const Login = () => {
         {error && <p className="msg-error">{error}</p>}
         {success && <p className="msg-success">{success}</p>}
 
-        
+        {/* ROLE DROPDOWN */}
         <div className="form-row">
           <label>Role</label>
           <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            required
+            value={selectedRole}
+            onChange={(e) => setSelectedRole(e.target.value)}
             className="role-box"
+            required
           >
-            <option value="" disabled hidden>Select Role</option>
+            <option value="" disabled>
+              Select Role
+            </option>
             <option value="admin">Admin</option>
             <option value="student">Student</option>
+            <option value="staff">Staff</option>
           </select>
         </div>
 
-       
+        {/* EMAIL */}
         <div className="form-row">
           <label>Email</label>
           <div className="email-box">
@@ -123,7 +138,7 @@ const Login = () => {
           </p>
         )}
 
-        
+        {/* PASSWORD */}
         <div className="form-row">
           <label>Password</label>
           <div className="pass-box">
@@ -138,9 +153,7 @@ const Login = () => {
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
             >
-              <FontAwesomeIcon
-                icon={showPassword ? faEye : faEyeSlash}
-              />
+              <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </span>
           </div>
         </div>
@@ -158,3 +171,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -1,106 +1,152 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";        
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import StudentProfile from "./pages/Student/StudentProfile.jsx";
-import EditStudentProfile from "./pages/Student/EditStudentProfile.jsx";
 
+/* student */
 import StudentDashboard from "./pages/Student/StudentDashboard";
+import StudentProfile from "./pages/Student/StudentProfile";
+import EditStudentProfile from "./pages/Student/EditStudentProfile";
 import AvailableCourses from "./pages/Student/AvailableCourses";
 import MyCourses from "./pages/Student/MyCourses";
+
+/* admin */
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ManageStudents from "./pages/Admin/ManageStudents";
 import ManageCourses from "./pages/Admin/ManageCourses";
 import CreateCourse from "./pages/Admin/CreateCourse";
 import ManageEnrollments from "./pages/Admin/ManageEnrollments";
 
+/* staff */
+import StaffDashboard from "./pages/Staff/StaffDashboard";
+import StaffProfile from "./pages/Staff/StaffProfile";
+import EditStaffProfile from "./pages/Staff/EditStaffProfile";
+
+/* protected route */
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-
-  const isLoggedIn = Boolean(token);
-  const isStudent = isLoggedIn && role === "student";
-  const isAdmin = isLoggedIn && role === "admin";
-
   return (
     <BrowserRouter>
       <Routes>
+        {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
+        {/* STUDENT */}
         <Route
-          path="/home"
+          path="/student/dashboard"
           element={
-            isLoggedIn
-              ? isStudent
-                ? <Navigate to="/student/dashboard" replace />
-                : isAdmin
-                  ? <Navigate to="/admin/dashboard" replace />
-                  : <Navigate to="/" replace />
-              : <Navigate to="/" replace />
+            <ProtectedRoute allowedRoles={["student"]}>
+              <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/profile"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <StudentProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/profile/edit"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <EditStudentProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/courses"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <AvailableCourses />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/my-courses"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <MyCourses />
+            </ProtectedRoute>
           }
         />
 
-      {/* admin routes */}
+        {/* ADMIN */}
         <Route
           path="/admin/dashboard"
-          element={isAdmin ? <AdminDashboard /> : <Navigate to="/" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
-
         <Route
           path="/admin/students"
-          element={isAdmin ? <ManageStudents /> : <Navigate to="/" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <ManageStudents />
+            </ProtectedRoute>
+          }
         />
-
         <Route
           path="/admin/courses"
-          element={isAdmin ? <ManageCourses /> : <Navigate to="/" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <ManageCourses />
+            </ProtectedRoute>
+          }
         />
-
         <Route
           path="/admin/create-course"
-          element={isAdmin ? <CreateCourse /> : <Navigate to="/" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <CreateCourse />
+            </ProtectedRoute>
+          }
         />
-
         <Route
           path="/admin/enrollments"
-          element={isAdmin ? <ManageEnrollments /> : <Navigate to="/" replace />}
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <ManageEnrollments />
+            </ProtectedRoute>
+          }
         />
 
-
-        {/*student routes*/}
+        {/* STAFF */}
         <Route
-          path="/student/dashboard"
-          element={isStudent ? <StudentDashboard /> : <Navigate to="/" replace />}
+          path="/staff/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["staff"]}>
+              <StaffDashboard />
+            </ProtectedRoute>
+          }
         />
-
         <Route
-          path="/student/courses"
-          element={isStudent ? <AvailableCourses /> : <Navigate to="/" replace />}
+          path="/staff/profile"
+          element={
+            <ProtectedRoute allowedRoles={["staff"]}>
+              <StaffProfile />
+            </ProtectedRoute>
+          }
         />
-
         <Route
-          path="/student/my-courses"
-          element={isStudent ? <MyCourses /> : <Navigate to="/" replace />}
+          path="/staff/profile/edit"
+          element={
+            <ProtectedRoute allowedRoles={["staff"]}>
+              <EditStaffProfile />
+            </ProtectedRoute>
+          }
         />
 
-        <Route
-          path="/student/profile"
-          element={isStudent ? <StudentProfile /> : <Navigate to="/" replace />}
-        />
-
-        <Route
-          path="/student/profile/edit"
-          element={isStudent ? <EditStudentProfile /> : <Navigate to="/" replace />}
-        />
-
-
+        {/* FALLBACK */}
         <Route path="*" element={<h1>404 Not Found</h1>} />
-
       </Routes>
     </BrowserRouter>
   );
