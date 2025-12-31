@@ -15,6 +15,7 @@ require_once __DIR__ . '/controllers/StudentController.php';
 require_once __DIR__ . '/controllers/CourseController.php';
 require_once __DIR__ . '/controllers/EnrollmentController.php';
 require_once __DIR__ . '/controllers/AdminController.php';
+require_once __DIR__ . '/controllers/StaffController.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -65,6 +66,19 @@ if ($method === 'GET' && $normalized === '/dropped-enrollments') return getDropp
 
 if ($method === 'GET' && $normalized === '/students') return listStudents();
 if ($method === 'GET' && $normalized === '/admin/stats') return adminStats();
+
+
+if ($method === 'GET' && $normalized === '/staff/dashboard') {
+    return staffDashboardController();
+}
+if ($method === 'GET' && $normalized === '/me/staff') {
+    return getStaffProfile();
+}
+if ($method === 'PUT' && $normalized === '/staff/update-profile') {
+    return updateStaffProfile();
+}
+
+
 
 
 

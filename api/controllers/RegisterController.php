@@ -5,7 +5,7 @@ require_once __DIR__ . '/../utils/Response.php';
 function registerController() {
   $data = json_decode(file_get_contents("php://input"), true);
 
-  // Basic fields (common for both roles)
+  // Basic fields (common for all roles)
   $email = trim($data['email'] ?? '');
   $password = trim($data['password'] ?? '');
   $role = trim($data['role'] ?? '');
@@ -24,8 +24,9 @@ function registerController() {
     response_json(400, 'Invalid email format');
   }
 
-  if (!in_array($role, ['admin', 'student'])) {
-    response_json(400, 'Role must be either admin or student');
+  // ✅ CHANGE 1: allow staff role
+  if (!in_array($role, ['admin', 'student', 'staff'])) {
+    response_json(400, 'Role must be admin, student, or staff');
   }
 
   global $pdo;
@@ -39,10 +40,13 @@ function registerController() {
 
   // Insert into users table
   $hash = password_hash($password, PASSWORD_BCRYPT);
-  $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)");
+  $stmt = $pdo->prepare(
+    "INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)"
+  );
   $stmt->execute([$email, $hash, $role]);
 
   $userId = $pdo->lastInsertId();
+
   // Insert into role-specific table
   if ($role === 'student') {
     $stmt = $pdo->prepare("
@@ -50,12 +54,21 @@ function registerController() {
       VALUES (?, ?, ?, ?, ?)
     ");
     $stmt->execute([$userId, $email, $name, $phone, $dob]);
+
   } elseif ($role === 'admin') {
     $stmt = $pdo->prepare("
       INSERT INTO admin (user_id, email, name, phone, dob)
       VALUES (?, ?, ?, ?, ?)
     ");
     $stmt->execute([$userId, $email, $name, $phone, $dob]);
+
+  // ✅ CHANGE 2: add staff block
+  } elseif ($role === 'staff') {
+    $stmt = $pdo->prepare("
+      INSERT INTO staff (user_id, email, name, phone)
+      VALUES (?, ?, ?, ?)
+    ");
+    $stmt->execute([$userId, $email, $name, $phone]);
   }
 
   // Success response

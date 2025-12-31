@@ -115,3 +115,12 @@ function is_admin(array $payload): bool {
 function is_student(array $payload): bool {
     return ($payload['role'] ?? null) === 'student';
 }
+
+
+// STAFF - access only
+function require_staff(array $payload): array {
+    if (($payload['role'] ?? null) !== 'staff') {
+        response_json(403, 'Access denied: Staff only');
+    }
+    return $payload;
+}
