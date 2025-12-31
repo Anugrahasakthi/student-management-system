@@ -13,20 +13,7 @@ const AdminDashboard = () => {
   const [topStudents, setTopStudents] = useState([]);
 
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     window.location.replace("/");
-  //     return;
-  //   }
 
-  //   window.history.pushState(null, "", window.location.href);
-  //   window.onpopstate = function () {
-  //     window.history.pushState(null, "", window.location.href);
-  //   };
-  // }, []);
-
-    // Check login token
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {

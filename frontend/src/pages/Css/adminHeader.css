@@ -1,37 +1,43 @@
-/* Full header bar */
+/* =========================
+   HEADER BASE (MOBILE VIEW)
+   ========================= */
+
 .app-header {
-  background-color: #05204a; /* Dark navy blue */
+  background-color: #05204a;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 30px;
+  flex-direction: column; 
+  gap: 15px;
+  padding: 15px 20px;
   color: white;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-/* Left text (Admin Panel) */
+/* Logo */
 .logo-text {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
+  text-align: center; 
 }
 
-/* Right side nav menu */
+/* Navigation */
 .nav-links {
   display: flex;
-  align-items: center;
-  gap: 25px;
+  flex-direction: column; 
+  gap: 12px;
+  align-items: stretch;
 }
 
-/* Menu links */
+/* Nav links */
 .nav-links a {
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   text-decoration: none;
   font-weight: 500;
-  padding: 6px 12px;
+  padding: 10px;
   border-radius: 6px;
+  text-align: left;
   transition: 0.2s ease-in-out;
 }
 
@@ -46,12 +52,48 @@
   background-color: #e63946;
   border: none;
   color: white;
-  padding: 8px 16px;
+  padding: 10px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
+  width: 100%; 
 }
 
 .logout-btn:hover {
   background-color: #d62839;
+}
+
+/* =========================
+   LAPTOP / DESKTOP VIEW
+   ========================= */
+
+@media (min-width: 1024px) {
+  .app-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 30px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    text-align: left;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .nav-links a {
+    font-size: 18px;
+    padding: 6px 12px;
+  }
+
+  .logout-btn {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
 }

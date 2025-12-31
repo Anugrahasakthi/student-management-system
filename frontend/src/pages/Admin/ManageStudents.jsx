@@ -37,15 +37,15 @@ const ManageStudents = () => {
   };
 
   if (loading) return <h2>Loading...</h2>;
-
   return (
-    <div>
-      <AdminHeader />
+  <div>
+    <AdminHeader />
 
-      <div className="manage-container">
-        <h1>Registered Students</h1>
-        
+    <div className="manage-container">
+      <h1>Registered Students</h1>
 
+      {/* ✅ TABLE CARD WRAPPER */}
+      
         <table className="students-table">
           <thead>
             <tr>
@@ -57,7 +57,6 @@ const ManageStudents = () => {
               <th>Courses</th>
             </tr>
           </thead>
-
 
           <tbody>
             {currentRows.map((s, index) => (
@@ -72,35 +71,102 @@ const ManageStudents = () => {
             ))}
           </tbody>
         </table>
+      </div>
 
-        <div className="pagination">
+      {/* Pagination */}
+      <div className="pagination">
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages)].map((_, i) => (
           <button
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage === 1}
+            key={i}
+            className={currentPage === i + 1 ? "active-page" : ""}
+            onClick={() => goToPage(i + 1)}
           >
-            Prev
+            {i + 1}
           </button>
+        ))}
 
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              className={currentPage === i + 1 ? "active-page" : ""}
-              onClick={() => goToPage(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
-
-          <button
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
-  );
+  
+);
+
+
+  // return (
+  //   <div>
+  //     <AdminHeader />
+
+  //     <div className="manage-container">
+  //       <h1>Registered Students</h1>
+        
+
+  //       <table className="students-table">
+  //         <thead>
+  //           <tr>
+  //             <th>S.No</th>
+  //             <th>Name</th>
+  //             <th>Email</th>
+  //             <th>Phone</th>
+  //             <th>DOB</th>
+  //             <th>Courses</th>
+  //           </tr>
+  //         </thead>
+
+
+  //         <tbody>
+  //           {currentRows.map((s, index) => (
+  //             <tr key={s.id}>
+  //               <td>{indexOfFirst + index + 1}</td>
+  //               <td>{s.name}</td>
+  //               <td>{s.email}</td>
+  //               <td>{s.phone}</td>
+  //               <td>{s.dob}</td>
+  //               <td>{s.courses || "No courses"}</td>
+  //             </tr>
+  //           ))}
+  //         </tbody>
+  //       </table>
+
+  //       <div className="pagination">
+  //         <button
+  //           onClick={() => goToPage(currentPage - 1)}
+  //           disabled={currentPage === 1}
+  //         >
+  //           Prev
+  //         </button>
+
+  //         {[...Array(totalPages)].map((_, i) => (
+  //           <button
+  //             key={i}
+  //             className={currentPage === i + 1 ? "active-page" : ""}
+  //             onClick={() => goToPage(i + 1)}
+  //           >
+  //             {i + 1}
+  //           </button>
+  //         ))}
+
+  //         <button
+  //           onClick={() => goToPage(currentPage + 1)}
+  //           disabled={currentPage === totalPages}
+  //         >
+  //           Next
+  //         </button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default ManageStudents;

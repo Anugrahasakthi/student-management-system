@@ -137,3 +137,12 @@ cd student-management-system
 5. Update database credentials in api/db.php.
 
 6. Make sure Apache rewrite module is enabled.
+Backend API base URL:http://localhost/SMS/api
+
+### Frontend Setup (React)
+cd frontend
+npm install
+npm run dev
+
+Frontend runs at:http://localhost:5173
+
