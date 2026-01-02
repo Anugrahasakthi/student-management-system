@@ -53,12 +53,12 @@ const StudentDashboard = () => {
   if (!student || !summary) return <h2>Loading...</h2>;
 
   return (
-    <div>
+    <div >
       <StudentHeader />
 
       <div
         className="student-dashboard-container"
-        style={{ backgroundImage: `url(${cloudImg})` }}
+        style={{ backgroundColor: "lightblue"}}
       >
         
         <div className="profile-card">

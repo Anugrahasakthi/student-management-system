@@ -13,7 +13,7 @@ const StudentHeader = () => {
   };
 
   return (
-    <div className="student-header">
+    <div className="student-header" >
       <div className="logo">Student Panel</div>
 
       <nav>

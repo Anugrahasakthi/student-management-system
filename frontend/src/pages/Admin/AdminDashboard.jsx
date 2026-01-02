@@ -92,19 +92,19 @@ const AdminDashboard = () => {
           alignItems: "center",
           fontSize: "26px",
           fontWeight: "600",
-          background: "white",
+          background: "lightblue",
           overflow: "hidden",
         }}
       >
-        Loading...
+        Loading...  
       </div>
     );
 
   return (
-    <div>
+    <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }} >
       <AdminHeader />
 
-      <div className="admin-container">
+      <div className="admin-container" style={{ backgroundColor: "lightblue" }}>
         <h1>Admin Dashboard</h1>
         <hr />
 

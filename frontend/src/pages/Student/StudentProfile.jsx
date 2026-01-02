@@ -32,7 +32,7 @@ const StudentProfile = () => {
   if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div className="profile-view-page" style={{ backgroundImage: `url(${cloudImg})` }}>
+    <div className="profile-view-page" style={{ backgroundColor: "lightblue"}}>
       
       
       <div className="profile-header">
@@ -55,7 +55,7 @@ const StudentProfile = () => {
       </div>
 
       
-      <div className="profile-view-card">
+      <div className="profile-view-card" >
         <h2 className="profile-title">My Profile</h2>
 
         <div className="profile-row"><strong>Name:</strong> {student.name}</div>

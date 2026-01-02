@@ -28,7 +28,7 @@ const StaffMyCourses = () => {
     <>
       <StaffHeader />
 
-      <div className="staff-courses-container">
+      <div className="staff-courses-container" style={{ backgroundColor: "lightblue" }}>
         <h2>My Assigned Courses</h2>
 
         {courses.length === 0 ? (

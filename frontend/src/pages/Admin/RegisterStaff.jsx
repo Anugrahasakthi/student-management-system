@@ -38,10 +38,10 @@ const RegisterStaff = () => {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }}>
       <AdminHeader />
 
-      <div className="assign-container">
+      <div className="assign-container" style={{ backgroundColor: "lightblue" }}>
         <h2>Register Staff</h2>
 
         {msg && <p className={`msg ${type}`}>{msg}</p>}
@@ -69,7 +69,7 @@ const RegisterStaff = () => {
           Register Staff
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

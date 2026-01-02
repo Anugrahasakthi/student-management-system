@@ -113,7 +113,7 @@ const StaffCoursesWithStudents = () => {
     <>
       <StaffHeader />
 
-      <div className="staff-courses-container">
+      <div className="staff-courses-container" style={{ backgroundColor: "lightblue" }}>
         <h1>My Courses & Students</h1>
 
         {courses.length === 0 ? (

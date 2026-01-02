@@ -64,7 +64,7 @@ const EditStaffProfile = () => {
   return (
     <div
       className="edit-profile-page"
-      style={{ backgroundImage: `url(${cloudImg})` }}
+      style={{ backgroundColor: "lightblue" }}
     >
       {popupMsg && (
         <div className={`profile-popup ${popupType}`}>{popupMsg}</div>

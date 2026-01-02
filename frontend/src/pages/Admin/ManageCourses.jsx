@@ -111,14 +111,14 @@ const handleUpdate = async (id) => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }}>
       <AdminHeader />
 
       {successMsg && (
         <div className={`success-popup ${msgType}`}>{successMsg}</div>
       )}
 
-      <div className="manage-container">
+      <div className="manage-container" style={{ backgroundColor: "lightblue" }}>
         <div className="title-container">
           <h1 className="manage-title">Courses</h1>
 

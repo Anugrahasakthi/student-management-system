@@ -69,12 +69,12 @@ const AvailableCourses = () => {
   const totalPages = Math.ceil(courses.length / rowsPerPage);
 
   return (
-    <div>
+    <div >
       <StudentHeader />
 
       <div
         className="AvailableCourse-cont"
-        style={{ backgroundImage: `url(${cloudImg})` }}
+        style={{ backgroundColor: "lightblue"}}
       >
         <h1 className="title">Courses List</h1>
 

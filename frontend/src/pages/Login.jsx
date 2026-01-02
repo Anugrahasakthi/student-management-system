@@ -82,7 +82,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ backgroundColor: "lightblue" }}>
       <form className="login-card" onSubmit={handleSubmit}>
         <h1 className="login-heading">Login</h1>
 

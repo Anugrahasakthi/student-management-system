@@ -8,20 +8,6 @@ import "../pages/Css/Home.css";
 const Home = () => {
 
   
-
-  // useEffect(() => {
-  //   // STEP 1: Replace the current entry so Login is removed from history
-  //   window.history.replaceState(null, "", window.location.href);
-
-  //   // STEP 2: Push a new state so back button has no previous page
-  //   window.history.pushState(null, "", window.location.href);
-
-  //   // STEP 3: Block back navigation permanently
-  //   window.onpopstate = function () {
-  //     window.history.pushState(null, "", window.location.href);
-  //   };
-  // }, []);
-
   useEffect(() => {
   // STEP 1: Replace the current entry
   window.history.replaceState(null, "", window.location.href);
@@ -35,7 +21,7 @@ const Home = () => {
   };
   window.onpopstate = blockBack;
 
-  // ⭐ CLEANUP WHEN LEAVING HOME PAGE
+  // CLEANUP WHEN LEAVING HOME PAGE
   return () => {
     window.onpopstate = null;
   };
@@ -46,7 +32,7 @@ const Home = () => {
    return (
     <div
       className="home-back"
-      style={{ backgroundImage: `url(${cloudImg})` }}
+      style={{ backgroundColor: "lightblue" }}
     >
       <img className="logo-top-left" src={Tao} alt="logo" />
 

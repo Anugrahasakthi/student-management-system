@@ -70,12 +70,7 @@ const EditStudentProfile = () => {
   if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div
-      className="edit-profile-page"
-      style={{ backgroundImage: `url(${cloudImg})` }}
-    >
-
-      
+    <div className="edit-profile-page" style={{ backgroundColor: "lightblue", minHeight: "120vh" }} >      
       {popupMsg && (
         <div className={`profile-popup ${popupType}`}>
           {popupMsg}

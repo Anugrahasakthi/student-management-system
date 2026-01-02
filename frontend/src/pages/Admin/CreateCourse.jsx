@@ -47,7 +47,7 @@ const CreateCourse = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "lightblue" }}>
       <AdminHeader />
 
       {/* Popup */}
@@ -57,7 +57,7 @@ const CreateCourse = () => {
         </div>
       )}
 
-      <div className="form-container">
+      <div className="form-container" style={{ backgroundColor: "lightblue" }}>
         <h1>Create New Course</h1>
 
         <div className="create-course-page">

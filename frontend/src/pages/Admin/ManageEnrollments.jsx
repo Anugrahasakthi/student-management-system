@@ -128,10 +128,10 @@ const ManageEnrollments = () => {
       : Math.ceil(dropped.length / rowsPerPage);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }}>
       <AdminHeader />
 
-      <div className="enroll-page-container">
+      <div className="enroll-page-container" style={{ backgroundColor: "lightblue" }}>
         <h1 className="page-title">Manage Enrollments</h1>
 
        

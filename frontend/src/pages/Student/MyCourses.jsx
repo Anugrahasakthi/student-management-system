@@ -36,11 +36,11 @@ const MyCourses = () => {
   const totalPages = Math.ceil(courses.length / coursesPerPage);
 
   return (
-    <div>
+    <div >
       <StudentHeader />
       <div
         className="mycourseContainer"
-        style={{ backgroundImage: `url(${cloudImg})` }}
+        style={{ backgroundColor: "lightblue", minHeight: "120vh" }}
       >
         <h1 className="course-head">My Courses ({courses.length})</h1>
 

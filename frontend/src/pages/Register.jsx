@@ -87,7 +87,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="register-container" style={{ backgroundColor: "lightblue" }}>
       <form className="form-container" onSubmit={handleSubmit}>        
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
