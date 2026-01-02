@@ -17,11 +17,18 @@ import ManageStudents from "./pages/Admin/ManageStudents";
 import ManageCourses from "./pages/Admin/ManageCourses";
 import CreateCourse from "./pages/Admin/CreateCourse";
 import ManageEnrollments from "./pages/Admin/ManageEnrollments";
+import AssignStaffToCourse from "./pages/Admin/AssignStaffToCourse";
+import RegisterStaff from "./pages/Admin/RegisterStaff";
+
 
 /* staff */
 import StaffDashboard from "./pages/Staff/StaffDashboard";
 import StaffProfile from "./pages/Staff/StaffProfile";
 import EditStaffProfile from "./pages/Staff/EditStaffProfile";
+import StaffMyCourses from "./pages/Staff/StaffMyCourses";
+import StaffCoursesWithStudents from "./pages/Staff/StaffCoursesWithStudents";
+
+
 
 /* protected route */
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -118,6 +125,24 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+         path="/admin/assign-staff"
+         element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AssignStaffToCourse />
+          </ProtectedRoute>
+           }
+        />
+        <Route
+  path="/admin/register-staff"
+  element={
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <RegisterStaff />
+    </ProtectedRoute>
+  }
+/>
+
+
 
         {/* STAFF */}
         <Route
@@ -144,6 +169,27 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/staff/my-courses"
+          element={
+            <ProtectedRoute allowedRoles={["staff"]}>
+              <StaffMyCourses />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/staff/courses-students"
+          element={
+            <ProtectedRoute allowedRoles={["staff"]}>
+              <StaffCoursesWithStudents />
+            </ProtectedRoute>
+          }
+        />
+
+
+
 
         {/* FALLBACK */}
         <Route path="*" element={<h1>404 Not Found</h1>} />

@@ -67,9 +67,16 @@ if ($method === 'GET' && $normalized === '/dropped-enrollments') return getDropp
 if ($method === 'GET' && $normalized === '/students') return listStudents();
 if ($method === 'GET' && $normalized === '/admin/stats') return adminStats();
 
+if ($method === 'GET' && $normalized === '/admin/staff') {
+    return getAllStaff();
+}
+if ($method === 'GET' && $normalized === '/admin/available-courses') {
+    return getAvailableCoursesForStaffAssignment();
+}
+
 
 if ($method === 'GET' && $normalized === '/staff/dashboard') {
-    return staffDashboardController();
+    return staffDashboard();
 }
 if ($method === 'GET' && $normalized === '/me/staff') {
     return getStaffProfile();
@@ -77,6 +84,22 @@ if ($method === 'GET' && $normalized === '/me/staff') {
 if ($method === 'PUT' && $normalized === '/staff/update-profile') {
     return updateStaffProfile();
 }
+
+
+if ($method === "POST" && $normalized === "/admin/assign-course") {
+    return assignCourseToStaff();
+}
+
+// STAFF
+if ($method === 'GET' && $normalized === '/staff/my-courses') {
+    return getStaffCourses();
+}
+
+if ($method === 'GET' && $normalized === '/staff/courses-with-students') {
+    getCoursesWithStudents();
+}
+
+
 
 
 

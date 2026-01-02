@@ -157,14 +157,14 @@ const Register = () => {
           </div>       
         </div>
         {passwordError && <p className="error-text">{passwordError}</p>}
-        <div className="label-input">
+        {/* <div className="label-input">
           <label>Role</label>
           <select name="role" value={formData.role} onChange={handleChange}>
             <option value="student">student</option>
             <option value="staff">staff</option>
             <option value="admin">admin</option>
           </select>
-        </div>
+        </div> */}
         <div className="button-group">
           <button type="submit" className="link-button">
             Register

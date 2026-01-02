@@ -1,0 +1,93 @@
+/* Main container */
+.assign-container {
+  max-width: 520px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Title */
+.assign-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Inputs */
+.assign-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.assign-container input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Button */
+.assign-btn {
+  width: 100%;
+  background: #22c55e;
+  border: none;
+  padding: 14px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.assign-btn:hover {
+  background: #16a34a;
+}
+
+.assign-btn:active {
+  transform: scale(0.98);
+}
+
+/* Message base */
+.msg {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* SUCCESS MESSAGE */
+.msg.success {
+  color: #166534;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+}
+
+/* ERROR MESSAGE */
+.msg.error {
+  color: #7f1d1d;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .assign-container {
+    margin: 20px;
+    padding: 24px;
+  }
+
+  .assign-container h2 {
+    font-size: 20px;
+  }
+}

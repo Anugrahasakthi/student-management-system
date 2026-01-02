@@ -1,0 +1,41 @@
+.staff-courses-container {
+  padding: 30px;
+}
+
+.staff-courses-container h2 {
+  margin-bottom: 20px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+}
+
+.course-card h3 {
+  color: #002855;
+  margin-bottom: 10px;
+}
+
+.duration,
+.assigned {
+  font-size: 14px;
+  color: #555;
+}
+
+.no-courses {
+  font-size: 16px;
+  color: #777;
+}

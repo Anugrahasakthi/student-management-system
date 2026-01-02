@@ -1,0 +1,172 @@
+/* PAGE WRAPPER */
+.staff-courses-container {
+  padding: 30px 40px;
+  min-height: calc(100vh - 65px);
+  background: #f5f7fb;
+  box-sizing: border-box;
+}
+
+/* PAGE TITLE */
+.staff-courses-container h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #03254c;
+  margin-bottom: 25px;
+}
+
+/* COURSE CARD */
+.course-card {
+  background: #ffffff;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* COURSE NAME */
+.course-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #03254c;
+  margin-bottom: 12px;
+}
+
+/* NO STUDENTS TEXT */
+.no-students {
+  font-size: 15px;
+  color: #777;
+  font-style: italic;
+  padding-top: 5px;
+}
+
+/* TABLE STYLES */
+.course-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* TABLE HEADER */
+.course-card thead {
+  background: #03254c;
+}
+
+.course-card thead th {
+  padding: 12px 15px;
+  color: #ffffff;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* TABLE BODY */
+.course-card tbody td {
+  padding: 12px 15px;
+  font-size: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* ROW HOVER */
+.course-card tbody tr:hover {
+  background: #f1f4fa;
+}
+
+/* LOADING / ERROR STATES */
+.loading {
+  padding: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.error {
+  color: #e63946;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .staff-courses-container {
+    padding: 20px;
+  }
+
+  .course-card {
+    padding: 18px;
+  }
+
+  .course-card h2 {
+    font-size: 20px;
+  }
+
+  .course-card table,
+  .course-card thead,
+  .course-card tbody,
+  .course-card th,
+  .course-card td,
+  .course-card tr {
+    display: block;
+  }
+
+  .course-card thead {
+    display: none;
+  }
+
+  .course-card tbody tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .course-card tbody td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .course-card tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    font-weight: bold;
+    color: #03254c;
+  }
+}
+/* PAGINATION */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.pagination button {
+  padding: 8px 18px;
+  background: #03254c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.pagination button:disabled {
+  background: #9bb0c9;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+  font-weight: 600;
+}
