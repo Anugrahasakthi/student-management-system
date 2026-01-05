@@ -20,7 +20,7 @@ const AdminHeader = () => {
         <Link to="/admin/dashboard">Dashboard</Link>
         <Link to="/admin/students">Students</Link>
         <Link to="/admin/courses">Courses</Link>
-        <Link to="/admin/assign-staff">Assign Staff</Link>
+        <Link to="/admin/assign-staff">Staff</Link>
         <Link to="/admin/enrollments">Enrollments</Link>
 
         <button className="logout-btn" onClick={logout}>Logout</button>

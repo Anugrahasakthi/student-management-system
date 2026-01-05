@@ -4,18 +4,17 @@ import AdminHeader from "./AdminHeader";
 import "../Css/assignStaffCourse.css";
 import { useNavigate } from "react-router-dom";
 
-
 const AssignStaffToCourse = () => {
   const [staffList, setStaffList] = useState([]);
   const [courses, setCourses] = useState([]);
   const [staffId, setStaffId] = useState("");
   const [courseId, setCourseId] = useState("");
   const [message, setMessage] = useState("");
-  const [msgType, setMsgType] = useState(""); // success | error
+  const [msgType, setMsgType] = useState("");
 
   const navigate = useNavigate();
 
-  // 🔁 load staff + available courses
+  // 🔁 Load staff & courses
   const loadData = async () => {
     try {
       const staffRes = await client.get("/admin/staff");
@@ -33,6 +32,18 @@ const AssignStaffToCourse = () => {
     loadData();
   }, []);
 
+  // ✅ Auto-hide message after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setMsgType("");
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const assignCourse = async () => {
     if (!staffId || !courseId) {
       setMessage("Please select staff and course");
@@ -41,6 +52,9 @@ const AssignStaffToCourse = () => {
     }
 
     try {
+      setMessage("");
+      setMsgType("");
+
       const res = await client.post("/admin/assign-course", {
         staff_id: staffId,
         course_id: courseId,
@@ -49,11 +63,11 @@ const AssignStaffToCourse = () => {
       setMessage(res.data.message || "Course assigned successfully");
       setMsgType("success");
 
-      // reset selections
+      // Reset selections
       setStaffId("");
       setCourseId("");
 
-      // reload available courses so assigned one disappears
+      // Reload available courses
       loadData();
     } catch (err) {
       setMessage(err.response?.data?.message || "Error assigning course");
@@ -64,23 +78,31 @@ const AssignStaffToCourse = () => {
   return (
     <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }}>
       <AdminHeader />
-      <div style={{ backgroundColor: "lightblue" }}>
-        <div className="register-staff-wrapper" style={{ backgroundColor: "lightblue" }}>
-  <button
-    className="register-staff-btn"
-    onClick={() => navigate("/admin/register-staff")}
-  >
-    + Register New Staff
-  </button>
+
+      <div className="register-staff-wrapper">
+        <button
+          className="register-staff-btn"
+          onClick={() => navigate("/admin/register-staff")}
+        >
+          + Register New Staff
+        </button>
       </div>
-      <div className="assign-container" >
+
+      <div className="assign-container">
         <h2>Assign Course to Staff</h2>
 
         {message && <p className={`msg ${msgType}`}>{message}</p>}
 
         <div className="form-group">
           <label>Select Staff</label>
-          <select value={staffId} onChange={(e) => setStaffId(e.target.value)}>
+          <select
+            value={staffId}
+            onChange={(e) => {
+              setStaffId(e.target.value);
+              setMessage("");
+              setMsgType("");
+            }}
+          >
             <option value="">-- Select Staff --</option>
             {staffList.map((staff) => (
               <option key={staff.id} value={staff.id}>
@@ -92,9 +114,15 @@ const AssignStaffToCourse = () => {
 
         <div className="form-group">
           <label>Select Course</label>
-          <select value={courseId} onChange={(e) => setCourseId(e.target.value)}>
+          <select
+            value={courseId}
+            onChange={(e) => {
+              setCourseId(e.target.value);
+              setMessage("");
+              setMsgType("");
+            }}
+          >
             <option value="">-- Select Course --</option>
-
             {courses.length === 0 ? (
               <option disabled>No available courses</option>
             ) : (
@@ -111,8 +139,6 @@ const AssignStaffToCourse = () => {
           Assign Course
         </button>
       </div>
-      </div>
-      
     </div>
   );
 };

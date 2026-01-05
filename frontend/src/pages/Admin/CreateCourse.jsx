@@ -47,7 +47,7 @@ const CreateCourse = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "lightblue" }}>
+    <div style={{ backgroundColor: "lightblue", minHeight: "100vh" }}>
       <AdminHeader />
 
       {/* Popup */}
