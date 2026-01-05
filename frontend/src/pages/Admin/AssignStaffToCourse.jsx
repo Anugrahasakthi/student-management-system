@@ -14,7 +14,7 @@ const AssignStaffToCourse = () => {
 
   const navigate = useNavigate();
 
-  // 🔁 Load staff & courses
+  // Load staff & courses
   const loadData = async () => {
     try {
       const staffRes = await client.get("/admin/staff");
@@ -32,7 +32,7 @@ const AssignStaffToCourse = () => {
     loadData();
   }, []);
 
-  // ✅ Auto-hide message after 3 seconds
+ 
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
@@ -61,13 +61,9 @@ const AssignStaffToCourse = () => {
       });
 
       setMessage(res.data.message || "Course assigned successfully");
-      setMsgType("success");
-
-      // Reset selections
+      setMsgType("success");      
       setStaffId("");
-      setCourseId("");
-
-      // Reload available courses
+      setCourseId("");     
       loadData();
     } catch (err) {
       setMessage(err.response?.data?.message || "Error assigning course");

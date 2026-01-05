@@ -29,10 +29,7 @@ const StaffProfile = () => {
 
   return (
     <>
-      {/* ✅ GLOBAL STAFF HEADER */}
-      <StaffHeader />
-
-      {/* PAGE CONTENT */}
+      <StaffHeader />      
       <div
         className="profile-view-page"
         style={{ backgroundColor: "lightblue" }}

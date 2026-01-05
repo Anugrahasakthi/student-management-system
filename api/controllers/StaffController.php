@@ -17,6 +17,7 @@ function staffDashboard() {
         FROM staff_courses 
         WHERE staff_id = ?
     ");
+
     $coursesStmt->execute([$staff_id]);
     $assignedCourses = $coursesStmt->fetchColumn();
 
@@ -63,6 +64,8 @@ function getStaffProfile() {
 
     response_json(200, "Staff profile", $staff);
 }
+
+
 
 function updateStaffProfile() {
     global $pdo;
@@ -140,7 +143,7 @@ function getCoursesWithStudents() {
         LEFT JOIN students s ON s.id = e.student_id
         LEFT JOIN users u ON u.id = s.user_id
         WHERE sc.staff_id = ?
-        ORDER BY c.course_name
+        ORDER BY c.id
     ");
 
     $stmt->execute([$auth['staff_id']]);
