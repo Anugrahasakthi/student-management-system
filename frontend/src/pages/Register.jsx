@@ -5,6 +5,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+const passwordRules = [
+  { label: "At least 1 uppercase letter", regex: /[A-Z]/ },
+  { label: "At least 1 lowercase letter", regex: /[a-z]/ },
+  { label: "At least 1 number", regex: /[0-9]/ },
+  { label: "At least 1 symbol", regex: /[^A-Za-z0-9]/ },
+  { label: "Minimum 8 characters", regex: /.{8,}/ },
+];
+
 const Register = () => {
   const navigate = useNavigate();
 
@@ -18,37 +26,20 @@ const Register = () => {
   });
 
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [passwordStatus, setPasswordStatus] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [showRules, setShowRules] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
- 
+  
   const validateEmail = (email) => {
     const regex = /^[a-z][a-z0-9]*@[a-z]+\.[a-z]{2,}$/;
-
     if (!email) return "Eg: example@domain.com";
     if (!regex.test(email))
       return "Invalid email format (Eg: example@domain.com)";
-
-    return "";
-  };
-
-  
-  const validatePassword = (password) => {
-    const rules = [
-      { regex: /[A-Z]/, message: "Must contain at least 1 uppercase letter" },
-      { regex: /[a-z]/, message: "Must contain at least 1 lowercase letter" },
-      { regex: /[0-9]/, message: "Must contain at least 1 number" },
-      { regex: /[^A-Za-z0-9]/, message: "Must contain at least 1 symbol" },
-      { regex: /.{8,}/, message: "Minimum 8 characters required" },
-    ];
-
-    for (let rule of rules) {
-      if (!rule.regex.test(password)) return rule.message;
-    }
     return "";
   };
 
@@ -58,46 +49,48 @@ const Register = () => {
     if (!phone) return "Phone number is required";
     if (!regex.test(phone))
       return "Enter a valid 10-digit mobile number";
-
     return "";
+  };
+
+  
+  const checkPasswordRules = (password) => {
+    const status = {};
+    passwordRules.forEach(rule => {
+      status[rule.label] = rule.regex.test(password);
+    });
+    setPasswordStatus(status);
   };
 
   
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Allow only digits in phone field
+    // Allow only digits for phone
     if (name === "phone" && !/^\d*$/.test(value)) return;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
 
-    if (name === "email") {
-      setEmailError(validateEmail(value));
-    }
-
-    if (name === "password") {
-      setPasswordError(validatePassword(value));
-    }
-
-    if (name === "phone") {
-      setPhoneError(validatePhone(value));
-    }
+    if (name === "email") setEmailError(validateEmail(value));
+    if (name === "phone") setPhoneError(validatePhone(value));
+    if (name === "password") checkPasswordRules(value);
   };
 
- 
+  const isPasswordValid =
+    Object.values(passwordStatus).length === passwordRules.length &&
+    Object.values(passwordStatus).every(Boolean);
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (emailError || passwordError || phoneError) return;
+    if (emailError || phoneError || !isPasswordValid) return;
 
     try {
       await client.post("/register", formData);
       setSuccess("Registration successful!");
       setError("");
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 800);
+      setTimeout(() => navigate("/login"), 800);
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
       setSuccess("");
@@ -105,7 +98,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container" style={{ backgroundColor: "lightblue" }}>
+    <div className="register-container">
       <form className="form-container" onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
@@ -114,73 +107,67 @@ const Register = () => {
 
         <div className="label-input">
           <label>Full Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter full name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+          <input name="name" value={formData.name} onChange={handleChange} />
         </div>
 
         <div className="label-input">
           <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <input name="email" value={formData.email} onChange={handleChange} />
         </div>
         {emailError && <p className="error-text">{emailError}</p>}
 
         <div className="label-input">
           <label>Phone</label>
           <input
-            type="text"
             name="phone"
-            placeholder="Enter phone number"
+            maxLength={10}
             value={formData.phone}
             onChange={handleChange}
-            maxLength={10}
-            required
           />
         </div>
         {phoneError && <p className="error-text">{phoneError}</p>}
 
         <div className="label-input">
-          <label>Date of Birth</label>
-          <input
-            type="date"
-            name="dob"
-            value={formData.dob}
-            onChange={handleChange}
-          />
+          <label>DOB</label>
+          <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
         </div>
 
         <div className="label-input">
           <label>Password</label>
+
           <div className="password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Enter a strong password"
               value={formData.password}
               onChange={handleChange}
-              required
+              onFocus={() => setShowRules(true)}
+              onBlur={() => setShowRules(false)}
             />
+
             <span
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
             >
               <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </span>
+
+            {showRules && (
+              <div className="password-popup">
+                {passwordRules.map(rule => (
+                  <p
+                    key={rule.label}
+                    className={
+                      passwordStatus[rule.label] ? "valid" : "invalid"
+                    }
+                  >
+                    {passwordStatus[rule.label] ? "✔" : "✖"} {rule.label}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-        {passwordError && <p className="error-text">{passwordError}</p>}
 
         <div className="button-group">
           <button type="submit" className="link-button">
@@ -196,3 +183,6 @@ const Register = () => {
 };
 
 export default Register;
+
+
+

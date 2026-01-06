@@ -22,7 +22,6 @@
   margin-bottom: 15px;
 }
 
-
 .label-input {
   display: flex;
   align-items: center;
@@ -35,9 +34,7 @@
   font-size: 14px;
 }
 
-
 .label-input input,
-.label-input select,
 .password-wrapper input {
   width: 100%;
   padding: 6px 8px;
@@ -51,6 +48,7 @@
   position: relative;
   width: 100%;
 }
+
 .eye-icon {
   position: absolute;
   right: 12px;
@@ -60,7 +58,6 @@
   font-size: 18px;
   color: #333;
 }
-
 
 .button-group {
   display: flex;
@@ -76,8 +73,6 @@
   background-color: #007bff;
   color: white;
   border-radius: 6px;
-  text-align: center;
-  text-decoration: none;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -89,12 +84,6 @@
   text-decoration: none;
 }
 
-/* .error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-} */
-
 .success-message {
   color: green;
   text-align: center;
@@ -105,6 +94,32 @@
   color: red;
   font-size: 13px;
   text-align: left;
-  margin-left: 105px; 
-  
+  margin-left: 105px;
+}
+
+/* -------- Password rules popup -------- */
+.password-popup {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 260px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+.password-popup p {
+  margin: 2px 0;
+}
+
+.password-popup .valid {
+  color: green;
+}
+
+.password-popup .invalid {
+  color: red;
 }
