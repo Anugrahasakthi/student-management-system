@@ -63,12 +63,12 @@ const StaffDashboard = () => {
 
         
         <div className="dashboard-stats">
-          <div className="stat-card">
+          <div className="stat-card" onClick={() => navigate("/staff/my-courses")}>
             <h1>{stats?.assigned_courses || 0}</h1>
             <p>Assigned Courses</p>
           </div>
 
-          <div className="stat-card">
+          <div className="stat-card"  onClick={() => navigate("/staff/courses-students")}>
             <h1>{stats?.students || 0}</h1>
             <p>Total Students</p>
           </div>
