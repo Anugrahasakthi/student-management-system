@@ -19,23 +19,24 @@ const Register = () => {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  
+ 
   const validateEmail = (email) => {
     const regex = /^[a-z][a-z0-9]*@[a-z]+\.[a-z]{2,}$/;
 
-
     if (!email) return "Eg: example@domain.com";
-    if (!regex.test(email)) return "Invalid email format (Eg: example@domain.com)";
+    if (!regex.test(email))
+      return "Invalid email format (Eg: example@domain.com)";
 
     return "";
   };
 
-
+  
   const validatePassword = (password) => {
     const rules = [
       { regex: /[A-Z]/, message: "Must contain at least 1 uppercase letter" },
@@ -51,9 +52,22 @@ const Register = () => {
     return "";
   };
 
- 
+  
+  const validatePhone = (phone) => {
+    const regex = /^[6-9][0-9]{9}$/;
+    if (!phone) return "Phone number is required";
+    if (!regex.test(phone))
+      return "Enter a valid 10-digit mobile number";
+
+    return "";
+  };
+
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Allow only digits in phone field
+    if (name === "phone" && !/^\d*$/.test(value)) return;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -64,12 +78,17 @@ const Register = () => {
     if (name === "password") {
       setPasswordError(validatePassword(value));
     }
+
+    if (name === "phone") {
+      setPhoneError(validatePhone(value));
+    }
   };
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (emailError || passwordError) return;
+    if (emailError || passwordError || phoneError) return;
 
     try {
       await client.post("/register", formData);
@@ -79,7 +98,6 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login");
       }, 800);
-
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
       setSuccess("");
@@ -88,10 +106,12 @@ const Register = () => {
 
   return (
     <div className="register-container" style={{ backgroundColor: "lightblue" }}>
-      <form className="form-container" onSubmit={handleSubmit}>        
+      <form className="form-container" onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
-        <h1 className="regis-heading">Register</h1>        
+
+        <h1 className="regis-heading">Register</h1>
+
         <div className="label-input">
           <label>Full Name</label>
           <input
@@ -103,6 +123,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="label-input">
           <label>Email</label>
           <input
@@ -113,9 +134,9 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          
         </div>
         {emailError && <p className="error-text">{emailError}</p>}
+
         <div className="label-input">
           <label>Phone</label>
           <input
@@ -124,8 +145,12 @@ const Register = () => {
             placeholder="Enter phone number"
             value={formData.phone}
             onChange={handleChange}
+            maxLength={10}
+            required
           />
         </div>
+        {phoneError && <p className="error-text">{phoneError}</p>}
+
         <div className="label-input">
           <label>Date of Birth</label>
           <input
@@ -135,9 +160,9 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
+
         <div className="label-input">
           <label>Password</label>
-
           <div className="password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
@@ -147,24 +172,16 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-
             <span
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
             >
               <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </span>
-          </div>       
+          </div>
         </div>
         {passwordError && <p className="error-text">{passwordError}</p>}
-        {/* <div className="label-input">
-          <label>Role</label>
-          <select name="role" value={formData.role} onChange={handleChange}>
-            <option value="student">student</option>
-            <option value="staff">staff</option>
-            <option value="admin">admin</option>
-          </select>
-        </div> */}
+
         <div className="button-group">
           <button type="submit" className="link-button">
             Register
@@ -172,7 +189,7 @@ const Register = () => {
           <Link to="/login" className="link-button-link">
             Already User? Login Here
           </Link>
-        </div>        
+        </div>
       </form>
     </div>
   );
