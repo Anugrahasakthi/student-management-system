@@ -93,3 +93,51 @@ function getAvailableCoursesForStaffAssignment() {
 
     response_json(200, "Available courses", $courses);
 }
+
+function getAllStaffWithCourses() {
+    global $pdo;
+
+    $auth = auth();
+    require_admin($auth);
+
+    $sql = "
+        SELECT 
+            s.id AS staff_id,
+            s.name AS staff_name,
+            s.email,
+            c.id AS course_id,
+            c.course_name
+        FROM staff s
+        LEFT JOIN staff_courses sc ON sc.staff_id = s.id
+        LEFT JOIN courses c ON c.id = sc.course_id
+        ORDER BY s.name, c.course_name
+    ";
+
+    $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    // Transform flat rows → grouped by staff
+    $result = [];
+
+    foreach ($rows as $row) {
+        $sid = $row['staff_id'];
+
+        if (!isset($result[$sid])) {
+            $result[$sid] = [
+                "staff_id" => $sid,
+                "name" => $row['staff_name'],
+                "email" => $row['email'],
+                "courses" => []
+            ];
+        }
+
+        if ($row['course_id']) {
+            $result[$sid]["courses"][] = [
+                "id" => $row['course_id'],
+                "course_name" => $row['course_name']
+            ];
+        }
+    }
+
+    response_json(200, "Staff with assigned courses", array_values($result));
+}
+

@@ -137,9 +137,26 @@
   transform: scale(0.97);
 }
 
+.staff-courses-btn {
+  background: #2563eb;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.staff-courses-btn:hover {
+  background: #1d4ed8;
+}
+
+
 /* Mobile fix */
 @media (max-width: 600px) {
   .register-staff-wrapper {
     padding: 15px 20px 0;
   }
 }
+

@@ -1,0 +1,39 @@
+.staff-courses-container {
+  padding: 40px;
+  background: #fde7c6;
+  min-height: 100vh;
+}
+
+.staff-courses-table {
+  width: 100%;
+  background: white;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.staff-courses-table th {
+  background: #000d5a;
+  color: white;
+  padding: 12px;
+}
+
+.staff-courses-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+
+.course-badge {
+  background: #e6f0ff;
+  color: #000d5a;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 4px 6px 4px 0;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.no-course {
+  color: gray;
+  font-size: 14px;
+}

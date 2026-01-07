@@ -80,9 +80,16 @@ const AssignStaffToCourse = () => {
           className="register-staff-btn"
           onClick={() => navigate("/admin/register-staff")}
         >
-          + Register New Staff
+          Register New Staff
         </button>
-      </div>
+        <button
+          className="staff-courses-btn"
+          onClick={() => navigate("/admin/staff-courses")}
+        >
+          Staff’s Courses
+        </button>
+    </div>   
+
 
       <div className="assign-container">
         <h2>Assign Course to Staff</h2>

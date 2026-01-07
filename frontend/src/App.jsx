@@ -19,6 +19,8 @@ import CreateCourse from "./pages/Admin/CreateCourse";
 import ManageEnrollments from "./pages/Admin/ManageEnrollments";
 import AssignStaffToCourse from "./pages/Admin/AssignStaffToCourse";
 import RegisterStaff from "./pages/Admin/RegisterStaff";
+import StaffCourses from "./pages/Admin/StaffCourses";
+
 
 
 /* staff */
@@ -126,21 +128,29 @@ function App() {
           }
         />
         <Route
-         path="/admin/assign-staff"
-         element={
+          path="/admin/assign-staff"
+          element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <AssignStaffToCourse />
           </ProtectedRoute>
            }
         />
         <Route
-  path="/admin/register-staff"
-  element={
-    <ProtectedRoute allowedRoles={["admin"]}>
-      <RegisterStaff />
-    </ProtectedRoute>
-  }
-/>
+          path="/admin/register-staff"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <RegisterStaff />
+            </ProtectedRoute>
+           }
+        />
+        <Route
+          path="/admin/staff-courses"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <StaffCourses />
+            </ProtectedRoute>
+           }
+        />
 
 
 

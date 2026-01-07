@@ -74,6 +74,13 @@ if ($method === 'GET' && $normalized === '/admin/available-courses') {
     return getAvailableCoursesForStaffAssignment();
 }
 
+/* new */
+if ($method === 'GET' && $normalized === '/admin/staff-with-courses') {
+    getAllStaffWithCourses();
+}
+
+
+
 
 if ($method === 'GET' && $normalized === '/staff/dashboard') {
     return staffDashboard();
